@@ -1,0 +1,162 @@
+--- Slide 1 ---
+Lecture 2: Edge detection
+CS4186: Computer Vision
+Prof. Zhu Zhiyu
+--- Slide 2 ---
+Edge detection
+TexPoint fonts used in EMF. 
+Read the TexPoint manual before you delete this box.: AAA
+Convert a 2D image into a set of curves
+Extracts salient features of the scene
+More compact than pixels
+--- Slide 3 ---
+Origin of edges
+Edges are caused by a variety of factors
+depth discontinuity
+surface color discontinuity
+illumination discontinuity
+surface normal discontinuity
+--- Slide 4 ---
+Images as functions…
+Edges look like steep cliffs
+--- Slide 5 ---
+Characterizing edges
+An edge is a place of rapid change in the image intensity function
+image
+Source: L. Lazebnik
+--- Slide 6 ---
+The gradient points in the direction of most rapid increase in intensity
+Image gradient
+The gradient of an image:
+The edge strength is given by the gradient magnitude:
+
+
+
+The gradient direction is given by:
+
+
+how does this relate to the direction of the edge?
+Source: Steve Seitz
+--- Slide 7 ---
+How can we differentiate a digital image F[x,y]?
+Option 1:  reconstruct a continuous image, f, then compute the derivative
+Option 2:  take discrete derivative (finite difference)
+How would you implement this as a linear filter?
+Image derivatives
+:
+:
+Source: S. Seitz
+--- Slide 8 ---
+Image gradient
+Source: L. Lazebnik
+--- Slide 9 ---
+Effects of noise
+Where is the edge?
+Source: S. Seitz
+Noisy input image
+--- Slide 10 ---
+Solution: smooth first
+f
+Source: S. Seitz
+--- Slide 11 ---
+Differentiation is convolution, and convolution is associative:
+
+
+
+
+This saves us one operation:
+Associative property of convolution
+Source: S. Seitz
+--- Slide 12 ---
+The 1D Gaussian and its derivatives
+--- Slide 13 ---
+2D edge detection filters
+Gaussian
+derivative of Gaussian (x)
+--- Slide 14 ---
+Derivative of Gaussian filter
+x-direction
+y-direction
+--- Slide 15 ---
+The Sobel operator
+Common approximation of derivative of Gaussian
+The standard definition of the Sobel operator omits the 1/8 term
+doesn’t make a difference for edge detection
+the 1/8 term is needed to get the right gradient magnitude
+--- Slide 16 ---
+Sobel operator: example
+Source: Wikipedia
+--- Slide 17 ---
+--- Slide 18 ---
+Example
+original image
+Demo:  http://bigwww.epfl.ch/demo/ip/demos/edgeDetector/
+Image credit: Joseph Redmon
+--- Slide 19 ---
+smoothed gradient magnitude
+Finding edges
+--- Slide 20 ---
+thresholding
+Finding edges
+where is the edge?
+--- Slide 21 ---
+Get Orientation at Each Pixel
+Get orientation (below, threshold at minimum gradient magnitude)
+θ = atan2(gy, gx)
+0
+360
+Gradient orientation angle
+--- Slide 22 ---
+Check if pixel is local maximum along gradient direction
+requires interpolating pixels p and r
+Non-maximum supression
+--- Slide 23 ---
+Before Non-max Suppression
+--- Slide 24 ---
+After Non-max Suppression
+--- Slide 25 ---
+Thresholding edges
+Still some noise
+Only want strong edges
+2 thresholds, 3 cases
+R > T: strong edge
+R < T but R > t: weak edge
+R < t: no edge
+Why two thresholds?
+--- Slide 26 ---
+Connecting edges
+Strong edges are edges!
+Weak edges are edges iff they connect to strong
+Look in some neighborhood(usually 8 closest)
+--- Slide 27 ---
+Canny edge detector
+Filter image with derivative of Gaussian 
+
+Find magnitude and orientation of gradient
+
+Non-maximum suppression
+
+Linking and thresholding (hysteresis):
+Define two thresholds: low and high
+Use the high threshold to start edge curves and the low threshold to continue them
+Source: D. Lowe, L. Fei-Fei, J. Redmon
+MATLAB:  edge(image,‘canny’)
+--- Slide 28 ---
+Canny edge detector
+Canny with
+Canny with
+original
+The choice of         depends on desired behavior
+large       detects “large-scale” edges
+small       detects fine edges
+Source: S. Seitz
+--- Slide 29 ---
+Scale space [Witkin 83]
+Properties of scale space (w/ Gaussian smoothing)
+edge position may shift with increasing scale ()
+two edges may merge with increasing scale 
+an edge may not split into two with increasing scale
+larger
+Gaussian filtered signal
+--- Slide 30 ---
+Questions?

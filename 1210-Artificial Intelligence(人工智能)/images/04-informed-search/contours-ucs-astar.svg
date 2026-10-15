@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="'Latin Modern Roman','CMU Serif','Times New Roman',Times,serif">
+  <rect x="0" y="0" width="900" height="340" fill="#333"/>
+  <text x="200" y="42" text-anchor="middle" font-size="24" fill="#eee">UCS: contours of equal g</text>
+  <circle cx="200" cy="190" r="135" fill="#9aa8ff" fill-opacity="0.18" stroke="#c9c9ff" stroke-width="2.5"/>
+  <circle cx="200" cy="190" r="90" fill="#9aa8ff" fill-opacity="0.22" stroke="#c9c9ff" stroke-width="2.5"/>
+  <circle cx="200" cy="190" r="45" fill="#9aa8ff" fill-opacity="0.3" stroke="#c9c9ff" stroke-width="2.5"/>
+  <circle cx="200" cy="190" r="11" fill="#c6f2c6" stroke="#111" stroke-width="2.5"/>
+  <text x="200" y="222" text-anchor="middle" font-size="16" fill="#eee">Start</text>
+  <circle cx="335" cy="190" r="11" fill="#f6c1c1" stroke="#111" stroke-width="2.5"/>
+  <text x="335" y="222" text-anchor="middle" font-size="16" fill="#eee">Goal</text>
+  <text x="640" y="42" text-anchor="middle" font-size="24" fill="#eee">A*: contours of equal f = g + h</text>
+  <ellipse cx="660" cy="190" rx="140" ry="66" fill="#9aa8ff" fill-opacity="0.18" stroke="#c9c9ff" stroke-width="2.5"/>
+  <ellipse cx="620" cy="190" rx="90" ry="48" fill="#9aa8ff" fill-opacity="0.22" stroke="#c9c9ff" stroke-width="2.5"/>
+  <ellipse cx="585" cy="190" rx="45" ry="30" fill="#9aa8ff" fill-opacity="0.3" stroke="#c9c9ff" stroke-width="2.5"/>
+  <circle cx="560" cy="190" r="11" fill="#c6f2c6" stroke="#111" stroke-width="2.5"/>
+  <text x="560" y="222" text-anchor="middle" font-size="16" fill="#eee">Start</text>
+  <circle cx="800" cy="190" r="11" fill="#f6c1c1" stroke="#111" stroke-width="2.5"/>
+  <text x="800" y="222" text-anchor="middle" font-size="16" fill="#eee">Goal</text>
+  <line x1="450" y1="60" x2="450" y2="290" stroke="#666" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="450" y="322" text-anchor="middle" font-size="17" fill="#eee">Both stop at the same optimal cost; A* touches far fewer nodes</text>
+</svg>

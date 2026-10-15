@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>CS4186/5187 期中考试速查表（2页打印版）</title>
+<style>
+@page{size:A4;margin:0;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{font-family:"Segoe UI","Microsoft YaHei",SimSun,sans-serif;color:#111;font-size:8px;line-height:1.28;}
+.sheet{width:210mm;height:296mm;padding:4mm 5mm;overflow:hidden;background:#fff;}
+.sheet+.sheet{page-break-before:always;}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;background:#1a4f8b;color:#fff;padding:1.2mm 2.5mm;border-radius:1.2mm;margin-bottom:1.6mm;}
+.hdr .t{font-size:10.5px;font-weight:700;letter-spacing:.5px;}
+.hdr .s{font-size:7.2px;}
+.cols{column-count:3;column-gap:2.8mm;column-fill:auto;height:280mm;}
+section{margin-bottom:1.5px;}
+h2{font-size:8.8px;font-weight:700;color:#fff;background:#1a4f8b;padding:.8px 6px;border-radius:2px;margin:3.5px 0 2px;break-after:avoid;}
+h2 .en{font-weight:400;font-size:7.4px;opacity:.85;}
+h3{font-size:8px;color:#1a4f8b;margin:2px 0 1px;break-after:avoid;}
+ul{list-style:none;}
+li{padding-left:7px;text-indent:-7px;margin-bottom:.5px;}
+li::before{content:"▪ ";color:#1a4f8b;font-size:7px;}
+b{color:#0b2e5c;}
+.fx{font-family:Cambria,"Cambria Math",Georgia,"Times New Roman",serif;background:#eef2f8;padding:1px 4px;margin:1.5px 0;border-radius:2px;font-size:8.3px;break-inside:avoid;}
+table{width:100%;border-collapse:collapse;table-layout:fixed;margin:1.5px 0;font-size:7.3px;line-height:1.22;}
+th,td{border:.5pt solid #9fb2c8;padding:.8px 2.5px;vertical-align:top;overflow-wrap:break-word;}
+th{background:#dde7f3;font-weight:700;text-align:left;}
+tr{break-inside:avoid;}
+.ex{border:.6pt dashed #6f86a3;background:#f8fafd;padding:1.5px 3.5px;margin:1.5px 0;border-radius:2px;break-inside:avoid;font-size:7.5px;}
+.ex b{color:#a02020;}
+.qz{color:#a02020;font-weight:700;font-size:7px;}
+/* 矩阵括号 */
+.brk{display:inline-table;position:relative;margin:0 2.5px;padding:1.5px 4px;border-top:1.1px solid #111;border-bottom:1.1px solid #111;vertical-align:middle;}
+.brk::before,.brk::after{content:"";position:absolute;top:-1.5px;bottom:-1.5px;width:3.5px;}
+.brk::before{left:-1px;border-left:1.1px solid #111;}
+.brk::after{right:-1px;border-right:1.1px solid #111;}
+.mt{width:auto;table-layout:auto;margin:0;}
+.mt td{border:none;padding:0 2.5px;text-align:center;font-family:Cambria,Georgia,serif;font-size:7.5px;line-height:1.15;white-space:nowrap;}
+.g td{border:none;padding:.3px 1px;font-size:7.1px;}
+.g td:first-child,.g td:nth-child(3){color:#1a4f8b;font-family:Georgia,serif;}
+.g td:nth-child(2),.g td:nth-child(4){color:#333;}
+.gr th{background:#1a4f8b;color:#fff;}
+@media screen{
+  body{background:#4a4a4a;padding:12px 0;}
+  .sheet{margin:0 auto 12px;box-shadow:0 0 10px rgba(0,0,0,.6);}
+}
+@media print{ body{background:#fff;padding:0;} .sheet{margin:0;box-shadow:none;} }
+</style>
+</head>
+<body>
+
+<!-- ============ 第 1 页 ============ -->
+<div class="sheet">
+<div class="hdr"><span class="t">CS4186/5187 Vision &amp; Image 期中速查 ①</span><span class="s">滤波 · 边缘 · 重采样 · Harris ｜ 范围:Lec01–04 + Lec06非DL ｜ 题型:选择·填空·简答·计算 ｜ ★=quiz已考</span></div>
+<div class="cols">
+
+<section>
+<h2>0 常用值速查 <span class="en">Quick Values</span></h2>
+<table>
+<colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
+<tr><td>Harris k=<b>0.04</b>/quiz <b>0.05</b></td><td>Lowe 比值 <b>0.75</b>(讲义例0.8)</td><td>SIFT=<b>4×4×8=128</b> 维</td><td>金字塔开销 <b>4/3</b>×原图</td></tr>
+<tr><td>Sobel 精确幅值 <b>÷8</b></td><td>模糊半径≈降采样倍数<b>/2</b></td><td>Nyquist：采样率≥<b>2×</b>最高频</td><td>TPR/FPR 与 ROC 见 P2</td></tr>
+<tr><td>Harris 阈值 <b>0.05·R<sub>max</sub></b>，再 NMS</td><td>高斯核权重总和=<b>1</b></td><td>∂G/∂x=<b>−(x/σ²)</b>·G</td><td>中值例 [5,80,10,12,13]→<b>12</b></td></tr>
+<tr><td>MOP：<b>40×40</b>→1/5→旋转→8×8</td><td>SIFT 抗~<b>60°</b>视角、显著光照</td><td>kd-tree 加速最近邻匹配</td><td>特征值 λ²−(trA)λ+det=<b>0</b></td></tr>
+<tr><td colspan="4"><b>数值：</b>e²≈7.39，e¹≈2.72，ln2≈0.693，sin30°=.5，sin45°=cos45°≈.707，sin60°≈.866，atan2(4,3)≈53.1°</td></tr>
+</table>
+</section>
+
+<section>
+<h2>1 卷积与滤波 <span class="en">Convolution</span></h2>
+<div class="fx">G[i,j] = Σ<sub>u,v=−k…k</sub> H[u,v] · I[i−u, j−v]</div>
+<ul>
+<li><b>卷积：kernel 先旋转 180°</b>（行、列都翻转）；互相关 cross-correlation 不翻转。题目写 "convolution" → 必须先翻转！</li>
+<li>步骤：①核转180° ②核中心对准目标像素 ③与覆盖块对应相乘求和 ④边界处理：zero 补0（默认）／clamp 复制／wrap 环绕／mirror 镜像</li>
+<li>线性滤波满足<b>叠加性+平移不变</b>；中值、阈值属于<b>非线性</b>滤波，不能用卷积实现</li>
+</ul>
+<div class="ex"><b>例1</b>　I块=[[1,2],[3,4]]，核=[[0,1],[1,0]]（对称核，翻转不变）→ 0·1+1·2+1·3+0·4 = <b>5</b></div>
+<div class="ex"><b>例2</b>　I=[0,10,20,30,0]，核=[1,2,3]（原点居中）：<b>相关</b>=1·10+2·20+3·30=<b>140</b>；<b>卷积</b>(翻成[3,2,1])=3·10+2·20+1·30=<b>110</b>——非对称核两者不同！</div>
+<div class="ex"><b>例3</b>　I 3×3=[[1,2,3],[4,5,6],[7,8,9]]，box核全1/9，zero-pad：中心=(1+…+9)/9=<b>5</b>；左上角=(0+0+0+0+1+2+0+4+5)/9=12/9≈<b>1.33</b></div>
+<table>
+<colgroup><col style="width:38%"><col style="width:24%"><col style="width:38%"></colgroup>
+<tr><th>滤波器</th><th>作用</th><th>备注</th></tr>
+<tr><td>Box/Mean（全1/9，滑动平均）</td><td>去噪、模糊</td><td>有条纹伪影；1D 版=[1/3,1/3,1/3]</td></tr>
+<tr><td>Gaussian 高斯</td><td>去噪、平滑</td><td>中间大四周小，权重和=1，最常用</td></tr>
+<tr><td>Sharpen 锐化 [[0,−1,0],[−1,5,−1],[0,−1,0]]</td><td>锐化</td><td>=原图+4·(原图−邻居)≈原图−拉普拉斯；Laplacian=[[0,1,0],[1,−4,1],[0,1,0]]</td></tr>
+<tr><td>Median 中值</td><td>去<b>椒盐噪声</b></td><td>取窗口中值；非线性！不能用卷积实现</td></tr>
+<tr><td>Bilateral 双边</td><td>保边平滑</td><td>空间距离+亮度距离双权重</td></tr>
+<tr><td>Threshold 阈值 I&gt;T→255 否则 0</td><td>二值化</td><td>非线性（lec01 "Filters: Thresholding"）</td></tr>
+</table>
+<div class="fx">h(u,v) = 1/(2πσ²) · e<sup>−(u²+v²)/2σ²</sup>　σ大→更模糊、核更宽、权重更平</div>
+<ul>
+<li>可分离：2D高斯 = 两个1D高斯依次卷积（省计算）</li>
+<li>结合律：(h₁∗h₂)∗I = h₁∗(h₂∗I)；卷积还满足交换律 f∗g=g∗f</li>
+</ul>
+</section>
+
+<section>
+<h2>2 边缘检测 <span class="en">Edges / Canny</span></h2>
+<div class="fx">∇f=[∂f/∂x, ∂f/∂y]　‖∇f‖=√(g<sub>x</sub>²+g<sub>y</sub>²)　θ=atan2(g<sub>y</sub>,g<sub>x</sub>)　<b>边缘方向 ⊥ 梯度方向</b></div>
+<div class="ex"><b>例</b>　g<sub>x</sub>=3, g<sub>y</sub>=4 → 幅值=√(9+16)=<b>5</b>；θ=atan2(4,3)≈<b>53.1°</b>；边缘方向≈53.1°−90°=<b>−36.9°</b></div>
+<ul>
+<li>离散求导 = 有限差分 = 线性滤波 [−1,0,1]。例 I=[10,12,15] → 中心 g<sub>x</sub>=15−10=<b>5</b></li>
+<li>边缘来源：深度/表面法线/反射率（颜色）突变、遮挡边界；理想模型：<b>阶跃 step／斜坡 ramp／屋顶 roof</b></li>
+<li>噪声放大导数（有限差分被噪声主导）→ 先高斯平滑再求导；结合律：d/dx(G∗I)=(dG/dx)∗I → <b>高斯导数核一步完成</b>（Tutorial 02 称 DoG filter；解析式 ∂G/∂x=−(x/σ²)G）</li>
+<li class="qz">quiz原题：局部区域数学描述+边缘方向表述？→ 窗口内梯度统计（结构张量 H）；θ=atan2(g<sub>y</sub>,g<sub>x</sub>)，边缘方向=θ±90°</li>
+</ul>
+<div class="fx">Sobel（默写）　G<sub>x</sub>=<span class="brk"><table class="mt"><tr><td>−1</td><td>0</td><td>1</td></tr><tr><td>−2</td><td>0</td><td>2</td></tr><tr><td>−1</td><td>0</td><td>1</td></tr></table></span>　G<sub>y</sub>=G<sub>x</sub><sup>T</sup>=<span class="brk"><table class="mt"><tr><td>−1</td><td>−2</td><td>−1</td></tr><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>2</td><td>1</td></tr></table></span>　（=平滑+差分，高斯导数近似；精确幅值÷8）</div>
+<ul>
+<li><b>Canny 步骤（排序题）</b>：①高斯导数滤波（平滑+求导）②梯度幅值与方向 ③<b>NMS</b>：沿梯度方向（量化为 0°/45°/90°/135° 四方向）与邻域比较只留局部最大（粗边→1px）④<b>双阈值滞后</b>：&gt;T 强边缘必留；t~T 弱边缘仅当与强边缘相连才留；&lt;t 丢弃</li>
+<li>σ大→大尺度边缘；σ小→精细边缘</li>
+<li>Scale space：尺度↑ 边缘可移动、两条可合并，<b>一条不会分裂成两条</b></li>
+</ul>
+</section>
+
+<section>
+<h2>3 重采样 · 混叠 · 插值 <span class="en">Aliasing / Interpolation</span></h2>
+<ul>
+<li>混叠原因：采样率 &lt; 2×最高频率。<b>Nyquist：采样率 ≥ 2×最高频率</b>；直接丢行丢列(sub-sampling)→摩尔纹/锯齿</li>
+<li><b>修复：先高斯低通再降采样</b>（顺序不能反：先采样后模糊无效，高频已折叠）；经验：模糊半径≈降采样倍数/2</li>
+<li>时域混叠同因：马车轮效应/直升机桨"倒转"（帧率低于旋转频率）</li>
+<li>高斯金字塔 = 高斯模糊+隔行隔列降采样反复；空间开销 1+1/4+1/16+…=<b>4/3×原图</b></li>
+<li class="qz">quiz原题：混叠原因（Nyquist 采样定理）+两角度缓解 → ①先高斯低通再降采样 ②提高采样率/分辨率</li>
+<li>现代方法名词：多帧<b>超分辨率</b>（Google Pixel 3 Super Res Zoom，利用手抖做亚像素采样）</li>
+</ul>
+<table>
+<colgroup><col style="width:30%"><col style="width:38%"><col style="width:32%"></colgroup>
+<tr><th>方法</th><th>说明</th><th>效果</th></tr>
+<tr><td>最近邻</td><td>取最近整数格点</td><td>快、块状</td></tr>
+<tr><td>双线性</td><td>相邻4点加权</td><td>常用、平滑</td></tr>
+<tr><td>双三次</td><td>相邻16点三次多项式</td><td>更平滑、慢</td></tr>
+</table>
+<div class="fx">双线性（dx,dy=待求点距左上角比例）：I<sub>top</sub>=I₁(1−dx)+I₂dx　I<sub>bot</sub>=I₃(1−dx)+I₄dx　I=I<sub>top</sub>(1−dy)+I<sub>bot</sub>dy</div>
+<div class="ex"><b>例1</b>　四角 I(0,0)=10, I(1,0)=20, I(0,1)=30, I(1,1)=40，求(0.5,0.5)：=0.25×(10+20+30+40)=<b>25</b></div>
+<div class="ex"><b>例2</b>　同四角，求(0.25,0.5)：top=10×0.75+20×0.25=<b>12.5</b>；bot=30×0.75+40×0.25=<b>32.5</b>；I=0.5×12.5+0.5×32.5=<b>22.5</b></div>
+</section>
+
+<section>
+<h2>4 Harris 角点 <span class="qz">★quiz</span></h2>
+<div class="fx">E(u,v) ≈ [u v] H [u;v] = Au²+2Buv+Cv²，　H = Σ<sub>(x,y)∈W</sub> <span class="brk"><table class="mt"><tr><td>I<sub>x</sub>²</td><td>I<sub>x</sub>I<sub>y</sub></td></tr><tr><td>I<sub>x</sub>I<sub>y</sub></td><td>I<sub>y</sub>²</td></tr></table></span>（A=ΣI<sub>x</sub>²，B=ΣI<sub>x</sub>I<sub>y</sub>，C=ΣI<sub>y</sub>²，高斯窗加权）</div>
+<ul>
+<li>直觉：flat 任意方向无变化；edge 沿边缘方向无变化；<b>corner 任意方向移动都大变化</b> → 好特征</li>
+<li>特例：水平边缘 I<sub>x</sub>=0 → H=diag(0,C)；垂直边缘 I<sub>y</sub>=0 → H=diag(A,0)（λ 一大一小 → edge）</li>
+<li>判分原理：希望小位移的 E 在<b>所有方向</b>都大 → 即 <b>λ<sub>min</sub></b> 要大；x<sub>max</sub>=E 增加最快方向（特征向量），λ<sub>max</sub>=该方向增幅</li>
+</ul>
+<table>
+<colgroup><col style="width:44%"><col style="width:56%"></colgroup>
+<tr><th>特征值 λ₁,λ₂</th><th>区域</th></tr>
+<tr><td>都小</td><td>Flat 平坦（E 各方向都小）</td></tr>
+<tr><td>一个≫另一个</td><td>Edge 边缘（一个方向大一个方向小）</td></tr>
+<tr><td><b>都大且相近</b></td><td><b>Corner 角点</b>（椭圆越圆越胖→角点；特征向量=主轴方向，λ=轴长²）</td></tr>
+</table>
+<div class="fx"><b>f = det H − k·(trace H)²</b>，k 用题目值（Tutorial 0.04／quiz 0.05）　或　f = det H / trace H（课件38页版）</div>
+<ul>
+<li>步骤：det=h₁₁h₂₂−h₁₂²；trace=h₁₁+h₂₂ → 代 f → 阈值(0.05·R<sub>max</sub>)+<b>NMS</b>（局部极大才保留；流程与代码见 P2 §6）</li>
+</ul>
+<div class="ex"><b>例1</b>　H=[[2,0],[0,3]]：det=6, trace=5, f=6−0.04×25=<b>5 &gt; 0 → 角点</b></div>
+<div class="ex"><b>例2</b>　H=[[5,0],[0,0.1]]：det=0.5, trace=5.1, f=0.5−1.04&lt;0 → 边缘</div>
+<div class="ex"><b>例3</b>　H=[[3,1],[1,3]]：det=8, tr=6, λ=(6±√4)/2=<b>4, 2</b>（都大→corner）；f=8−0.04×36=<b>6.56</b></div>
+<div class="ex"><b>quiz真题</b>　H=[[800,100],[100,750]]：tr=1550, det=590000；λ=(1550±√42500)/2≈<b>878, 672</b>（都大且近→corner）；R=590000−0.05×1550²=<b>469875≫0 → 强角点</b>（k=0.05）</div>
+</section>
+
+</div>
+</div>
+
+<!-- ============ 第 2 页 ============ -->
+<div class="sheet">
+<div class="hdr"><span class="t">CS5187 Vision &amp; Image 期中速查 ②</span><span class="s">描述子与匹配（lec06 非DL） · 代码 · 简答 · 辨析 · 矩阵 · 词汇 ｜ 范围:Lec01–04 + Lec06非DL</span></div>
+<div class="cols">
+
+<section>
+<h2>5 描述子与匹配 <span class="qz">★quiz</span></h2>
+<h3>5.1 流程与两大要求</h3>
+<ul>
+<li>流程 <b>detect → describe → match</b>；描述子两要求：<b>invariance 不变性</b>（变换下描述子不变）+ <b>discriminability 可区分性</b>（不同点描述子足够不同/唯一）</li>
+<li>两个反例（选择题）：描述子恒为 <b>0</b> → 对一切变换不变但<b>零可区分</b>；5×5 轴对齐窗口 → <b>只平移不变</b>（旋转/尺度/光照都会变）→ 不变性与可区分性要<b>折中</b></li>
+<li>实用描述子通常能抗：平移、2D 旋转、尺度；有限的 3D 旋转（SIFT~60°）、有限仿射、有限光照变化</li>
+</ul>
+<h3>5.2 旋转不变的做法</h3>
+<ul>
+<li>求 patch <b>主方向</b>：取 H 的 λ<sub>max</sub> 对应特征向量 x<sub>max</sub>；或（更好）<b>平滑后梯度方向</b>；再按该角旋转 patch 后描述</li>
+</ul>
+<h3>5.3 MOP（Multiscale Oriented Patches）</h3>
+<ul>
+<li>①40×40 窗 ②缩到 1/5（先预滤波）③<b>旋转到主方向水平</b>（旋转不变关键）④采样 8×8 ⑤<b>减均值、除以标准差</b>归一化（光度不变）</li>
+</ul>
+<h3>5.4 SIFT（维度计算必考）</h3>
+<ul>
+<li>基本做法：①取 16×16 窗 ②每像素算<b>边缘方向 = 梯度方向−90°</b> ③阈值剔除弱边缘 ④对存活边缘做方向<b>直方图</b> ⑤把最大 bin 循环移到首位（旋转不变）</li>
+<li>完整版：16×16 分 <b>4×4 cell</b>，每 cell <b>8 方向 bin</b> 梯度直方图 → <b>4×4×8=128 维</b></li>
+<li>性质：抗~60° 视角变化、显著光照变化（甚至昼/夜），&lt;1s，代码多</li>
+</ul>
+<h3>5.5 其他描述子（认名字+一步流程）</h3>
+<ul>
+<li><b>HOG</b>（Dalal/Triggs，滑窗行人检测）：①[-1,0,1] 求梯度幅值/方向 ②8×8 cell 做 9 bins(0–180°) 直方图、按幅值加权 ③2×2 cell 组成 block 做 L2 归一化（抗光照）</li>
+<li><b>ORB</b> = oFAST（FAST 检测 + Harris 度量排序 + 强度质心定向）+ rBRIEF（256 bit 二值强度对比较，采样模式随主方向旋转）；实时 SLAM</li>
+<li><b>FREAK</b>：视网膜启发二值描述子，实时；<b>Haar-like</b>：水平/垂直亮度差模板</li>
+</ul>
+<h3>5.6 匹配与距离</h3>
+<ul>
+<li>对 I₁ 每个特征在 I₂ 找最近邻：L2/SSD ‖f₁−f₂‖，kd-tree/FLANN 加速</li>
+<li><b>Lowe 比值检验</b>：d₁ &lt; <b>0.75</b>·d₂ 才接受；d₁≈d₂ → 歧义拒绝（讲义例 0.8，答题写 0.75 注明 Tutorial 代码）</li>
+<li>SSD vs 比值距离：<b>不改变谁是最近邻</b>，只改变距离数值/排序与阈值过滤结果；比值距离对歧义匹配给出大值</li>
+</ul>
+<div class="ex"><b>例</b>　d₁=50, d₂=80 → 50 &lt; 0.75×80=60 ✓ 保留；若 d₁=58, d₂=62 → 58 &lt; 46.5? ✗ 拒绝（歧义）</div>
+<h3>5.7 匹配评价 TPR/FPR/ROC <span class="qz">★quiz</span></h3>
+<ul>
+<li>TP=阈值后保留的<b>正确</b>匹配；FP=阈值后保留的<b>错误</b>匹配；<b>TPR</b>=TP/总正确匹配数（recall），<b>FPR</b>=FP/总错误匹配数</li>
+</ul>
+<div class="ex"><b>quiz原题</b>　1000 匹配（800 对/200 错），某阈值保留 600 对、100 错 → TPR=600/800=<b>75%</b>，FPR=100/200=<b>50%</b>。全保留真阳→阈值最大（TPR=FPR=1）；零假阳→阈值最小（但无匹配留下）</div>
+<ul>
+<li><b>ROC</b>：扫全部阈值画 TPR vs FPR；<b>AUC=曲线下面积</b>，=1 完美，越大越好（综合评价，与单一阈值选择无关）</li>
+</ul>
+<h3>5.8 特征的应用（lec06 收尾页）</h3>
+<ul>
+<li>图像对齐/拼接 mosaics、3D 重建、运动跟踪、物体识别、图像检索 indexing、机器人导航</li>
+</ul>
+</section>
+
+<section>
+<h2>6 代码要点 <span class="en">Tutorial 02–04</span></h2>
+<ul>
+<li><b>Harris（T03）</b>：Ix=cv2.Sobel(img,CV_64F,1,0)；Iy=…(0,1)→Ix²、Iy²、Ix·Iy 各自 cv2.GaussianBlur 加权 → R=det−k·tr²；threshold=0.05·R.max()；NMS：cv2.dilate(R) 取邻域最大，R==dilate(R) 即局部极大</li>
+<li><b>旋转验证（T03）</b>：cv2.getRotationMatrix2D(center,45,1.0)+cv2.warpAffine 旋转 45° → 角点跟随旋转（等变）</li>
+<li><b>SIFT（T04）</b>：sift=cv2.SIFT_create()；kp,des=sift.detectAndCompute(img,None)</li>
+<li><b>匹配（T04）</b>：BFMatcher(cv2.NORM_L2, crossCheck=True).match 或 FLANN(KDTree, trees=5).knnMatch(des1,des2,k=2)；过滤：m.distance&lt;0.75·n.distance；cv2.drawMatches 可视化</li>
+<li><b>不变性验证（T04）</b>：旋转 45°+缩放 0.5 后匹配，retention rate = 匹配数/min(kp1,kp2)×100%</li>
+<li><b>混叠实验（T02）</b>：PIL img.resize(小, NEAREST) 直接降采样→摩尔纹；修复：ImageFilter.GaussianBlur(radius=倍数/2) 再 resize</li>
+<li>注意：cv2.filter2D 实现的是<b>相关</b>而非数学卷积（要卷积需先翻转核）</li>
+</ul>
+</section>
+
+<section>
+<h2>7 简答背诵（一句话）</h2>
+<ol style="padding-left:11px;font-size:7.4px;">
+<li>卷积前翻核？——卷积定义（满足结合律等性质）；互相关不翻。</li>
+<li>先平滑再求导？——噪声放大导数；结合律合并成高斯导数核。</li>
+<li>Canny 双阈值？——单阈值要么断边要么多噪；强边锚定+弱边续接。</li>
+<li>降采样前模糊？——低于Nyquist采样混叠；低通先去高频。</li>
+<li>描述子减均值除std？——消除光照强度/对比度变化影响。</li>
+<li>SIFT 旋转不变？——主方向归一（最大bin移到首位）。</li>
+<li>比值检验好在哪？——两候选距离接近=歧义，比值可识别剔除。</li>
+<li>角点为什么是好特征？——任意方向小位移都引起大变化（λ₁、λ₂都大），可重复、信息量大。</li>
+<li>Harris 为何用 det/trace 不解特征值？——R=det−k·tr² 是 λ<sub>min</sub> 的近似，免开方求解。</li>
+<li>描述子恒 0 说明什么？——完全不变但零可区分；不变性与可区分性需折中。</li>
+<li>5×5 窗口描述子不变什么？——只平移不变；旋转/尺度/光照都变。</li>
+<li>SSD 与比值距离改变最佳匹配吗？——不改变最近邻是谁，只改变排序与过滤。</li>
+<li>阈值取最大/最小？——最大→全保留(TPR=FPR=1)；最小→全拒绝(无匹配)。</li>
+<li>AUC 意义？——扫全部阈值的综合性能，面积越大越好，1 为完美。</li>
+</ol>
+</section>
+
+<section>
+<h2>8 易错辨析 &amp; 填空高频空 <span class="qz">判断对错自测</span></h2>
+<ul>
+<li>①卷积必须翻核、互相关不翻（题干写 convolution 就翻）②中值去椒盐但非线性、不能用卷积；高斯去高斯噪声 ③σ大→更模糊；Canny σ小→精细边缘、σ大→大尺度边缘 ④梯度方向=变化最快方向，<b>边缘⊥梯度</b> ⑤尺度↑ 边缘可移动/合并，<b>不会一分为二</b> ⑥Lowe 比值不改变最近邻是谁，只滤"两候选都近"的歧义 ⑦非对称核的卷积≠相关（见 P1 例2）</li>
+</ul>
+<div class="fx">填空：f=det−【k】·tr²（k 取题目值 0.04~0.06）｜Lowe：d₁&lt;【0.75】·d₂｜SIFT=4×4×【8】=【128】维｜金字塔开销=【4/3】×原图｜Nyquist≥【2】×最高频率｜det=【λ₁λ₂】，tr=【λ₁+λ₂】｜TPR=正确保留/【总正确匹配数】｜FPR=错误保留/【总错误匹配数】</div>
+</section>
+
+<section>
+<h2>9 矩阵基础 <span class="en">Matrix</span></h2>
+<div class="fx">det<span class="brk"><table class="mt"><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></table></span>=ad−bc　trace=a+d　det=λ₁λ₂　trace=λ₁+λ₂</div>
+<ul>
+<li>特征值/向量：Ax=λx；det(A−λI)=0；λ²−(trA)λ+det=0 → λ=(tr±√(tr²−4det))/2</li>
+<li>对称阵：特征值必为实数、特征向量相互<b>正交</b>；H=Σ w·[I<sub>x</sub>,I<sub>y</sub>]ᵀ[I<sub>x</sub>,I<sub>y</sub>] <b>半正定</b>（E≥0）</li>
+<li>二次型 [u v]H[u v]=const 是椭圆：轴长∝√λ、主轴方向=特征向量；λ<sub>max</sub>/λ<sub>min</sub> 越接近 1 越圆（越像角点）</li>
+<li>A⁻¹=(1/det)·[[d,−b],[−c,a]]；AA⁻¹=I；(AB)<sup>T</sup>=B<sup>T</sup>A<sup>T</sup>；(AB)⁻¹=B⁻¹A⁻¹</li>
+<li>乘法 (AB)<sub>ij</sub>=Σ<sub>k</sub>A<sub>ik</sub>B<sub>kj</sub>（A列数=B行数）；SSD/L2：‖a−b‖²=Σ(a<sub>i</sub>−b<sub>i</sub>)²</li>
+</ul>
+<div class="ex"><b>例</b>　[[0,1],[1,0]]：tr=0, det=−1 → λ=±1（一正一负→某方向变化大→edge）；特征向量：解 (H−λI)x=0</div>
+</section>
+
+<section>
+<h2>10 英文关键词对照 <span class="en">Glossary</span></h2>
+<table class="g">
+<colgroup><col style="width:27%"><col style="width:23%"><col style="width:27%"><col style="width:23%"></colgroup>
+<tr class="gr"><th colspan="4">滤波 · 边缘</th></tr>
+<tr><td>convolution / cross-correlation</td><td>卷积 / 互相关</td><td>kernel, filter</td><td>核, 滤波器</td></tr>
+<tr><td>smoothing / blurring</td><td>平滑 / 模糊</td><td>moving average</td><td>滑动平均</td></tr>
+<tr><td>boundary padding / clamp / mirror</td><td>边界填充/复制/镜像</td><td>separable</td><td>可分离</td></tr>
+<tr><td>sharpening / Laplacian</td><td>锐化 / 拉普拉斯</td><td>median filter</td><td>中值滤波</td></tr>
+<tr><td>salt-and-pepper / Gaussian noise</td><td>椒盐 / 高斯噪声</td><td>bilateral / edge-preserving</td><td>双边 / 保边</td></tr>
+<tr><td>gradient / magnitude</td><td>梯度 / 幅值</td><td>finite difference</td><td>有限差分</td></tr>
+<tr><td>step / ramp edge</td><td>阶跃 / 斜坡边缘</td><td>strong / weak edge</td><td>强 / 弱边缘</td></tr>
+<tr><td>non-max suppression</td><td>非极大值抑制</td><td>hysteresis thresholding</td><td>双阈值滞后</td></tr>
+<tr><td>scale space</td><td>尺度空间</td><td>aliasing / moiré</td><td>混叠 / 摩尔纹</td></tr>
+<tr class="gr"><th colspan="4">重采样 · 插值</th></tr>
+<tr><td>downsampling / upsampling</td><td>降 / 上采样</td><td>sub-sampling</td><td>子采样</td></tr>
+<tr><td>Nyquist rate</td><td>奈奎斯特率</td><td>anti-aliasing / low-pass</td><td>抗混叠 / 低通</td></tr>
+<tr><td>pyramid</td><td>金字塔</td><td>interpolation</td><td>插值</td></tr>
+<tr><td>nearest neighbor</td><td>最近邻</td><td>bilinear / bicubic</td><td>双线性 / 双三次</td></tr>
+<tr><td>wagon-wheel effect</td><td>马车轮效应(时域混叠)</td><td>super-resolution</td><td>超分辨率</td></tr>
+<tr class="gr"><th colspan="4">角点 · 描述子 · 匹配</th></tr>
+<tr><td>interest point</td><td>兴趣点/特征点</td><td>structure tensor / second moment matrix</td><td>结构张量/二阶矩矩阵</td></tr>
+<tr><td>corner / flat / edge</td><td>角点/平坦/边缘</td><td>cornerness response</td><td>角点响应</td></tr>
+<tr><td>eigenvalue / eigenvector</td><td>特征值 / 特征向量</td><td>determinant / trace</td><td>行列式 / 迹</td></tr>
+<tr><td>descriptor</td><td>描述子</td><td>discriminability</td><td>可区分性</td></tr>
+<tr><td>invariance / equivariance</td><td>不变性 / 等变(协变)</td><td>dominant orientation</td><td>主方向</td></tr>
+<tr><td>patch / window</td><td>图像块 / 窗口</td><td>gradient histogram</td><td>梯度直方图</td></tr>
+<tr><td>binary descriptor</td><td>二值描述子</td><td>intensity centroid</td><td>强度质心</td></tr>
+<tr><td>normalization</td><td>归一化</td><td>kd-tree</td><td>k维树(近邻加速)</td></tr>
+<tr><td>Haar-like features</td><td>类 Haar 特征</td><td>ratio test</td><td>比值检验</td></tr>
+<tr><td>correspondence</td><td>对应关系</td><td>ambiguous match</td><td>歧义匹配</td></tr>
+<tr><td>ground truth / oracle</td><td>真值 / 先知</td><td>recall</td><td>召回率</td></tr>
+<tr><td>nearest neighbor matching</td><td>最近邻匹配</td><td>distance threshold</td><td>距离阈值</td></tr>
+<tr><td>TPR / FPR</td><td>真/假阳性率</td><td>ROC / AUC</td><td>ROC曲线 / 线下面积</td></tr>
+<tr><td>pedestrian detection</td><td>行人检测</td><td>image alignment</td><td>图像对齐</td></tr>
+<tr><td>motion tracking</td><td>运动跟踪</td><td>object recognition</td><td>物体识别</td></tr>
+<tr><td>indexing / retrieval</td><td>索引 / 检索</td><td>robot navigation</td><td>机器人导航</td></tr>
+<tr class="gr"><th colspan="4">缩写</th></tr>
+<tr><td>SIFT / MOP</td><td>尺度不变特征变换/多尺度方向块</td><td>HOG</td><td>方向梯度直方图</td></tr>
+<tr><td>ORB / FREAK</td><td>二值描述子(实时)</td><td>SSD</td><td>平方差和</td></tr>
+<tr><td>NMS</td><td>非极大值抑制</td><td>DoG</td><td>高斯导数核(T02)/高斯差</td></tr>
+<tr><td>BF / FLANN</td><td>暴力匹配 / 快速近邻匹配</td><td>PSD</td><td>半正定</td></tr>
+</table>
+</section>
+
+</div>
+</div>
+
+</body>
+</html>

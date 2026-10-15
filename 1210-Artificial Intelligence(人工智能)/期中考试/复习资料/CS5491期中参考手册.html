@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5491 期中参考手册</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false}
+    ],
+    throwOnError: false
+  });
+});
+</script>
+<style>
+  :root {
+    --ink: #1a1a1a; --muted: #555; --line: #ccc;
+    --blue-bg: #eef4fb; --blue-bd: #3a6ea5;
+    --orange-bg: #fdf3e7; --orange-bd: #c07a1f;
+    --green-bg: #eef7ee; --green-bd: #3a7d44;
+    --red-bg: #fbeeee; --red-bd: #b03a3a;
+    --gray-bg: #f5f5f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", -apple-system, sans-serif;
+    color: var(--ink); margin: 0; background: #fafafa;
+    line-height: 1.55; font-size: 15px;
+  }
+  .page { max-width: 920px; margin: 0 auto; padding: 24px 32px 80px; background: #fff; }
+  header.hero { border-bottom: 3px solid var(--blue-bd); padding-bottom: 14px; margin-bottom: 18px; }
+  header.hero h1 { margin: 0 0 6px; font-size: 26px; }
+  header.hero .sub { color: var(--muted); font-size: 13.5px; }
+  .exam-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .exam-strip span { background: var(--blue-bg); border: 1px solid var(--blue-bd); border-radius: 4px; padding: 3px 10px; font-size: 13px; }
+  h2 { font-size: 20px; border-left: 5px solid var(--blue-bd); padding-left: 10px; margin: 34px 0 10px; page-break-after: avoid; }
+  h3 { font-size: 16.5px; margin: 20px 0 8px; color: #123; page-break-after: avoid; }
+  h4 { font-size: 14.5px; margin: 14px 0 6px; page-break-after: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 14px; font-size: 13.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: var(--gray-bg); }
+  code, pre { font-family: Consolas, "Courier New", monospace; font-size: 13px; }
+  pre { background: #f7f7f9; border: 1px solid #e0e0e6; border-radius: 4px; padding: 10px 12px; overflow-x: auto; page-break-inside: avoid; }
+  .box { border-radius: 5px; padding: 10px 14px; margin: 10px 0; page-break-inside: avoid; }
+  .formula { background: var(--blue-bg); border: 1px solid var(--blue-bd); }
+  .formula .tag, .qtype .tag, .method .tag, .warn .tag, .tip .tag {
+    display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .5px;
+    margin-bottom: 4px; text-transform: uppercase;
+  }
+  .formula .tag { color: var(--blue-bd); }
+  .qtype { background: var(--orange-bg); border: 1px solid var(--orange-bd); }
+  .qtype .tag { color: var(--orange-bd); }
+  .method { background: var(--green-bg); border: 1px solid var(--green-bd); }
+  .method .tag { color: var(--green-bd); }
+  .warn { background: var(--red-bg); border: 1px solid var(--red-bd); }
+  .warn .tag { color: var(--red-bd); }
+  .tip { background: var(--gray-bg); border: 1px solid #999; }
+  .tip .tag { color: #555; }
+  ol.steps > li { margin-bottom: 7px; }
+  ul { padding-left: 22px; }
+  .toc { background: var(--gray-bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 20px; }
+  .toc ol { margin: 6px 0; padding-left: 22px; columns: 2; column-gap: 36px; }
+  .toc a { color: var(--blue-bd); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .kw { font-weight: 700; }
+  .en { color: var(--muted); font-size: 12.5px; }
+  .center { text-align: center; }
+  .katex-display { margin: 6px 0; }
+  .formula .katex-display { margin: 8px 0; }
+  footer { margin-top: 40px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+  @media print {
+    body { background: #fff; font-size: 10.5pt; }
+    .page { max-width: none; padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    h2 { page-break-before: always; }
+    h2:first-of-type { page-break-before: avoid; }
+    .toc ol { columns: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>CS5491 Artificial Intelligence · 期中参考手册</h1>
+  <div class="sub">覆盖第 1–6 周 / 讲座 01–12 ｜ 公式 · 知识点 · 题型 · 解题模板 ｜ 供开卷考试打印使用</div>
+  <div class="exam-strip">
+    <span>📅 2026-10-22（周四）9:30–11:30</span>
+    <span>📍 AC5-515</span>
+    <span>📖 Open-book：仅纸质材料</span>
+    <span>🚫 禁止电子设备</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <strong>目录</strong>
+  <ol>
+    <li><a href="#s1">搜索问题形式化</a></li>
+    <li><a href="#s2">无信息搜索</a></li>
+    <li><a href="#s3">有信息搜索（A*）</a></li>
+    <li><a href="#s4">约束满足问题 CSP</a></li>
+    <li><a href="#s5">对抗搜索（Minimax / α-β / Expectimax）</a></li>
+    <li><a href="#s6">线性规划 LP</a></li>
+    <li><a href="#s7">整数规划 IP 与分支定界</a></li>
+    <li><a href="#s8">优化建模</a></li>
+    <li><a href="#s9">凸优化与梯度下降</a></li>
+    <li><a href="#s10">高频题型 · 从零解题模板</a></li>
+    <li><a href="#s11">考前一页速查</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 搜索问题形式化 ============ -->
+<h2 id="s1">1. 搜索问题形式化 <span class="en">Search Problems (L01–02)</span></h2>
+
+<div class="box formula"><span class="tag">核心定义</span>
+<p>一个搜索问题由四部分组成：</p>
+<ul>
+  <li><span class="kw">状态空间</span> $S$：世界配置的抽象表示（只保留规划所需细节）</li>
+  <li><span class="kw">后继函数</span> $succ(s) \to \{(action,\ s',\ cost)\}$</li>
+  <li><span class="kw">初始状态</span> $s_0$ 与<span class="kw">目标测试</span> $Goal(s)$</li>
+</ul>
+<p><span class="kw">解 Solution</span>：把 $s_0$ 变换到满足目标测试状态的<span class="kw">动作序列</span>（一个计划）。</p>
+</div>
+
+<h3>Agent 与环境分类</h3>
+<ul>
+  <li><span class="kw">理性 Agent</span>：选择最大化（期望）效用的动作。不是全知、不能预见未来，但自主。</li>
+  <li><span class="kw">反射 Agent</span> 只看当前感知；<span class="kw">规划 Agent</span> 基于动作的<span class="kw">预测后果</span>决策，需要转移模型 + 目标。</li>
+  <li>PEAS = Performance, Environment, Actuators, Sensors。</li>
+  <li>环境维度：完全/部分可观测、单/多 agent、确定/随机、静态/动态、离散/连续。</li>
+</ul>
+
+<h3>状态空间图 vs 搜索树</h3>
+<table>
+<tr><th></th><th>状态空间图 State Space Graph</th><th>搜索树 Search Tree</th></tr>
+<tr><td>节点</td><td>状态（每个状态只出现一次）</td><td>路径/计划（同一状态可多次出现）</td></tr>
+<tr><td>关系</td><td colspan="2">搜索树中每个节点 = 状态空间图中一整条路径；两者都按需、尽量少地构造</td></tr>
+</table>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 给场景（Pacman / 罗马尼亚旅行）写出状态、后继函数、目标测试；② 判断某细节是否需要进入搜索状态（state abstraction）；③ 计算状态空间大小（各维度相乘）。</p>
+</div>
+
+<!-- ============ 2 无信息搜索 ============ -->
+<h2 id="s2">2. 无信息搜索 <span class="en">Uninformed Search (L03)</span></h2>
+
+<div class="box formula"><span class="tag">通用框架</span>
+<p>所有搜索算法 = <span class="kw">fringe（边缘队列）</span> + <span class="kw">expansion（扩展）</span> + <span class="kw">探索策略（弹哪个节点）</span>。树中节点数 $1+b+b^2+\cdots+b^m = O(b^m)$（$b$=分支因子，$m$=最大深度）。</p>
+</div>
+
+<table>
+<tr><th>算法</th><th>策略</th><th>Fringe 实现</th><th>Complete</th><th>Optimal</th><th>Time</th><th>Space</th></tr>
+<tr><td><span class="kw">DFS</span></td><td>最深的先扩展</td><td>栈 LIFO</td><td>仅当 $m$ 有限且防环</td><td>✗（找"最左"解）</td><td>$O(b^m)$</td><td>$O(bm)$</td></tr>
+<tr><td><span class="kw">BFS</span></td><td>最浅的先扩展</td><td>队列 FIFO</td><td>✓</td><td>仅当代价全为 1</td><td>$O(b^s)$</td><td>$O(b^s)$</td></tr>
+<tr><td><span class="kw">UCS</span></td><td>累计代价 $g(n)$ 最小先扩展</td><td>优先队列（key=$g$）</td><td>✓（弧代价 $\epsilon&gt;0$）</td><td>✓</td><td>$O(b^{C^*/\epsilon})$</td><td>$O(b^{C^*/\epsilon})$</td></tr>
+<tr><td><span class="kw">迭代加深</span><td>限深 DFS：深度 1,2,3,…</td><td>栈</td><td>✓</td><td>同 BFS（代价为 1）</td><td>$O(b^s)$</td><td>$O(bs)$</td></tr>
+</table>
+
+<ul>
+  <li>$s$ = 最浅解的深度；$C^*$ = 最优解代价；"有效深度" $\approx C^*/\epsilon$。</li>
+  <li>BFS 找的是<span class="kw">动作数最少</span>的路径，不是<span class="kw">代价最小</span>的路径 → 需要代价敏感时用 UCS。</li>
+  <li>UCS 沿等代价等值线（cost contours）向外扩展：没有目标方向信息 → 引出 A*。</li>
+  <li>迭代加深看似重复浪费，但绝大多数节点在最后一层，代价可接受；兼得 DFS 空间与 BFS 完备性。</li>
+</ul>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 在小图上按给定算法写出节点扩展顺序（注意 fringe 内容追踪）；② 判断 complete/optimal 并说明原因；③ 复杂度计算（给定 $b, m, s$）。</p>
+</div>
+
+<!-- ============ 3 有信息搜索 ============ -->
+<h2 id="s3">3. 有信息搜索 <span class="en">Informed Search (L04)</span></h2>
+
+<div class="box formula"><span class="tag">核心公式</span>
+$$f(n) = g(n) + h(n)$$
+<ul>
+  <li>$g(n)$：向后代价（起点到 $n$ 的实际路径代价）——UCS 用</li>
+  <li>$h(n)$：向前代价估计（$n$ 到最近目标的估计）——Greedy 用</li>
+  <li><span class="kw">A* = UCS + Greedy</span>：按 $f(n)$ 排序的优先队列</li>
+</ul>
+</div>
+
+<h3>启发函数 Admissibility（可采纳性）</h3>
+<div class="box formula"><span class="tag">定义</span>
+$$0 \le h(n) \le h^*(n)\quad \text{（} h^*(n) \text{ 为到最近目标的真实代价）}$$
+<p><span class="kw">Admissible = 乐观</span>。悲观（不可采纳）启发会因低估好计划而在 fringe 上被困，破坏最优性。</p>
+</div>
+
+<h3>A* 关键考点</h3>
+<ul>
+  <li><span class="kw">终止条件</span>：<b>dequeue（弹出）目标时才停</span>，不是 enqueue 时。目标入队后可能还有更便宜的路径。</li>
+  <li><span class="kw">最优性</span>（树搜索，$h$ 可采纳）证明骨架：设 $A$ 最优、$B$ 次优目标，$n$ 是 $A$ 在 fringe 上的祖先：
+  $$f(n) \le g(A) = f(A) &lt; f(B)$$
+  故 $A$ 及其所有祖先都在 $B$ 之前弹出 → A* 最优。</li>
+  <li><span class="kw">构造可采纳启发</span>：解一个<span class="kw">松弛问题</span>（放宽约束、增加可用动作），其精确解即为原问题的乐观估计。例：忽略墙 → 曼哈顿距离；忽略只能向前翻 → 煎饼问题的最大错位索引。</li>
+  <li>UCS 均匀向各方向扩展；A* 主要朝目标扩展但保留少量对冲以保证最优性。</li>
+</ul>
+
+<table>
+<tr><th></th><th>Greedy</th><th>UCS</th><th>A*</th></tr>
+<tr><td>排序依据</td><td>$h(n)$</td><td>$g(n)$</td><td>$f(n)=g(n)+h(n)$</td></tr>
+<tr><td>最优</td><td>✗（像被误导的 DFS）</td><td>✓</td><td>✓（$h$ 可采纳）</td></tr>
+<tr><td>方向性</td><td>直冲目标（可能错）</td><td>全向</td><td>朝目标 + 对冲</td></tr>
+</table>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 给 $h$ 表，追踪 A* 扩展顺序并写出每个节点的 $g, h, f$；② 证明某 $h$ 是否 admissible（逐点验证 $h(n)\le h^*(n)$ 或说明它是松弛问题的精确解）；③ 解释为什么必须在 dequeue 目标时终止；④ Greedy / A* 在同一图上的行为对比。</p>
+</div>
+
+<!-- ============ 4 CSP ============ -->
+<h2 id="s4">4. 约束满足问题 CSP <span class="en">(L05–06)</span></h2>
+
+<div class="box formula"><span class="tag">定义</span>
+<p>CSP = $(\mathbf{X}, D, C)$：<span class="kw">变量</span> $X_i$ 取值于<span class="kw">域</span> $D_i$，<span class="kw">约束</span> $C$ 规定变量子集的合法组合。<span class="kw">解</span> = 满足所有约束的完整赋值。</p>
+<p>CSP 是"识别问题"（identification）：重要的是<span class="kw">目标本身</span>而非路径——与规划问题（路径重要）相对。</p>
+</div>
+
+<ul>
+  <li>例：地图着色（变量=区域，域={red,green,blue}，约束=相邻不同色）；N 皇后两种建模（$X_{ij}\in\{0,1\}$ vs $Q_k\in\{1..N\}$，后者变量更少更好）。</li>
+  <li><span class="kw">约束图</span>：节点=变量，弧=二元约束。塔斯马尼亚 = 独立子问题。</li>
+  <li>约束种类：一元（等价于直接缩减域）、二元、高阶（如 cryptarithmetic 列约束）、软约束（偏好 → 约束优化）。</li>
+  <li>域大小 $d$、变量数 $n$ → 完整赋值 $O(d^n)$ 个；布尔 CSP = SAT（NP-complete）。</li>
+</ul>
+
+<h3>回溯搜索 Backtracking</h3>
+<div class="box formula"><span class="tag">两个改进</span>
+<p><b>回溯 = DFS + 以下两点</b>：</p>
+<ol>
+  <li><span class="kw">每次只赋值一个变量</span>（赋值可交换 commutative，固定变量顺序即可，砍掉 $n!$ 重复）；</li>
+  <li><span class="kw">边赋值边检查</span>（incremental goal test）：只考虑与已赋值不冲突的值。</li>
+</ol>
+</div>
+
+<h3>三大改进方向</h3>
+<table>
+<tr><th>方向</th><th>技术</th><th>规则</th><th>要点</th></tr>
+<tr><td rowspan="2">排序 Ordering</td><td><span class="kw">MRV</span>（变量排序）</td><td>选剩余合法值<span class="kw">最少</span>的变量</td><td>fail-fast；"最受约束变量"先赋值</td></tr>
+<tr><td><span class="kw">LCV</span>（值排序）</td><td>选<span class="kw">排除邻居选项最少</span>的值</td><td>给后续留最大余地</td></tr>
+<tr><td rowspan="2">过滤 Filtering</td><td><span class="kw">Forward Checking</span></td><td>赋值后划掉未赋值变量域中冲突的值</td><td>任何域变空 → 立即回溯</td></tr>
+<tr><td><span class="kw">弧一致 Arc Consistency</span></td><td>弧 $X\to Y$ 一致 ⟺ 对尾 $X$ 的每个 $x$，头 $Y$ 中存在相容的 $y$（<b>从尾删值</b>）</td><td>$X$ 丢值 → $X$ 的邻居需重检；AC-3 复杂度 $O(n^2d^3)$（可优化 $O(n^2d^2)$）</td></tr>
+<tr><td rowspan="3">结构 Structure</td><td>独立子问题</td><td>约束图的连通分量</td><td>$n$ 变量分成大小 $c$ 的子问题 → $O\big((n/c)\,d^c\big)$</td></tr>
+<tr><td>树形 CSP</td><td>无环约束图</td><td>$O(nd^2)$ 可解（选根排序 → 反向 RemoveInconsistent → 正向赋值）</td></tr>
+<tr><td>割集条件 Cutset</td><td>实例化 $c$ 个变量使剩余图成树</td><td>$O(d^c\,(n-c)\,d^2)$，$c$ 小则极快</td></tr>
+</table>
+
+<div class="box warn"><span class="tag">易错点</span>
+<ul>
+  <li>弧一致 ≠ 有解：弧一致后可能剩 1 个解、多个解、或 0 个解（却不知道）；弧一致仍需在回溯框架内运行。</li>
+  <li>Forward checking 只传播"已赋值→未赋值"，不做约束到约束的推理（例：NT、SA 都只剩 blue 却都未赋值 → 冲突检测不到，弧一致可以）。</li>
+</ul>
+</div>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 手动模拟回溯（含 MRV/LCV）过程；② 给定赋值后执行 forward checking（写域变化表）；③ 判断某弧是否一致 / 执行一轮 AC-3；④ 求树形 CSP 的解；⑤ 复杂度计算。</p>
+</div>
+
+<!-- ============ 5 对抗搜索 ============ -->
+<h2 id="s5">5. 对抗搜索 <span class="en">Adversarial Search (L07–08)</span></h2>
+
+<h3>确定性博弈形式化</h3>
+<p>$(S, s_0, P, A, succ: S\times A\to S,\ terminal: S\to\{t,f\},\ utility: S\times P\to \mathbb{R})$；玩家的解是一个<span class="kw">策略 policy</span> $S\to A$。零和博弈：一方效用 = 另一方负效用 → 一方 max 一方 min。</p>
+
+<h3>Minimax</h3>
+<div class="box formula"><span class="tag">递归定义</span>
+$$V(s)=\begin{cases}\text{已知} & s\text{ 为终态}\\[2pt] \max_{s'\in succ(s)} V(s') & s\text{ 由 MAX 控制}\\[2pt] \min_{s'\in succ(s)} V(s') & s\text{ 由 MIN 控制}\end{cases}$$
+<p>时间 $O(b^m)$，空间 $O(bm)$（同穷举 DFS）。对完美对手最优；对非完美对手可能错过"诱饵"机会（100 的分支需要对手失误才拿得到）。</p>
+</div>
+
+<h3>α-β 剪枝</h3>
+<div class="box formula"><span class="tag">剪枝规则（核心）</span>
+<ul>
+  <li>$\alpha$：MAX 在上方选择点<span class="kw">已保证</span>的最好值（<b>下界/floor</b>）；$\beta$：MIN 已保证的最好值（<b>上界/ceiling</b>）。</li>
+  <li>只有严格介于 $\alpha,\beta$ 之间的值才可能影响根的决策。</li>
+  <li><span class="kw">MIN 节点</span>：$v$ 只降不升，一旦 $v\le\alpha$ → <b>剪枝</b>（MAX 上层不会选它）。</li>
+  <li><span class="kw">MAX 节点</span>：$v$ 只升不降，一旦 $v\ge\beta$ → <b>剪枝</b>（MIN 上层不会允许）。</li>
+  <li>实现：根调用 $(-\infty,+\infty)$；每个子调用传递当前 $(\alpha,\beta)$；<b>先测试后更新</b>：MAX 每个孩子后 if $v\ge\beta$ return，else $\alpha\leftarrow\max(\alpha,v)$；MIN 对称。</li>
+</ul>
+</div>
+
+<ul>
+  <li>根的 minimax 值不变；<span class="kw">中间节点值可能算错</span>（含根的孩子）→ 朴素版不能直接做动作选择。</li>
+  <li>剪枝效率依赖子节点顺序；完美排序 $O(b^{m/2})$（可搜深度翻倍）。</li>
+  <li>深度受限搜索：用<span class="kw">评价函数 eval</span> 替代终局效用；失去最优保证（horizon effect）；迭代加深做 anytime。</li>
+</ul>
+
+<h3>Expectimax（含随机性）</h3>
+<div class="box formula"><span class="tag">机会节点</span>
+$$v = \sum_i p_i\, v_i \qquad \text{（加权平均；例：} \tfrac12(8)+\tfrac13(24)+\tfrac16(-12)=10\text{）}$$
+<ul>
+  <li>MAX 节点同 minimax；MIN 节点换成<span class="kw">机会节点</span>（期望）。</li>
+  <li>Expectimax <b>一般不能剪枝</b>——未见孩子可以任意大/小；只有当效用有界 $[lo, hi]$ 时才可用上界估计剪枝（例：$[0,10]$ 中 $(2+10+10)/3\approx 7.3&lt;8$ → 剪）。</li>
+  <li>混合博弈（西洋双陆棋）：<span class="kw">Expectiminimax</span>——max/min/chance 交替。骰子使 $b$ 增大（21 种掷法 × 20 步法）。</li>
+</ul>
+</div>
+
+<h3>效用 Utilities</h3>
+<ul>
+  <li><span class="kw">minimax 只需单调</span>（对正单调变换不敏感，只要序不变）；<span class="kw">expectimax 需要数值大小有意义</span>（平方后 20 vs 25 变 800 vs 650，决策翻转）。</li>
+  <li>最大期望效用原理：理性 agent 选择最大化期望效用的动作。von Neumann–Morgenstern 定理：理性偏好都可总结成效用函数。</li>
+  <li>危险乐观（把对抗当随机）/ 危险悲观（把随机当最坏）：minimax Pacman 对随机鬼 493 分，expectimax 503 分；但对抗鬼下 expectimax 输惨。</li>
+</ul>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 给博弈树算 minimax 值；② <b>α-β 剪枝追踪</b>（标出被剪节点 + 每个节点收到的 $(\alpha,\beta)$）；③ expectimax 计算（带概率的机会节点）；④ 混合树（max/min/chance）；⑤ 概念题：为什么 expectimax 不能直接剪枝 / 效用尺度何时重要。</p>
+</div>
+
+<!-- ============ 6 LP ============ -->
+<h2 id="s6">6. 线性规划 LP <span class="en">(L09)</span></h2>
+
+<h3>三种形式与转化</h3>
+<div class="box formula"><span class="tag">标准记法</span>
+$$\min_{\mathbf{x}}\ \mathbf{c}^T\mathbf{x}\quad s.t.\quad \mathbf{A}\mathbf{x}\le\mathbf{b} \qquad\text{（不等式形式）}$$
+$$\min_{\mathbf{x}}\ \mathbf{c}^T\mathbf{x}\quad s.t.\quad \mathbf{A}\mathbf{x}=\mathbf{b},\ \mathbf{x}\ge\mathbf{0} \qquad\text{（标准形式，加松弛变量可得）}$$
+<ul>
+  <li>$\ge$ 约束 → 两边乘 $-1$ 变 $\le$（$b$ 也变号）；min ↔ max 互转：$\max f = -\min(-f)$。</li>
+  <li>LP = 线性目标 + 线性约束 + 连续变量。</li>
+</ul>
+</div>
+
+<h3>几何图解法（2D 必考）</h3>
+<ul>
+  <li>每个约束 $a_1x_1+a_2x_2\le b$ 是<span class="kw">半平面</span>；交集 = <span class="kw">可行多面体</span>（凸）。</li>
+  <li><span class="kw">代价等值线</span> $\mathbf{c}^T\mathbf{x}=k$ 是平行直线族；$\mathbf{c}$ 垂直于它们并指向<span class="kw">代价增大</span>方向 → 沿 $-\mathbf{c}$ 平移等值线找最小。</li>
+  <li><span class="kw">顶点定理</span>：非空有界的可行多面体，至少一个最优解在<span class="kw">顶点</span>（2D 顶点 = 两条独立约束边界的交点，且满足<span class="kw">所有</span>原约束）。</li>
+</ul>
+
+<h3>Diet 例子（课上完整推导）</h3>
+<div class="box formula"><span class="tag">建模→求解</span>
+$$\begin{aligned}\min\quad &x_1+0.4x_2\\ s.t.\quad &2000\le 100x_1+50x_2\le 2500\\ &3x_1+4x_2\le 100\\ &20x_1+70x_2\ge 700\\ &x_1,x_2\ge 0\end{aligned}$$
+<p>binding 约束（取等号）：热量下界 + 糖上界 → 解方程组 $100x_1+50x_2=2000,\ 3x_1+4x_2=100$ 得 $(x_1,x_2)=(12,16)$，最小代价 $12+0.4(16)=18.4$；其余顶点代价 $19.5,\ 24,\ 24\tfrac23$。</p>
+</div>
+
+<h3>LP 的三种结局</h3>
+<table>
+<tr><th>结局</th><th>例子</th><th>含义</th></tr>
+<tr><td>有限最优</td><td>$\min x,\ x\ge 0$</td><td>最优值 0，在 $x=0$</td></tr>
+<tr><td>不可行 Infeasible</td><td>$\min x,\ x\ge 1,\ x\le 0$</td><td>没有点满足所有约束</td></tr>
+<tr><td>无界 Unbounded</td><td>$\min -x,\ x\ge 0$</td><td>目标可无限下降</td></tr>
+</table>
+<p class="en">注意：可行域无界 ≠ 目标无界（第一个例子的可行域也无界却有有限最优）。</p>
+
+<ul>
+  <li>算法概念：单纯形 simplex（顶点间移动）、内点法 interior-point（从内部逼近）；考试以图解法 + 顶点枚举为主。</li>
+</ul>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 从文字题建 LP 模型（定变量和单位 → 目标 → 约束 → 非负）；② 图解：画可行域、枚举顶点、求最优；③ 识别 binding 约束；④ 判断 infeasible/unbounded/有限最优。</p>
+</div>
+
+<!-- ============ 7 IP ============ -->
+<h2 id="s7">7. 整数规划与分支定界 <span class="en">Integer Programming (L10)</span></h2>
+
+<table>
+<tr><th>模型</th><th>变量域</th></tr>
+<tr><td>LP</td><td>$x_i\in\mathbb{R}$</td></tr>
+<tr><td>Pure ILP</td><td>$x_i\in\mathbb{Z}$（全部整数）</td></tr>
+<tr><td>Binary IP</td><td>$x_i\in\{0,1\}$（选中/不选中）</td></tr>
+<tr><td>MILP</td><td>部分整数部分连续</td></tr>
+</table>
+
+<h3>LP 松弛 Relaxation</h3>
+<div class="box formula"><span class="tag">核心不等式</span>
+$$P_{\mathrm{IP}}\subseteq P_{\mathrm{LP}}\quad\Longrightarrow\quad z^*_{\mathrm{LP}}\le z^*_{\mathrm{IP}}\quad\text{（min 问题：LP 是下界）}$$
+<ul>
+  <li>做法：去掉整数约束，保留目标、约束、变量界。</li>
+  <li>与 A* 的联系：松弛问题的解 = 乐观估计（admissible）；节点 LP 界 = 该节点内最优整数解的下界。</li>
+  <li>三条判断：<b>① $z^*_{LP}\le z^*_{IP}$ 恒成立；② $x^*_{LP}=x^*_{IP}$ 不一定（LP 最优可能分数）；③ 若 LP 最优点恰好整数坐标 → 它就是 IP 最优</b>（可行 + 达到下界）。</li>
+</ul>
+</div>
+
+<div class="box warn"><span class="tag">四舍五入会失败</span>
+<p>例（课上）：$\min x-4y$ s.t. $-10x+20y\le 22,\ 5x+10y\le 49,\ 0\le x\le 5, y\ge 0$，$x,y\in\mathbb{Z}$。LP 最优 $(3.8, 3)$ 值 $-8.2$；最近舍入 $(4,3)$ 违反 $5x+10y\le 49$（50&gt;49）<b>不可行</b>；附近可行的 $(4,2)$ 值 $-4$，但真正的整数最优是 $(2,2)$ 值 $-6$ → <b>可行舍入也未必最优</b>。</p>
+</div>
+
+<h3>分支定界 Branch &amp; Bound（重点大题）</h3>
+<div class="box formula"><span class="tag">规则集</span>
+<ul>
+  <li><span class="kw">Incumbent</span>：迄今最好的可行整数解；<span class="kw">全局上界</span> $U$ = 其目标值（初始 $+\infty$）。找到更好的整数解（值 $z$）→ $U\leftarrow z$。</li>
+  <li><span class="kw">节点下界</span> $L$：该节点 LP 松弛的最优值。</li>
+  <li><span class="kw">分支规则</span>：选分数值的整数变量 $x_i^*$：左孩子加 $x_i\le\lfloor x_i^*\rfloor$，右孩子加 $x_i\ge\lceil x_i^*\rceil$（如 $3.8\to x\le 3$ 或 $x\ge 4$）。两个孩子排除当前分数解，且覆盖所有整数解。</li>
+  <li><span class="kw">三种关闭节点</span>：① LP 不可行 → 关；② LP 最优为整数 → 更新 incumbent 后关；③ $L\ge U$ → 剪枝（例：$L=-5.4\ge U=-6$ → 剪）。</li>
+  <li>无节点可开时，incumbent 即最优（最优性证书：每个叶子都不可行/已整数解/无法改进 $U$）。</li>
+</ul>
+</div>
+
+<div class="box method"><span class="tag">课上完整例子的树</span>
+<pre>root LP: (3.8,3) L=-8.2, U=+∞ ── branch on x
+├─ x≥4: LP (4,2.9) L=-7.6 ── branch on y
+│   ├─ y≤2: (4,2) 整数 → U=-4
+│   └─ y≥3: 不可行 → 关
+└─ x≤3: LP (3,2.6) L=-7.4 (>-4? no: -7.4<-4 继续) ── branch on y
+    ├─ y≥3: 不可行 → 关
+    └─ y≤2: LP (1.8,2) L=-6.2 ── branch on x
+        ├─ x≥2: (2,2) 整数 → U=-6
+        └─ x≤1: LP (1,1.6) L=-5.4 ≥ U=-6 → 剪枝
+最优: x*=(2,2), z*=-6（U: +∞ → -4 → -6）</pre>
+</div>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 手动执行 B&amp;B（画树：每节点写 LP 解、$L$、动作）；② 判断某节点该不该剪；③ "能否在第一个整数解就停？"（不能：例中 $-4$ 后来改进到 $-6$）；④ 解释松弛为何给下界。</p>
+</div>
+
+<!-- ============ 8 优化建模 ============ -->
+<h2 id="s8">8. 优化建模 <span class="en">Modeling Optimization (L11)</span></h2>
+
+<div class="box formula"><span class="tag">统一框架</span>
+$$\min_{\mathbf{x}\in\mathcal{F}} f(\mathbf{x})$$
+<table>
+<tr><th>组件</th><th>含义</th></tr>
+<tr><td>决策变量 $\mathbf{x}$</td><td>我们选择的东西（vs 给定的数据）</td></tr>
+<tr><td>可行集 $\mathcal{F}$</td><td>满足所有域限制和约束的选择</td></tr>
+<tr><td>目标 $f:\mathcal{F}\to\mathbb{R}$</td><td>要最小化的值</td></tr>
+</table>
+</div>
+
+<ul>
+  <li><span class="kw">argmin</span> = 所有最优解的集合（点）；<span class="kw">$f^*$</span> = 最优值（数）。例：$\min t^2$ over $\{-1,1\}$：argmin $=\{-1,1\}$，$f^*=1$。</li>
+  <li>三种结局：<b>取得最小</b>（$\min t, t\in[0,1]$ → $t^*=0$）/ <b>无界</b>（$\min t, t\in\mathbb{R}$）/ <b>不可行</b>（$t\ge 1$ 且 $t\le 0$）。</li>
+  <li>min ↔ max：$\operatorname{argmin} f = \operatorname{argmax}(-f)$；$g^*=-f^*$。</li>
+  <li>变量类型：连续 $\mathbb{R}$ / 离散 $\{0,1\}$ / 混合。<b>先定单位再写模型</b>（8 oz 一份 → amount $=8n$）。</li>
+  <li>建模示例：TSP（$x$=排列，$f=\sum_{k=1}^{n-1}d(x_k,x_{k+1})+d(x_n,x_1)$，闭合边橙色部分别漏）；8 皇后 = 可行性问题（$f\equiv 0$，每个可行解都最优，约束 $x_i\ne x_j,\ |x_i-x_j|\ne|i-j|$）；过原点回归 $L_1=\sum|y_i-ax_i|$ vs $L_2=\sum(y_i-ax_i)^2$（$L_1$ 最优斜率可能是区间；$L_2$ 唯一；都凸，凸 ≠ 唯一）。</li>
+  <li>解模型流程：写变量/约束/目标 → 按结构选方法 → 求解看状态 → <b>检查可行 + 重算目标</b> → 回到原问题解释。</li>
+</ul>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 概念辨析：feasible / optimal / optimal value / argmin；② 判断问题是否有解、是否无界；③ 给场景指出变量/数据/可行集/目标；④ "这是 LP 吗？"（目标或约束非线性就不是）。</p>
+</div>
+
+<!-- ============ 9 凸优化 ============ -->
+<h2 id="s9">9. 凸优化与梯度下降 <span class="en">Convex Optimization (L12)</span></h2>
+
+<div class="box formula"><span class="tag">定义链</span>
+<p><b>凸组合</b>：$\mathbf{z}=\theta\mathbf{x}+(1-\theta)\mathbf{y},\ 0\le\theta\le1$。</p>
+<p><b>凸集</b>：$\mathbf{x},\mathbf{y}\in\mathcal{F} \Rightarrow \theta\mathbf{x}+(1-\theta)\mathbf{y}\in\mathcal{F}$（线段不出集）。</p>
+<p><b>凸函数</b>：$f(\theta\mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\mathbf{y})$（图在弦下方；严格凸取 $&lt;$）。</p>
+<p><b>凸优化问题</b>：$\mathcal{F}$ 凸 + $f$ 凸（两个条件都要）。</p>
+</div>
+
+<h3>凸性判断工具箱</h3>
+<table>
+<tr><th>工具</th><th>判据</th></tr>
+<tr><td>定义</td><td>直接验证 Jensen 不等式</td></tr>
+<tr><td>运算保凸</td><td>凸函数非负加权和 $\sum w_if_i$；凸函数复合仿射映射 $g(A\mathbf{x}+\mathbf{b})$</td></tr>
+<tr><td>二阶导（1D）</td><td>$f''(t)\ge 0$ on 开区间 ⟺ 凸</td></tr>
+<tr><td>Hessian（nD）</td><td>$H(\mathbf{x})\succeq 0$（PSD，特征值全 $\ge 0$，或 $\mathbf{z}^TH\mathbf{z}\ge0\ \forall\mathbf{z}$）</td></tr>
+<tr><td>凹凸关系</td><td>$f$ 凹 ⟺ $-f$ 凸；max 凹函数 = min 凸问题</td></tr>
+</table>
+
+<table>
+<tr><th>对象</th><th>凸?</th><th>原因</th></tr>
+<tr><td>$\mathbb{R}^n$、$\emptyset$、单点集</td><td>✓ 凸</td><td>定义直接验证（空集无违例）</td></tr>
+<tr><td>$\mathcal{F}_1\cap\mathcal{F}_2$</td><td>✓ 凸</td><td>交集保凸</td></tr>
+<tr><td>$\mathcal{F}_1\cup\mathcal{F}_2$</td><td>✗ 不一定</td><td>$\{0\}\cup\{2\}$ 缺中点 1</td></tr>
+<tr><td>$\mathbb{Z}^n$</td><td>✗</td><td>中点未必整数（整数约束破坏凸性！）</td></tr>
+<tr><td>$e^{at}$</td><td>✓ 凸</td><td>$f''=a^2e^{at}\ge 0$</td></tr>
+<tr><td>$\log t$</td><td>凹非凸</td><td>$f''=-1/t^2&lt;0$</td></tr>
+<tr><td>$\|\mathbf{x}\|_2$</td><td>✓ 凸</td><td>但在 $\mathbf{0}$ 不可微</td></tr>
+<tr><td>$\mathbf{x}^TA\mathbf{y}$（联合）</td><td>仅 $A=0$ 时凸</td><td>否则既非凸也非凹</td></tr>
+<tr><td>$t^3$</td><td>✗</td><td>$f''=6t$ 变号</td></tr>
+<tr><td>仿射函数 $ax+b$</td><td>✓（且凹）</td><td>等号成立</td></tr>
+</table>
+
+<h3>最优性性质</h3>
+<ul>
+  <li><span class="kw">局部 = 全局</span>：凸问题的每个局部最小都是全局最小（若有更优点，朝它挪一点立即改进）。</li>
+  <li>凸性<b>不保证</b>存在性也不保证唯一性：
+    <table>
+    <tr><th>凸问题</th><th>结果</th></tr>
+    <tr><td>$\min_{\mathbb{R}}[(t-2)^2+1]$</td><td>仅在 $t=2$ 取得</td></tr>
+    <tr><td>$\min_{\mathbb{R}} e^t$</td><td>下确界 0，<b>无取得点</b></td></tr>
+    <tr><td>$\min_{[0,1]^2}(u+v-1)^2$</td><td>$F^*=0$，argmin = 整条线段 $\{(u,1-u)\}$（无穷多）</td></tr>
+    </table></li>
+  <li><span class="kw">严格凸 → 至多一个最小点</span>（存在性另论）。</li>
+</ul>
+
+<h3>梯度下降 Gradient Descent</h3>
+<div class="box formula"><span class="tag">更新公式</span>
+$$\mathbf{x}_{k+1}=\mathbf{x}_k-\alpha_k\nabla f(\mathbf{x}_k),\qquad \alpha_k&gt;0$$
+<ul>
+  <li>$\nabla f$ = 偏导向量；指向最速上升方向 → 负梯度是下降方向。</li>
+  <li>例：$q(t)=(t-2)^2+1$，$t_0=0$，$\alpha=\tfrac14$：$q'(0)=-4$ → $t_1=0-\tfrac14(-4)=1$（$q:5\to2$）；$t_2=1-\tfrac14(-2)=\tfrac32$（$q=\tfrac54$）→ 单侧逼近 $t^*=2$。</li>
+  <li><b>步长分析</b>：每步把误差乘 $(1-2\alpha)$：$t_{k+1}-2=(1-2\alpha)(t_k-2)$。
+    <table>
+    <tr><th>$\alpha$</th><th>因子</th><th>行为</th></tr>
+    <tr><td>$\tfrac14$</td><td>$\tfrac12$</td><td>收敛到 2</td></tr>
+    <tr><td>$1$</td><td>$-1$</td><td>振荡 $0,4,0,4,\dots$</td></tr>
+    <tr><td>$\tfrac54$</td><td>$-\tfrac32$</td><td>发散</td></tr>
+    </table>
+    收敛条件 $|1-2\alpha|&lt;1$ 即 $0&lt;\alpha&lt;1$（本例）。</li>
+  <li><b>停止与最优性</b>：无约束可微凸问题，$\nabla f(\mathbf{x})=0$ 即<b>全局最小证书</b>；实用停止：梯度范数、目标变化量、迭代上限。小心：步长太小 → 更新量小但离最优还远（$f=t^2$, $t_0=100$, $\alpha=10^{-12}$：一步只挪 $2\times10^{-10}$）。</li>
+  <li>投影梯度下降（<span class="en">带约束版，选学不考</span>）：$\mathbf{x}_{k+1}=P_{\mathcal{F}}(\mathbf{x}_k-\alpha_k\nabla f)$。</li>
+</ul>
+</div>
+
+<div class="box qtype"><span class="tag">常见题型</span>
+<p>① 判断集合/函数凸性（用二阶导/Hessian/运算规则）；② 一步或多步 GD 迭代计算；③ 求全部最小点（如 $(u+v-1)^2$ 类）；④ 步长与收敛行为分析；⑤ "局部最优何时是全局"。</p>
+</div>
+
+<!-- ============ 10 解题模板 ============ -->
+<h2 id="s10">10. 高频题型 · 从零解题模板</h2>
+<p>考试大题的标准套路。每题先写清<span class="kw">假设</span>（题目歧义时明确写出，按假设评分）。</p>
+
+<h3>T1 · A* / UCS 搜索追踪</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>列表格</b>：列 = 迭代轮次；每轮记录：弹出的节点（expand）、其 $g,h,f$、新生成的节点、fringe 内容（按 $f$ 排序）。</li>
+  <li><b>初始化</b>：fringe = {起点}，$g(s_0)=0$。</li>
+  <li><b>循环</b>：弹出 $f$ 最小的节点（并列时任选，<b>写明你的打破平局规则</b>，如字母序/后进先出）。</li>
+  <li><b>目标测试在弹出时做</b>（dequeue 才停！A* 最优性的关键）。</li>
+  <li>展开：对每个后继 $s'$ 计算 $g(s')=g(s)+c(s,s')$，$f=g+h$，入队。<b>树搜索</b>：重复状态也再次入队；<b>图搜索</b>：已扩展过的跳过，未扩展但已在 fringe 的若新 $g$ 更小则更新。</li>
+  <li>写出解路径与代价；若题目问"为什么不是更早出现的目标"，引用 dequeue 终止规则。</li>
+</ol>
+</div>
+
+<h3>T2 · 构造可采纳启发函数</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>识别原问题的约束（墙、只能向前翻、每步代价 …）。</li>
+  <li><b>放松</b>：去掉一个或多个约束（增加可用动作 = 只会降低真实代价）。</li>
+  <li>精确求解松弛问题 → 其解即 $h(n)$（例：忽略墙 → 曼哈顿距离；任意翻转 → 错位数）。</li>
+  <li>验证 admissibility：$0\le h(n)\le h^*(n)$，一句话论证"松弛问题的最优代价 ≤ 原问题最优代价，因为原问题的每个解也是松弛问题的可行解"。</li>
+</ol>
+</div>
+
+<h3>T3 · α-β 剪枝追踪（必考）</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>从左到右、自底向上</b>（后序）遍历；根是 MAX，调用参数 $(-\infty,+\infty)$。</li>
+  <li>每个节点旁标注它<span class="kw">收到</span>的 $(\alpha,\beta)$（来自父辈的窗口）。</li>
+  <li><b>MIN 节点</b>：看完一个孩子得 $v$ 后：若 $v\le\alpha$ → <b>立即返回，剩余孩子画 X（剪枝）</b>；否则 $\beta\leftarrow\min(\beta,v)$，把更新后的窗口传给下一个孩子。</li>
+  <li><b>MAX 节点</b>对称：$v\ge\beta$ → 剪枝返回；否则 $\alpha\leftarrow\max(\alpha,v)$。</li>
+  <li>叶节点直接返回效用值。</li>
+  <li>答案标注：根的最终值 = minimax 值（不变）；数出被剪的叶节点数；如被问"根的孩子值对不对"——<b>可能错</b>（剪枝版本不能做动作选择）。</li>
+</ol>
+<p>课上例：左 MIN 返回 3（root 设 $\alpha=3$）→ 中间 MIN 第一个孩子 2 ≤ 3 → 其余两个孩子被剪 → 右 MIN 无剪枝返回 2 → root = max(3,2,2) = 3。<b>若中间叶子顺序是 6,4,2 则一个都剪不掉——剪枝依赖顺序。</b></p>
+</div>
+
+<h3>T4 · Expectimax 计算</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>自底向上：叶 = 效用；MAX 节点 = max；<b>机会节点 = $\sum p_i v_i$</b>（概率在枝上给定时直接加权；"equally likely" = 均匀分布取平均）。</li>
+  <li>决策节点选最大期望的分支。</li>
+  <li>概念追问：为何不能像 α-β 那样剪（未见孩子可任意大）→ 给效用界 $[lo,hi]$ 才能剪：上界 $=\frac{(\text{已见和})+(\text{未见数})\times hi}{\text{总数}}$，若仍 &lt; 当前最好 → 剪。</li>
+</ol>
+</div>
+
+<h3>T5 · 回溯搜索 + MRV + Forward Checking</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>选变量</b>：MRV——数每个未赋值变量当前域大小，选最小（并列任选并注明）。</li>
+  <li><b>选值</b>：LCV——试着数该值会删掉邻居多少个值，选删最少的；题目不要求时可按域顺序。</li>
+  <li><b>一致性检查</b>：与所有已赋值变量的约束比对（增量目标测试）。</li>
+  <li><b>Forward checking 表</b>：每步赋值后，更新所有未赋值变量的域（划掉冲突值）；<b>任何域空 → 回溯</b>。</li>
+  <li>画出完整搜索过程（赋值序列 + 回溯箭头），直到得到一个满足所有约束的完整赋值。</li>
+</ol>
+</div>
+
+<h3>T6 · 弧一致性检查</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>对弧 $X\to Y$：对 $X$ 域中每个 $x$，在 $Y$ 域中找至少一个 $y$ 使 $(x,y)$ 满足约束（"支持"）。</li>
+  <li>没有支持的 $x$ → <b>从 $X$ 的域（尾）中删除</b>。</li>
+  <li>$X$ 丢值后 → 所有指向 $X$ 的弧 $(Z\to X)$ 重新入队检查（AC-3 队列机制）。</li>
+  <li>结论表述：弧一致后域的最终状态；域空 → 无解；注意弧一致 ≠ 有解。</li>
+</ol>
+</div>
+
+<h3>T7 · LP 图解法完整流程</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>定变量和单位</b>：$x_1$ = …（oz），$x_2$ = …（fl oz）。</li>
+  <li><b>写模型</b>：目标 $\mathbf{c}^T\mathbf{x}$；把每句话翻成线性约束；加非负约束。</li>
+  <li><b>标准化</b>（如需）：$\ge$ 乘 $-1$ 变 $\le$。</li>
+  <li><b>画可行域</b>：每约束一条边界线 + 阴影半平面；交集为凸多面体（标出顶点）。</li>
+  <li><b>枚举顶点</b>：每个顶点选 $n$ 条（2D 即 2 条）独立约束令其取等，解线性方程组，<b>代回所有原约束验证可行</b>。</li>
+  <li><b>求最优</b>：两条路线任选——(a) 顶点枚举：算每个顶点的 $\mathbf{c}^T\mathbf{x}$ 取最小；(b) 等值线：画 $\mathbf{c}^T\mathbf{x}=k$，沿 $-\mathbf{c}$ 方向平移到最后的接触点。</li>
+  <li><b>报告</b>：最优解（变量值 + 单位）、最优值、binding 约束（取等的那些）、其他顶点的值（可验证）。</li>
+  <li>检查特判：无可行域 → infeasible；等值线可无限平移 → unbounded。</li>
+</ol>
+</div>
+
+<h3>T8 · Branch &amp; Bound 完整流程（必考大题）</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>根节点</b>：解 LP 松弛（用 T7 的图解/顶点法）。得 $x^{LP}, L=z^{LP}$。</li>
+  <li><b>判定</b>（按序检查三种关闭条件）：
+    <ul>
+      <li>LP 不可行 → 关闭该节点；</li>
+      <li>$x^{LP}$ 全整数 → 候选解：若 $z^{LP}&lt;U$ 则更新 incumbent（$U\leftarrow z^{LP}$，记录解），关闭；</li>
+      <li>$L\ge U$ → 剪枝关闭（写明"$L\ge U$"作为理由）；</li>
+    </ul></li>
+  <li><b>分支</b>：选一个分数变量 $x_i^*$（任选，注明规则，通常选分数部分最大者或先出现的），生成两孩子：$x_i\le\lfloor x_i^*\rfloor$ 与 $x_i\ge\lceil x_i^*\rceil$。<b>孩子继承全部祖先约束</b>。</li>
+  <li><b>探索顺序</b>：DFS（课上例子先探 $x\ge4$ 一侧）；每节点重复第 2 步。</li>
+  <li><b>终止</b>：无开放节点 → incumbent 即最优。给出最优性证书一句话："每个叶子均为不可行 / 整数解 / 界 $L\ge U$，故无未探索分支含更优解"。</li>
+</ol>
+<p>画树模板：每节点圆圈写「附加约束 | LP 解 | $L$ | 动作(关/剪/分支)」；旁边维护 $U$ 的变化链（$+\infty\to\cdots$）。</p>
+</div>
+
+<h3>T9 · 梯度下降迭代计算</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>求 $\nabla f$（或 1D 的 $f'$），代 $\mathbf{x}_k$ 得梯度值。</li>
+  <li>套公式 $\mathbf{x}_{k+1}=\mathbf{x}_k-\alpha\nabla f(\mathbf{x}_k)$，逐步写出每个迭代点及 $f$ 值。</li>
+  <li>最优性：解 $\nabla f=0$ 得 $t^*$ 与 $f^*=f(t^*)$（无约束可微凸 = 全局最小证书）。</li>
+  <li>步长分析（二次目标 $q=(t-a)^2+c$）：误差每步乘 $(1-2\alpha)$；$|1-2\alpha|&lt;1$ 收敛、$=1$ 振荡、$&gt;1$ 发散。可与具体数列一起写出。</li>
+  <li>若给二变量 $F(u,v)$：分别求偏导，写向量更新。</li>
+</ol>
+</div>
+
+<h3>T10 · 凸性判断流程</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>集合？→ 取任意两点看线段（或用已知：$\cap$ 保凸、$\cup$ 不保、仿射像/原像保凸）。</li>
+  <li>一元函数？→ 求 $f''$，全区间 $\ge 0$ 即凸（$&gt;0$ 严格凸；变号 = 既非凸也非凹）。</li>
+  <li>多元函数？→ 求 Hessian $H$，验证 PSD：$\mathbf{z}^TH\mathbf{z}\ge0$ 或特征值全非负。</li>
+  <li>复合结构？→ 非负加权和、仿射复合、取负（凸↔凹）。</li>
+  <li>答"是否凸优化"要<b>两个都查</b>：$f$ 凸 + $\mathcal{F}$ 凸（整数约束 → 非凸）。</li>
+</ol>
+</div>
+
+<!-- ============ 11 速查 ============ -->
+<h2 id="s11">11. 考前一页速查 <span class="en">Quick Reference</span></h2>
+
+<table>
+<tr><th>主题</th><th>必背公式/结论</th></tr>
+<tr><td>搜索框架</td><td>节点总数 $O(b^m)$；fringe: DFS=栈, BFS=队列, UCS=按 $g$, A*=按 $f=g+h$</td></tr>
+<tr><td>DFS / BFS / UCS</td><td>DFS: $O(b^m)$/O(bm) 非最优；BFS: $O(b^s)$/O(b^s) 代价全 1 才最优；UCS: $O(b^{C^*/\epsilon})$ 完备+最优</td></tr>
+<tr><td>A*</td><td>$f=g+h$；admissible $0\le h\le h^*$；<b>dequeue 目标才停</b>；$f(n)\le f(A^*)&lt;f(B)$ 最优性</td></tr>
+<tr><td>启发构造</td><td>松弛问题精确解；松弛 = 增加动作/去掉约束</td></tr>
+<tr><td>CSP</td><td>回溯 = DFS + 单变量 + 边赋边查；MRV 选变量 / LCV 选值；前向检查删未赋值域</td></tr>
+<tr><td>弧一致</td><td>$X\to Y$：每个 $x$ 有支持 $y$；删尾；AC-3 $O(n^2d^3)$；树形 CSP $O(nd^2)$；割集 $O(d^c(n-c)d^2)$</td></tr>
+<tr><td>Minimax</td><td>$V=\max$ (MAX层) / $\min$ (MIN层)；$O(b^m)$ 时间 / $O(bm)$ 空间</td></tr>
+<tr><td>α-β</td><td>MIN 节点 $v\le\alpha$ 剪；MAX 节点 $v\ge\beta$ 剪；完美排序 $O(b^{m/2})$；根值不变、中间值可能错</td></tr>
+<tr><td>Expectimax</td><td>机会节点 $v=\sum p_iv_i$；无界不能剪；minimax 只需序、expectimax 需大小</td></tr>
+<tr><td>LP</td><td>$\min \mathbf{c}^T\mathbf{x}$ s.t. $A\mathbf{x}\le\mathbf{b}$；最优在<b>顶点</b>；$\mathbf{c}\perp$ 等值线、指向代价增大；结局：有限/不可行/无界</td></tr>
+<tr><td>顶点求法</td><td>选 $n$ 条独立约束取等解方程组 → 代回全部约束验证</td></tr>
+<tr><td>IP 松弛</td><td>$P_{IP}\subseteq P_{LP} \Rightarrow z^*_{LP}\le z^*_{IP}$（min 下界）；LP 最优点整数 → 即 IP 最优；rounding 可失败</td></tr>
+<tr><td>B&amp;B</td><td>分支 $x_i\le\lfloor x_i^*\rfloor$ / $x_i\ge\lceil x_i^*\rceil$；关闭：不可行 / 整数(更新 $U$) / $L\ge U$</td></tr>
+<tr><td>优化概念</td><td>argmin=解集, $f^*$=值；结局：取得/无界/不可行；$\operatorname{argmin} f=\operatorname{argmax}(-f)$</td></tr>
+<tr><td>凸性</td><td>集：线段不出集，$\cap$ 保凸 $\cup$ 不保；函数：$f''\ge0$ / $H\succeq0$；局部=全局；严格凸→至多一个最小点</td></tr>
+<tr><td>梯度下降</td><td>$x_{k+1}=x_k-\alpha\nabla f(x_k)$；$\nabla f=0$=全局最小证书；二次例收敛 $0&lt;\alpha&lt;1$（误差乘 $1-2\alpha$）</td></tr>
+</table>
+
+<div class="box tip"><span class="tag">答题提醒（来自考试说明）</span>
+<ul>
+  <li>清晰简洁——冗长答案会被扣分；解释题先想清楚再写。</li>
+  <li>题目有歧义 → 自行补充假设并<b>明确写出</b>，评分看假设+推理。</li>
+  <li>追踪题（A*/α-β/B&amp;B）务必展示中间过程：表格/树 + 每步理由，别只给答案。</li>
+</ul>
+</div>
+
+<footer>
+CS5491 Artificial Intelligence · Midterm Reference · 基于 2026 秋季第 1–12 讲课件整理 · 生成于 2026-10-15<br>
+范围以老师公布与 practice midterm 为准；公式由 KaTeX 渲染（打印需联网打开后打印）。
+</footer>
+
+</div>
+</body>
+</html>

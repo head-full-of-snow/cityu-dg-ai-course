@@ -1,0 +1,217 @@
+--- Slide 1 ---
+Lecture 1: Images and image filtering
+Hybrid Images, Oliva et al., http://olivalab.mit.edu/hybridimage.htm
+Zhu Zhiyu
+CS5187: Vision & Image
+--- Slide 2 ---
+What is an image?
+--- Slide 3 ---
+Digital Camera
+The Eye
+Source: A. Efros
+We’ll focus on these in this class
+(More on this process later)
+What is an image?
+--- Slide 4 ---
+A grid (matrix) of intensity values
+
+
+
+
+
+
+
+	(common to use one byte per value: 0 = black, 255 = white)
+=
+What is an image?
+--- Slide 5 ---
+Can think of a (grayscale) image as a function f from R2 to R:
+f (x,y) gives the intensity at position (x,y) 
+
+
+
+
+
+
+
+
+
+
+A digital image is a discrete (sampled, quantized) version of this function
+snoop
+3D view
+What is an image?
+--- Slide 6 ---
+As with any function, we can apply operators to an image
+
+
+
+
+
+Today we’ll talk about a special kind of operator, convolution (linear filtering)
+Image transformations
+--- Slide 7 ---
+Filters
+Filtering
+Form a new image whose pixel values are a combination of the original pixel values
+Why? 
+To get useful information from images
+E.g., extract edges or contours (to understand shape)
+To enhance the image
+E.g., to remove noise
+E.g., to sharpen and “enhance image” a la CSI
+A key operator in Convolutional Neural Networks
+--- Slide 8 ---
+Canonical Image Processing problems
+Image Restoration
+denoising
+deblurring
+Image Compression
+JPEG, HEIF, MPEG, …
+Locating Structural Features
+corners
+edges
+--- Slide 9 ---
+Question: Noise reduction
+Given a camera and a still scene, how can you reduce noise?
+Take lots of images and average them!
+What’s the next best thing?
+Source: S. Seitz
+--- Slide 10 ---
+Image filtering
+Modify the pixels in an image based on some function of a local neighborhood of each pixel
+Local image data
+Modified image data
+Some function
+Source: L. Zhang
+--- Slide 11 ---
+Linear filtering
+One simple version of filtering:  linear filtering (cross-correlation, convolution)
+Replace each pixel by a linear combination (a weighted sum) of its neighbors
+The prescription for the linear combination is called the “kernel” (or “mask”, “filter”)
+kernel
+Modified image data
+Source: L. Zhang
+Local image data
+--- Slide 12 ---
+Let       be the image,      be the kernel (of size 	2k+1 x 2k+1), and      be the output image
+
+
+
+Can think of as a “dot product” between local neighborhood and kernel for each pixel
+Convolution
+This is called a convolution operation:
+--- Slide 13 ---
+Convolution
+Adapted from F. Durand
+--- Slide 14 ---
+Mean filtering
+*
+=
+--- Slide 15 ---
+Mean filtering / Moving average
+--- Slide 16 ---
+Mean filtering / Moving average
+--- Slide 17 ---
+Mean filtering / Moving average
+--- Slide 18 ---
+Mean filtering / Moving average
+--- Slide 19 ---
+Mean filtering / Moving average
+--- Slide 20 ---
+Mean filtering / Moving average
+--- Slide 21 ---
+Linear filters: examples
+Original
+Source: D. Lowe
+*
+--- Slide 22 ---
+Linear filters: examples
+Original
+Identical image
+Source: D. Lowe
+*
+=
+--- Slide 23 ---
+Linear filters: examples
+Original
+Source: D. Lowe
+*
+--- Slide 24 ---
+Linear filters: examples
+Original
+Shifted left by 1 pixel
+Source: D. Lowe
+*
+=
+--- Slide 25 ---
+Linear filters: examples
+Original
+Blur (with a mean filter)
+Source: D. Lowe
+*
+=
+--- Slide 26 ---
+Linear filters: examples
+Original
+Source: D. Lowe
+=
+*
+--- Slide 27 ---
+Sharpening
+Source: D. Lowe
+--- Slide 28 ---
+Smoothing with box filter revisited
+Source: D. Forsyth
+--- Slide 29 ---
+Gaussian kernel
+Source: C. Rasmussen
+--- Slide 30 ---
+Gaussian filters
+--- Slide 31 ---
+Mean vs. Gaussian filtering
+--- Slide 32 ---
+Gaussian filter
+Removes “high-frequency” components from the image (low-pass filter)
+Convolution with self is another Gaussian
+
+
+
+
+Convolving twice with Gaussian kernel of width     				= convolving once with kernel of width
+Source: K. Grauman
+*
+=
+--- Slide 33 ---
+Sharpening revisited
+What does blurring take away?
+original
+smoothed (5x5)
+–
+(This “detail extraction” operation is also called a high-pass filter)
+Photo credit: https://www.flickr.com/photos/geezaweezer/16089096376/
+--- Slide 34 ---
+Sharpen filter
+image
+blurredimage
+unit impulse(identity kernel with single 1 in center, zeros elsewhere)
++
+--- Slide 35 ---
+Sharpen filter
+unfiltered
+filtered
+--- Slide 36 ---
+Source: https://www.diyphotography.net/diy_create_your_own_bokeh/
+Bokeh: Blur in out-of-focus regions of an image.
+Camera shake
+*
+=
+Source: Fergus, et al. “Removing Camera Shake from a Single Photograph”, SIGGRAPH 2006
+“Optical” convolution
+--- Slide 37 ---
+Filters: Thresholding
+--- Slide 38 ---
+Linear filters
+Can thresholding be implemented with a linear filter?
+--- Slide 39 ---
+Questions?

@@ -1,0 +1,259 @@
+--- Slide 1 ---
+Image transformations and image warping
+CS5670: Computer Vision
+Prof. Zhu Zhiyu
+--- Slide 2 ---
+Image alignment
+--- Slide 3 ---
+Image alignment
+Why don’t these image line up exactly?
+--- Slide 4 ---
+What is the geometric relationship between these two images?
+Answer: Similarity transformation (translation, rotation, uniform scale)
+--- Slide 5 ---
+What is the geometric relationship between these two images?
+--- Slide 6 ---
+Very important for creating mosaics!
+First, we need to know what this transformation is.
+Second, we need to figure out how to compute it using feature matches.
+What is the geometric relationship between these two images?
+--- Slide 7 ---
+Richard Szeliski
+Image Stitching
+7
+Image Warping
+image filtering: change range of image
+g(x) = h(f(x))
+
+
+image warping: change domain of image
+g(x) = f(h(x))
+--- Slide 8 ---
+Richard Szeliski
+Image Stitching
+8
+Image Warping
+image filtering: change range of image
+g(x) = h(f(x))
+
+
+image warping: change domain of image
+g(x) = f(h(x))
+f
+f
+g
+g
+--- Slide 9 ---
+Richard Szeliski
+Image Stitching
+9
+Parametric (global) warping
+Examples of parametric warps:
+translation
+rotation
+aspect
+--- Slide 10 ---
+Parametric (global) warping
+Transformation T is a coordinate-changing machine:
+					p’ = T(p)
+What does it mean that T is global?
+Is the same for any point p
+can be described by just a few numbers (parameters)
+Let’s consider linear xforms (can be represented by a 2x2 matrix):
+p = (x,y)
+p’ = (x’,y’)
+--- Slide 11 ---
+Common linear transformations
+Uniform scaling by s:
+(0,0)
+(0,0)
+What is the inverse?
+--- Slide 12 ---
+Common linear transformations
+Rotation by angle θ (about the origin)
+(0,0)
+(0,0)
+What is the inverse?
+For rotations:
+θ
+--- Slide 13 ---
+2x2 Matrices
+What types of transformations can be represented with a 2x2 matrix?
+2D mirror across Y axis?
+2D mirror across line y = x?
+--- Slide 14 ---
+2x2 Matrices
+What types of transformations can be represented with a 2x2 matrix?
+2D mirror across Y axis?
+2D mirror across line y = x?
+--- Slide 15 ---
+What types of transformations can be represented with a 2x2 matrix?
+2D Translation?
+2x2 Matrices
+--- Slide 16 ---
+Can a 2D translation by (tx,ty) be represented with a 2x2 matrix transformation?
+ⓘ Start presenting to display the poll results on this slide.
+--- Slide 17 ---
+What types of transformations can be represented with a 2x2 matrix?
+2D Translation?
+Translation is not a linear operation on 2D coordinates
+NO!
+2x2 Matrices
+--- Slide 18 ---
+All 2D Linear Transformations
+Linear transformations are combinations of …
+Scale,
+Rotation,
+Shear, and
+Mirror
+Properties of linear transformations:
+Origin maps to origin
+Lines map to lines
+Parallel lines remain parallel
+Ratios are preserved
+Closed under composition
+--- Slide 19 ---
+Homogeneous coordinates
+Trick:  add one more coordinate:
+homogeneous image 
+coordinates
+Converting from homogeneous coordinates
+(x, y, w)
+(x/w, y/w, 1)
+homogeneous plane
+--- Slide 20 ---
+Translation
+Solution: homogeneous coordinates to the rescue
+--- Slide 21 ---
+Affine transformations
+any transformation represented by a 3x3 matrix with last row [ 0 0 1 ] we call an affine transformation
+--- Slide 22 ---
+Basic affine transformations
+Translate
+2D in-plane rotation
+Shear
+Scale
+--- Slide 23 ---
+Affine transformations are combinations of …
+Linear transformations, and
+Translations
+
+Properties of affine transformations:
+Origin does not necessarily map to origin
+Lines map to lines
+Parallel lines remain parallel
+Ratios are preserved
+Closed under composition
+Affine transformations
+--- Slide 24 ---
+Is this an affine transformation?
+--- Slide 25 ---
+Where do we go from here?
+affine transformation
+what happens when we mess with this row?
+--- Slide 26 ---
+Projective Transformations aka Homographies aka Planar Perspective Maps
+Called a homography 
+(or planar perspective map)
+--- Slide 27 ---
+Homographies
+--- Slide 28 ---
+Homographies
+--- Slide 29 ---
+Points at infinity
+--- Slide 30 ---
+Image warping with homographies
+image plane in front
+image plane below
+--- Slide 31 ---
+Homographies
+--- Slide 32 ---
+Homographies
+Homographies …
+Affine transformations, and
+Projective warps
+
+Properties of projective transformations:
+Origin does not necessarily map to origin
+Lines map to lines
+Parallel lines do not necessarily remain parallel
+Ratios are not preserved
+Closed under composition
+
+Key fact: homographies are only defined up to a scale factor (e.g., H and 2H are equivalent homographies)
+--- Slide 33 ---
+Alternate formulation for homographies
+where the length of the vector [h00 h01 … h22] is 1
+--- Slide 34 ---
+2D image transformations
+These transformations are a nested set of groups
+ Closed under composition and inverse is a member
+--- Slide 35 ---
+Implementing image warping
+Given a coordinate xform (x’,y’) = T(x,y) and a source image f(x,y), how do we compute a transformed image g(x’,y’) = f(T(x,y))?
+f(x,y)
+g(x’,y’)
+x
+x’
+T(x,y)
+y
+y’
+--- Slide 36 ---
+Forward Warping
+Send each pixel (x,y) to its corresponding location (x’,y’) = T(x,y) in g(x’,y’)
+x
+x’
+T(x,y)
+What if pixel lands “between” two pixels?
+y
+y’
+f(x,y)
+g(x’,y’)
+--- Slide 37 ---
+Forward Warping
+Send each pixel (x,y) to its corresponding location (x’,y’) = T(x,y) in g(x’,y’)
+x
+x’
+T(x,y)
+What if pixel lands “between” two pixels?
+Answer: add “contribution” to several pixels, normalize later (splatting)
+Can still result in holes
+y
+y’
+f(x,y)
+g(x’,y’)
+--- Slide 38 ---
+Inverse Warping
+Get each pixel g(x’,y’) from its corresponding location (x,y) = T-1(x,y) in f(x,y)
+x
+x’
+T-1(x,y)
+Requires taking the inverse of the transform
+What if pixel comes from “between” two pixels?
+y
+y’
+f(x,y)
+g(x’,y’)
+--- Slide 39 ---
+Inverse Warping
+Get each pixel g(x’,y’) from its corresponding location (x,y) = T-1(x’,y’) in f(x,y)
+What if pixel comes from “between” two pixels?
+Answer: resample color value from interpolated (prefiltered) source image
+x
+x’
+y
+y’
+f(x,y)
+g(x’,y’)
+T-1(x,y)
+--- Slide 40 ---
+Interpolation
+Possible interpolation filters:
+nearest neighbor
+bilinear
+bicubic
+sinc
+Needed to prevent “jaggies” and “texture crawl” 
+       (with prefiltering)
+--- Slide 41 ---
+Questions?

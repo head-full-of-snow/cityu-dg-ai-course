@@ -1,0 +1,244 @@
+--- Slide 1 ---
+CS5187: Vision & Image
+Instructor: Zhu Zhiyu
+--- Slide 2 ---
+Instructor
+Zhu Zhiyu (zhiyu.zhu@cityu.edu.hk)
+Research interests:
+
+Computer vision and computational imaging
+
+Machine learning (Generative models)
+--- Slide 3 ---
+My research work
+Novel view Synthesis from single static images
+3D content generation
+--- Slide 4 ---
+My research work
+Object tracking & detection
+--- Slide 5 ---
+My research work
+Generative models & network learning theory
+--- Slide 6 ---
+Today
+What is computer vision?
+
+Why study computer vision?
+
+Course overview
+
+Images & image filtering [time permitting]
+--- Slide 7 ---
+Every image tells a story
+Goal of computer vision: perceive the “story” behind the picture
+Compute properties of the world
+3D shape
+ Names of people or objects
+What happened?
+--- Slide 8 ---
+The goal of computer vision
+--- Slide 9 ---
+Can computers match human perception?
+Yes and no
+humans are better at “hard” things, are more robust, and make inferences quickly and cheaply
+
+But huge progress
+Accelerating in the last 10 years due to deep learning, large vision-language models
+What is considered “hard” keeps changing
+--- Slide 10 ---
+Human perception has its shortcomings
+https://twitter.com/pickover/status/1460275132958662657/
+--- Slide 11 ---
+But humans can tell a lot about a scene from a little information…
+Source: “80 million tiny images” by Torralba, et al.
+--- Slide 12 ---
+The goal of computer vision
+--- Slide 13 ---
+The goal of computer vision
+“Enhance” images
+--- Slide 14 ---
+The goal of computer vision
+“Enhance” images
+--- Slide 15 ---
+The goal of computer vision
+ZED 2i Camera
+Compute the 3D shape of the world
+--- Slide 16 ---
+The goal of computer vision
+Terminator 2, 1991
+Recognize objects and people
+--- Slide 17 ---
+The goal of computer vision
+Visual content generation.
+--- Slide 18 ---
+Why study computer vision?
+Billions of images/videos captured per day
+Huge number of potential applications
+The next slides show the current state of the art
+--- Slide 19 ---
+Optical character recognition (OCR)
+Digit recognition, AT&T labs (1990’s)
+http://yann.lecun.com/exdb/lenet/
+If you have a scanner, it probably came with OCR software
+License plate readers
+http://en.wikipedia.org/wiki/Automatic_number_plate_recognition
+Automatic check processing
+Sudoku grabber
+http://sudokugrab.blogspot.com/
+--- Slide 20 ---
+Face detection
+Nearly all cameras detect faces in real time
+(Why?)
+--- Slide 21 ---
+Face analysis and recognition
+--- Slide 22 ---
+Who is she?
+Source: S. Seitz
+Vision-based biometrics
+--- Slide 23 ---
+Vision-based biometrics
+“How the Afghan Girl was Identified by Her Iris Patterns”  Read the story
+Source: S. Seitz
+--- Slide 24 ---
+Login without a password
+--- Slide 25 ---
+Pirates of the Carribean, Industrial Light and Magic
+Special effects: motion capture
+Source: S. Seitz
+--- Slide 26 ---
+3D face tracking w/ consumer cameras
+Face2Face system (Thies et al.)
+--- Slide 27 ---
+Which face is real?
+https://www.whichfaceisreal.com/
+--- Slide 28 ---
+Image synthesis
+--- Slide 29 ---
+Sports
+Sportvision first down line
+Explanation on www.howstuffworks.com
+Source: S. Seitz
+--- Slide 30 ---
+Smart cars
+Mobileye
+Tesla Autopilot
+Safety features in many cars
+--- Slide 31 ---
+Self-driving cars
+Waymo
+--- Slide 32 ---
+Robotics
+Amazon Scout
+--- Slide 33 ---
+Medical imaging
+--- Slide 34 ---
+Virtual & Augmented Reality
+3D scene understanding
+--- Slide 35 ---
+Current state of the art
+You just saw many examples of current systems.
+Many of these are less than 10 years old
+
+Computer vision is an active research area, and rapidly changing
+Many new apps in the next 5 years
+Deep learning and generative methods powering many modern applications
+
+Many startups across a dizzying array of areas
+Generative AI, robotics, autonomous vehicles, medical imaging, construction, inspection, VR/AR, …
+--- Slide 36 ---
+Why is computer vision difficult?
+Viewpoint variation
+Illumination
+Scale
+Credit: Flickr user michaelpaul
+--- Slide 37 ---
+Why is computer vision difficult?
+Intra-class variation
+Background clutter
+Motion (Source: S. Lazebnik)
+Occlusion
+--- Slide 38 ---
+Challenges:  local ambiguity
+slide credit: Fei-Fei, Fergus & Torralba
+--- Slide 39 ---
+But there are lots of visual cues we can use…
+Source: S. Lazebnik
+--- Slide 40 ---
+CS5187: Vision and Image
+Project-based course whose goal is to teach you the fundamentals of computer vision – image processing, geometry, recognition – in a hands-on way
+
+This course covers fundamentals, including mathematical fundamentals. It is not a course specifically on deep learning or generative AI, though those topics will be covered.
+--- Slide 41 ---
+Course requirements
+Prerequisites
+Data structures
+Good working knowledge of Python programming
+Linear algebra
+Vector calculus
+
+Course does not assume prior imaging experience
+computer vision, image processing, graphics, etc.
+--- Slide 42 ---
+Course overview (tentative)
+Low-level vision (2-3 classes)
+image processing, edge detection, feature detection, cameras, image formation
+
+Geometry & appearance (3-4 classes)
+projective geometry, stereo, structure from motion, optimization, lighting & materials
+
+Recognition & generative models (6-8 classes)
+object classification, deep learning, diffusion models
+We generally have 13 classes.
+
+3  Classes
+20/01/2026 - 03/02/2026
+
+
+10 classes
+03/03/2026 - 09/05/2026
+--- Slide 43 ---
+Course overview (tentative)
+Low-level vision (2-3 classes)
+image processing, edge detection, feature detection, cameras, image formation
+
+Geometry & appearance (3-4 classes)
+projective geometry, stereo, structure from motion, optimization, lighting & materials
+
+Recognition & generative models (6-8 classes)
+object classification, deep learning, diffusion models
+We generally have 13 classes.
+--- Slide 44 ---
+1. Low-level vision
+Basic image processing and image formation
+--- Slide 45 ---
+2. Geometry & appearance
+Projective geometry
+Structure from motion
+Stereo vision
+Image credit: IDS Imaging
+--- Slide 46 ---
+3. Recognition & Generative Models
+Image generation
+--- Slide 47 ---
+Lectures
+Lectures will be held in person in AC5-514
+If there is an instance where you cannot attend the class, please reach out to the instructor for approval
+No conversations during class, please!
+--- Slide 48 ---
+Grading
+One midterm (between the 2nd and 3rd sections), and one final exam (in class)
+
+Grade breakdown (subject to minor tweaks):
+Assignment : 40%  = (Midterm: 30% + In-Class Quiz 10%)
+Programming projects (2 projects): 10%
+Final exam: 50%
+--- Slide 49 ---
+Academic Integrity
+Assignments will be done in pairs 
+
+Please do not leave any code public on GitHub (or the like) at the end of the semester!
+
+If you use ChatGPT (or CoPilot, or similar) on coding assignments, you must disclose that with your submission
+BUT: We advise you to do all coding yourself.
+--- Slide 50 ---
+Questions?

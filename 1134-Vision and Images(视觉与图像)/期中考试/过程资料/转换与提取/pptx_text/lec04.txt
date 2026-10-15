@@ -1,0 +1,300 @@
+--- Slide 1 ---
+Local features & Harris corner detection
+CS5187: Vision & Image
+--- Slide 2 ---
+Today: Feature extraction—Corners and blobs
+--- Slide 3 ---
+Motivation: Automatic panoramas
+Credit: Matt Brown
+--- Slide 4 ---
+Panorama stitching
+Panorama captured by Perseverence Rover, Feb. 20, 2021
+https://www.space.com/nasa-perseverance-rover-first-panorama-mars
+--- Slide 5 ---
+GigaPan:
+http://gigapan.com/
+Also see Google Zoom Views: 
+https://www.google.com/culturalinstitute/beta/project/gigapixels
+Motivation: Automatic panoramas
+--- Slide 6 ---
+Why extract features?
+Motivation: panorama stitching
+We have two images – how do we combine them?
+--- Slide 7 ---
+Why extract features?
+Motivation: panorama stitching
+We have two images – how do we combine them?
+Step 1: extract features
+Step 2: match features
+--- Slide 8 ---
+Why extract features?
+Motivation: panorama stitching
+We have two images – how do we combine them?
+Step 1: extract features
+Step 2: match features
+Step 3: align images
+--- Slide 9 ---
+Application: Visual SLAM
+(aka Simultaneous Localization and Mapping)
+--- Slide 10 ---
+Do these images overlap?
+--- Slide 11 ---
+NASA Mars Rover images
+with SIFT feature matches
+Answer below (look for tiny colored squares…)
+--- Slide 12 ---
+Feature matching for object search
+--- Slide 13 ---
+Feature matching
+--- Slide 14 ---
+Invariant local features
+Find features that are invariant to transformations
+geometric invariance:  translation, rotation, scale
+photometric invariance:  brightness, exposure, …
+Feature Descriptors
+--- Slide 15 ---
+Advantages of local features
+Locality 
+features are local, so robust to occlusion and clutter
+Quantity
+hundreds or thousands in a single image
+Distinctiveness: 
+can differentiate a large database of objects
+Efficiency
+real-time performance achievable
+--- Slide 16 ---
+More motivation…
+Feature points are used for:
+Image alignment (e.g., mosaics)
+3D reconstruction
+Motion tracking (e.g. for AR)
+Object recognition
+Image retrieval
+Robot/car navigation
+… other
+--- Slide 17 ---
+Approach
+1. Feature detection: find it
+2. Feature descriptor: represent it
+3. Feature matching: match it
+
+Feature tracking: track it, when motion
+--- Slide 18 ---
+Local features: main components
+Detection: Identify the interest points
+
+
+
+
+
+
+
+Description: Extract vector feature descriptor surrounding each interest point
+
+
+
+
+Matching: Determine correspondence between descriptors in two views
+Credit: Kristen Grauman
+--- Slide 19 ---
+Snoop demo
+What makes a good feature?
+--- Slide 20 ---
+Want uniqueness
+Look for image regions that are unusual
+Lead to unambiguous matches in other images
+
+How to define “unusual”?
+--- Slide 21 ---
+Local measures of uniqueness
+Suppose we only consider a small window of pixels
+What defines whether a feature is a good or bad candidate?
+Credit: S. Seitz, D. Frolova, D. Simakov
+--- Slide 22 ---
+Local measures of uniqueness
+“flat” region:no change in all directions
+“edge”:  
+no change along the edge direction
+“corner”:significant change in all directions
+How does the window change when you shift it?
+Shifting the window in any direction causes a big change
+Credit: S. Seitz, D. Frolova, D. Simakov
+--- Slide 23 ---
+Consider shifting the window W by (u,v)
+how do the pixels in W change?
+compare each pixel before and after bysumming up the squared differences (SSD)
+this defines an SSD “error” E(u,v):
+
+
+
+We are pretty happy if this error is high for some offset (u, v)
+We are very happy if this error is high for all offsets (u,v)
+But, slow to compute exactly for each pixel and each offset (u,v)
+Harris corner detection:  the math
+W
+(u,v)
+Chris Harris and Mike Stephens (1988). "A Combined Corner and Edge Detector". Alvey Vision Conference.
+--- Slide 24 ---
+Taylor Series expansion of I:
+
+
+If the motion (u, v) is small, then first order approximation is good
+
+
+
+
+
+
+
+Plugging this into the formula on the previous slide…
+Small motion assumption
+--- Slide 25 ---
+Corner detection:  the math
+Consider shifting the window W by (u,v)
+define an SSD “error” E(u,v):
+W
+(u,v)
+--- Slide 26 ---
+Corner detection:  the math
+Consider shifting the window W by (u,v)
+define an SSD “error” E(u,v):
+Thus, E(u,v) is locally approximated as a quadratic error function
+W
+(u,v)
+--- Slide 27 ---
+The surface E(u,v) is locally approximated by a quadratic form.
+The second moment matrix
+Let’s try to understand its shape.
+--- Slide 28 ---
+Horizontal edge:
+--- Slide 29 ---
+Vertical edge:
+--- Slide 30 ---
+General case
+We can visualize H as an ellipse with axis lengths determined by the eigenvalues of H and orientation determined by the eigenvectors of H
+Ellipse equation:
+max, min : eigenvalues of H
+--- Slide 31 ---
+Quick eigenvalue/eigenvector review
+The eigenvectors of a matrix A are the vectors x that satisfy:
+
+The scalar  is the eigenvalue corresponding to x
+The eigenvalues are found by solving:
+
+
+In our case, A = H is a 2x2 matrix, so we have
+
+
+The solution:
+
+
+Once you know , you find x by solving
+--- Slide 32 ---
+Corner detection:  the math
+Eigenvalues and eigenvectors of H
+Define shift directions with the smallest and largest change in error
+xmax = direction of largest increase in E
+max = amount of increase in direction xmax
+xmin = direction of smallest increase in E 
+min = amount of increase in direction xmin
+--- Slide 33 ---
+Corner detection:  the math
+How are max, xmax, min, and xmin relevant for feature detection?
+What’s our feature scoring function?
+--- Slide 34 ---
+Corner detection:  the math
+How are max, xmax, min, and xmin relevant for feature detection?
+What’s our feature scoring function?
+Want E(u,v) to be large for small shifts in all directions
+the minimum of E(u,v) should be large, over all unit vectors [u v]
+this minimum is given by the smaller eigenvalue (min) of H
+--- Slide 35 ---
+Interpreting the eigenvalues
+1
+2
+“Corner”1 and 2 are large, 1 ~ 2;E increases in all directions
+1 and 2 are small;E is almost constant in all directions
+“Edge” 1 >> 2
+“Edge” 2 >> 1
+“Flat” region
+Classification of image points using eigenvalues of M:
+--- Slide 36 ---
+Corner detection summary
+Here’s what you do:
+Compute the gradient at each point in the image
+For each pixel:
+Create the H matrix from nearby gradient values
+Compute the eigenvalues. 
+Find points with large response (min > threshold)
+Choose those points where min is a local maximum as features
+--- Slide 37 ---
+Corner detection summary
+Here’s what you do:
+Compute the gradient at each point in the image
+For each pixel:
+Create the H matrix from nearby gradient values
+Compute the eigenvalues. 
+Find points with large response (min > threshold)
+Choose those points where min is a local maximum as features
+--- Slide 38 ---
+The Harris operator
+min is a variant of the “Harris operator” for feature detection
+
+
+
+
+
+
+
+The trace is the sum of the diagonals, i.e., trace(H) = h11 + h22
+Very similar to min but less expensive (no square root)
+Called the Harris Corner Detector or Harris Operator
+Lots of other detectors, this is one of the most popular
+--- Slide 39 ---
+Alternate Harris operator
+will use an alternate definition of the Harris operator:
+--- Slide 40 ---
+The Harris operator
+Harris operator
+--- Slide 41 ---
+Harris detector example
+--- Slide 42 ---
+f value (red high, blue low)
+--- Slide 43 ---
+Threshold (f > value)
+--- Slide 44 ---
+Find local maxima of f (non-max suppression)
+--- Slide 45 ---
+Harris features (in red)
+--- Slide 46 ---
+Weighting the derivatives
+In practice, using a simple window W doesn’t work too well
+
+
+
+
+Instead, we’ll weight each derivative value based on its distance from the center pixel
+--- Slide 47 ---
+Harris Detector – Recap [Harris88]
+Second moment matrix
+47
+1. Image derivatives
+2. Square of derivatives
+3. Gaussian     filter g(sI)
+Ix2
+Iy2
+IxIy
+g(Ix2)
+g(Iy2)
+g(IxIy)
+4. Cornerness function – both eigenvalues are strong
+har
+5. Non-maxima suppression
+0. Input image
+--- Slide 48 ---
+Harris Corners – Why so complicated?
+Can’t we just check for regions with lots of gradients in the x and y directions?
+No! A diagonal line would satisfy that criteria
+Current Window
+--- Slide 49 ---
+Questions?

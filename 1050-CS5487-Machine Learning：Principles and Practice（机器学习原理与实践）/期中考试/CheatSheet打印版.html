@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>CS5487 期中 CheatSheet（A4 双面）</title>
+<style>
+  @page { size: A4; margin: 5mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Segoe UI","Microsoft YaHei",sans-serif; font-size: 9.2pt; line-height: 1.24; color: #000; }
+  .page { column-count: 3; column-gap: 2.5mm; column-fill: auto; height: 284mm; overflow: hidden; }
+  .pb { break-after: page; }
+  h2 { font-size: 10.5pt; background: #ddd; padding: 0 2px; margin: 1.5px 0; break-after: avoid; }
+  p, li, div { margin: 0.5px 0; overflow-wrap: anywhere; }
+  ul { padding-left: 8px; list-style: none; }
+  table { border-collapse: collapse; width: 100%; margin: 1px 0; table-layout: fixed; }
+  td, th { border: 0.5pt solid #888; padding: 0 2px; overflow-wrap: anywhere; }
+  th { background: #eee; }
+  .f { font-family: "Cambria Math",Georgia,serif; }
+  .box { border: 0.8pt solid #000; padding: 0 2px; margin: 1px 0; background: #f5f5f5; }
+  .red { color: #000; font-weight: bold; }
+  sub, sup { font-size: 6.5pt; }
+  .tiny { font-size: 7.5pt; color: #333; }
+</style>
+</head>
+<body>
+
+<!-- ================= 第 1 面 ================= -->
+<div class="page pb">
+
+<h2>① 五大分布（期望/方差）</h2>
+<table><colgroup><col style="width:24%"><col style="width:40%"><col style="width:13%"><col style="width:23%"></colgroup><tr><th>分布</th><th>公式</th><th>E</th><th>Var</th></tr>
+<tr><td>Bernoulli(π)</td><td>π<sup>x</sup>(1−π)<sup>1−x</sup></td><td>π</td><td>π(1−π)</td></tr>
+<tr><td>Binomial(n,π)</td><td>C(n,k)π<sup>k</sup>(1−π)<sup>n−k</sup></td><td>np</td><td>np(1−π)</td></tr>
+<tr><td>Poisson(λ)</td><td>e<sup>−λ</sup>λ<sup>k</sup>/k!</td><td>λ</td><td>λ</td></tr>
+<tr><td>N(μ,σ²)</td><td>(2πσ²)<sup>−1/2</sup>e<sup>−(x−μ)²/2σ²</sup></td><td>μ</td><td>σ²</td></tr>
+<tr><td>Beta(α,β)</td><td>∝π<sup>α−1</sup>(1−π)<sup>β−1</sup></td><td>α/(α+β)</td><td>αβ/[(α+β)²(α+β+1)]</td></tr></table>
+<p class="tiny">Beta(1,1)=均匀；五分布=考试重点。</p>
+
+<h2>② 贝叶斯 + 指标</h2>
+<p class="f">P(D|+)= P(+|D)P(D) / [P(+|D)P(D)+P(+|¬D)P(¬D)]</p>
+<p><b>医学例</b>: 0.9×0.02/(0.9×0.02+0.08×0.98)=<b>0.187</b>；真阳 180 vs 假阳 784（基础率低⇒阳性多没病）。敏感性 P(+|D) ≠ 后验 P(D|+)。</p>
+<p>Acc=(TP+TN)/N（不平衡会骗人）；<b>精确率</b>=TP/(TP+FP)；<b>召回/敏感</b>=TP/(TP+FN)；特异=TN/(TN+FP)。训练→验证（选模型）→测试（只碰一次）；预处理只用训练集。</p>
+
+<h2>③ 期望/协方差规则</h2>
+<ul>
+<li>Y=AX+b ⇒ E[Y]=Aμ+b；<span class="f">Σ<sub>Y</sub>=AΣA<sup>T</sup></span>（b 不影响 Σ）</li>
+<li>Y=a<sup>T</sup>X+b ⇒ E=a<sup>T</sup>μ+b；<span class="f">Var=a<sup>T</sup>Σa</span></li>
+<li>例: A=[[1,1],[0,1]], Σ=diag(4,1) ⇒ Σ<sub>Y</sub>=[[5,1],[1,1]]，E[Y]=A[1,0]+b</li>
+<li>Cov=E[(X−E[X])(Y−E[Y])]；ρ=Cov/σσ ∈[−1,1] 无量纲</li></ul>
+
+<h2>④ 多元高斯·马氏距离（模板）</h2>
+<p class="f">p(x)∝exp[−½(x−μ)<sup>T</sup>Σ<sup>−1</sup>(x−μ)]；同一高斯比两点⇒只比 <b>D=(x−μ)<sup>T</sup>Σ<sup>−1</sup>(x−μ)</b>，D 小者 p 大；<span class="f">p<sub>A</sub>/p<sub>B</sub>=exp[−½(D<sub>A</sub>−D<sub>B</sub>)]</span></p>
+<p>步骤：|Σ| → Σ⁻¹ → 偏差 → D → 比较 → 比值。2×2 逆：[[a,b],[b,c]]⁻¹ = (ac−b²)⁻¹[[c,−b],[−b,a]]</p>
+<div class="box"><b>Q1</b>: μ=[1,2], Σ=[[4,1],[1,1]]：|Σ|=3，Σ⁻¹=⅓[[1,−1],[−1,4]]；x<sub>A</sub>−μ=[2,1] ⇒ D<sub>A</sub>=4/3；x<sub>B</sub>−μ=[0,2] ⇒ D<sub>B</sub>=16/3 ⇒ p<sub>A</sub>&gt;p<sub>B</sub>（欧氏距离同为√5）；比值=e²≈7.39</div>
+
+<h2>⑤ 特征值 / PCA / SVD</h2>
+<ul>
+<li>[[a,b],[b,a]] 型：λ=a±b，u=1/√2[1,±1]；一般 2×2 对称：λ=[(a+c)±√((a−c)²+4b²)]/2</li>
+<li>例: [[3,2],[2,3]] ⇒ λ=5,1；u₁=1/√2[1,1]（最大方差方向）</li>
+<li>PCA 方向=协方差阵最大特征值的特征向量；中心化 X=UDV<sup>T</sup> ⇒ <b>V 列=PCA 方向</b>，大奇异值=大方差（X<sup>T</sup>X=VD²V<sup>T</sup>）</li></ul>
+
+<h2>⑥ MLE 万能四步</h2>
+<p><b>连乘似然 → 取 log → 导数=0 → 检查边界</b></p>
+<ul>
+<li>Bernoulli: π̂=m/n；全成功 ⇒ π̂=1（边界，L=π<sup>n</sup> 单调）</li>
+<li>高斯: μ̂=x̄；σ̂²<sub>MLE</sub>=(1/n)Σ(xᵢ−x̄)²；无偏版 ÷(n−1)（均值从数据估出，损失 1 自由度，MLE 偏小）</li>
+<li>不等方差（Q6）: <span class="f">μ̂=Σ(xᵢ/σᵢ²)/Σ(1/σᵢ²)</span>（精度加权）；σᵢ² 相等 ⇒ x̄</li></ul>
+
+<h2>⑦ 回归数值题（列表法）</h2>
+<p>正规方程：Σrᵢ=0，Σxᵢrᵢ=0 ⇒ <b>n·w₀+w₁Σx=Σy；w₀Σx+w₁Σx²=Σxy</b></p>
+<div class="box"><b>Q2</b>: (−1,0),(0,1),(1,2),(2,2)：Σx=2, Σy=5, Σxy=6, Σx²=6 ⇒ 4w₀+2w₁=5；2w₀+6w₁=6 ⇒ <b>w₀=0.9, w₁=0.7</b>；残差=(−0.2,0.1,0.4,−0.3) ⇒ σ̂²=0.3/4=<b>0.075</b>；ŷ(3)=0.9+2.1=<b>3.0</b></div>
+<p class="tiny">套路：先填 x,y,xy,x² 四列求和 → 解 2×2 方程 → 残差平方平均=σ̂² → 代入预测。</p>
+
+<h2>⑧ Beta-Bernoulli 更新</h2>
+<p class="f">Beta(α,β) + (m,n−m) ⇒ <b>Beta(α+m, β+n−m)</b></p>
+<ul>
+<li>后验均值=下次成功概率=<span class="f">(α+m)/(α+β+n)</span>；MAP=<span class="f">(α+m−1)/(α+β+n−2)</span>（要求 α+m&gt;1, β+n−m&gt;1，否则边界）</li>
+<li>例: B(2,2), m=3, n=4 ⇒ B(5,3)：均值 5/8=0.625，MAP 2/3≈0.667，MLE 0.75（先验 κ₀=α+β 越大越拉向先验；B(20,20) 同数据⇒23/44≈0.523）</li>
+<li>均值=加权平均：w<sub>prior</sub>(α+β)/(α+β+n)·先验均值 + w<sub>data</sub>·m/n</li>
+<li>5 次全败: MLE=0；Beta(1,1)⇒Beta(1,6)⇒预测 1/7（贝叶斯避免极端）</li></ul>
+
+<h2>⑨ 离散先验表格法（Q3）</h2>
+<table><tr><th>π</th><th>先验</th><th>似然 π³(1−π)</th><th>乘积</th><th>后验</th></tr>
+<tr><td>0.2</td><td>0.2</td><td>0.0064</td><td>0.00128</td><td>0.0202</td></tr>
+<tr><td>0.5</td><td>0.5</td><td>0.0625</td><td>0.03125</td><td><b>0.4941</b></td></tr>
+<tr><td>0.8</td><td>0.3</td><td>0.1024</td><td>0.03072</td><td>0.4857</td></tr></table>
+<p>证据=Σ乘积=0.06325；MAP=0.5；后验预测=Σπ·后验=<b>0.6396</b>（≠MAP 代入 0.5）</p>
+
+<h2>⑩ 高斯-高斯共轭</h2>
+<p>精度=1/方差：λ₀=1/τ₀²，λ<sub>D</sub>=n/σ²</p>
+<div class="box f">μ<sub>n</sub>=(λ₀μ₀+λ<sub>D</sub>x̄)/(λ₀+λ<sub>D</sub>)；τ<sub>n</sub>²=1/(λ₀+λ<sub>D</sub>)；预测 x*~N(μ<sub>n</sub>, σ²+τ<sub>n</sub>²)</div>
+<ul>
+<li>例: μ~N(10,4), n=2, x̄=14, σ²=8：λ₀=λ<sub>D</sub>=0.25（等权）⇒ μ<sub>n</sub>=<b>12</b>, τ<sub>n</sub>²=<b>2</b>；预测 N(12, 8+2=10)（预测方差=参数不确定+新噪声，更大）</li>
+<li>例2: N(10,4), n=4, x̄=12, σ²=4：λ<sub>D</sub>=1 ⇒ μ<sub>n</sub>=0.2·10+0.8·12=11.6, τ<sub>n</sub>²=0.8</li>
+<li>τ₀²→∞ 或 n→∞ ⇒ μ<sub>n</sub>→x̄=MLE；谁精度高谁权重大</li></ul>
+
+<h2>⑪ MAP / 正则化 / 软阈值</h2>
+<ul>
+<li>MAP = 最小化(−log似然 −log先验)。高斯先验 N(0,τ²) ⇒ L2：<span class="f">‖y−Xw‖²+λ‖w‖², λ=σ²/τ²</span>（岭回归）；拉普拉斯先验 ⇒ L1（稀疏，可压到 0）</li>
+<li>先验中心 w₀: 惩罚 ‖w−w₀‖² ⇒ <b>(X<sup>T</sup>X+λI)ŵ = X<sup>T</sup>y+λw₀</b>；w₀=0⇒标准岭；τ²→∞⇒λ→0⇒OLS</li>
+<li>岭稳定机制：X<sup>T</sup>X 近奇异（特征共线）时 +λI 抬高小特征值</li></ul>
+<div class="box"><b>Q7 拉普拉斯 MAP</b>: L(w)=n/(2σ²)·(w−x̄)²+λ|w|（用 Σ(xᵢ−w)²=Σ(xᵢ−x̄)²+n(w−x̄)²）。w&gt;0: w=x̄−λσ²/n（当 x̄&gt;λσ²/n）；w&lt;0 对称；|x̄|≤λσ²/n ⇒ ŵ=0。合并：<b>ŵ=sign(x̄)max(|x̄|−λσ²/n, 0)</b></div>
+
+<h2>⑫ 噪声→损失</h2>
+<p>高斯噪声 ⇒ −log∝Σrᵢ²（平方，r=10⇒100）；拉普拉斯 ⇒ Σ|rᵢ|（绝对值，稳健）。</p>
+
+<h2>⑬ 常用数值速算</h2>
+<table>
+<tr><td>√2=1.414</td><td>√3=1.732</td><td>√5=2.236</td><td>√(2π)=2.507</td></tr>
+<tr><td colspan="4">1/√(2π)=0.3989　= 1/2.507</td></tr>
+<tr><td>e<sup>−0.5</sup>=0.607</td><td>e<sup>−1</sup>=0.368</td><td>e<sup>−1.5</sup>=0.223</td><td>e<sup>−2</sup>=0.135</td><td>e<sup>−4</sup>=0.0183</td></tr>
+<tr><td>e<sup>−0.125</sup>=0.882</td><td>e<sup>−2.25</sup>=0.105</td><td>e<sup>−8</sup>=0.0003</td><td>⅓≈0.333</td><td>⅔≈0.667</td></tr></table>
+<p><b>一维高斯代入模板</b>：先算 z=(x−μ)/σ，则 N(x|μ,σ²)=(1/σ)·0.3989·e<sup>−z²/2</sup>。如 σ²=2 ⇒ 0.2821·e<sup>−z²/2</sup>；σ²=1 ⇒ 0.3989·e<sup>−z²/2</sup>。</p>
+
+<h2>⑭ 英文题面关键词 → 模板</h2>
+<table><colgroup><col style="width:55%"><col style="width:45%"></colgroup>
+<tr><td>posterior / prior / update belief</td><td>→ ② 表格法 / ⑧ Beta</td></tr>
+<tr><td>larger density, not Euclidean</td><td>→ ④ 马氏距离</td></tr>
+<tr><td>derive MLE / closed form</td><td>→ ⑥ 四步</td></tr>
+<tr><td>fit regression / predict at x*</td><td>→ ⑦ 列表法</td></tr>
+<tr><td>posterior predictive / next trial</td><td>→ ⑧⑨ 均值加权</td></tr>
+<tr><td>MAP / prior∝exp(−λ|w|) / ridge</td><td>→ ⑪ 软阈值/岭</td></tr>
+<tr><td>update centroids / assignment</td><td>→ ⑰ K-means</td></tr>
+<tr><td>responsibilities / EM iteration</td><td>→ ⑱ E+M 三式</td></tr>
+<tr><td>as σ²→0 / limit / hard assignment</td><td>→ ⑱ 极限推导</td></tr>
+<tr><td>bandwidth / kernel / density</td><td>→ ⑲ KDE</td></tr>
+<tr><td>mode / mean shift</td><td>→ ⑳ 均值漂移</td></tr>
+<tr><td>partition / Ncut / Laplacian</td><td>→ ㉑ 谱聚类</td></tr></table>
+
+<h2>⑮ 简答题模板（问法→答题要点）</h2>
+<table><colgroup><col style="width:34%"><col style="width:66%"></colgroup>
+<tr><td>方差为何 n−1？</td><td>均值由同数据估出，Σ残差=0 损失 1 自由度；MLE÷n 偏小，÷(n−1) 无偏</td></tr>
+<tr><td>MAP≠后验均值？</td><td>众数 vs 全分布平均；后验不对称时分叉（B(2,5): 0.286 vs 0.2）</td></tr>
+<tr><td>后验预测≠代 MAP？</td><td>按后验对所有参数加权平均，保留不确定性（5 败: MLE 预测 0，贝叶斯 1/7）</td></tr>
+<tr><td>敏感性 vs 后验？</td><td>P(+|D) 患病中阳性 vs P(D|+) 阳性中患病；基础率低⇒后验≪敏感性</td></tr>
+<tr><td>先验何时帮/害？</td><td>帮：真实先验、稳定共线/高维；害：强+错+未检验</td></tr>
+<tr><td>为何 EM 不直接 MLE？</td><td>log(Σ) 耦合无闭式；Jensen 下界每步似然不减；仅局部最优</td></tr>
+<tr><td>K-means 收敛？</td><td>两步各使 J 不增+分配有限⇒不动点；局部最优、初始化敏感</td></tr>
+<tr><td>K-means 失败场景？</td><td>球形假设被违反：长条/密度不均/非凸/离群拉均值</td></tr>
+<tr><td>GMM vs K-means？</td><td>软概率 vs 硬分配；椭球各Σₖ vs 球；GMM 可过拟合（σ²→0，防护 Nₖ≥5）</td></tr>
+<tr><td>岭回归为何稳？</td><td>共线⇒XᵀX 病态系数乱跳；+λI 抬小特征值；λ=σ²/τ²</td></tr>
+<tr><td>高斯 vs 拉普拉斯噪声？</td><td>Σrᵢ² vs Σ|rᵢ|；平方放大大误差（r=10: 100 vs 10）</td></tr>
+</table>
+
+</div>
+
+<!-- ================= 第 2 面 ================= -->
+<div class="page">
+
+<h2>⑯ 矩阵求导 + 正规方程推导</h2>
+<table><colgroup><col style="width:20%"><col style="width:22%"><col style="width:22%"><col style="width:36%"></colgroup><tr><th>f(w)</th><th>a<sup>T</sup>w</th><th>w<sup>T</sup>w</th><th>w<sup>T</sup>Aw(对称)</th></tr>
+<tr><td>∇<sub>w</sub>f</td><td>a</td><td>2w</td><td>2Aw</td></tr></table>
+<p class="f">J=‖y−Xw‖²=y<sup>T</sup>y−2w<sup>T</sup>X<sup>T</sup>y+w<sup>T</sup>X<sup>T</sup>Xw；∇=−2X<sup>T</sup>y+2X<sup>T</sup>Xw=0 ⇒ <b>X<sup>T</sup>Xŵ=X<sup>T</sup>y</b></p>
+<ul><li>几何：残差 r=y−Xŵ 满足 <b>X<sup>T</sup>r=0</b>（r⊥X 各列，无方向可再降残差）；∇J=−2X<sup>T</sup>r（X<sup>T</sup>把 ℝⁿ 映回 ℝ<sup>d</sup>）</li>
+<li>避免显式 (X<sup>T</sup>X)⁻¹（病态）→ QR/SVD；两列几乎相同 ⇒ X<sup>T</sup>X 病态、权重不稳</li><li><b>2×2 验算</b>：λ₁+λ₂=trace；λ₁λ₂=det（算完特征值必查）</li><li>点积/投影：a<sup>T</sup>b=‖a‖‖b‖cosθ；投影长度=a<sup>T</sup>b/‖b‖</li><li>常用导数：d/dμ(x−μ)²=−2(x−μ)；d/dv log v=1/v；d/dw |w|=sign(w)</li></ul>
+
+<h2>⑰ K-means</h2>
+<p class="f">J=Σ<sub>i</sub>Σ<sub>k</sub>r<sub>ik</sub>‖x<sub>i</sub>−μ<sub>k</sub>‖²（簇内平方和；r<sub>ik</sub>∈{0,1}, Σ<sub>k</sub>r<sub>ik</sub>=1）</p>
+<p>循环：<b>①初始化 ②分配=最近中心 ③中心=成员均值 μ<sub>k</sub>=Σr<sub>ik</sub>x<sub>i</sub>/Σr<sub>ik</sub> ④重复至不变</b>。每步 J 不降+分配有限⇒收敛（仅局部最优，初始化敏感→多次取 J 最小 / K-means++（按 D(x)² 概率选远点））</p>
+<div class="box"><b>例</b>: 点 {1,2,7,8}，μ=1,5：|x−μ₁|=(0,1,6,7), |x−μ₂|=(4,3,2,3) ⇒ {1,2}|{7,8}；μ→1.5, 7.5；J：14→1；再分配不变⇒停</div>
+<p>假设：球形/欧氏=相似/均值有意义。失败：长条、密度不均、非凸（环/月牙）、离群点拉偏均值。</p>
+
+<h2>⑱ GMM + EM（大题）</h2>
+<p class="f">p(x)=Σ<sub>k</sub>π<sub>k</sub>N(x|μ<sub>k</sub>,Σ<sub>k</sub>)；生成：P(z=k)=π<sub>k</sub> → x~N(μ<sub>k</sub>,Σ<sub>k</sub>)</p>
+<p><b>E</b>: <span class="f">γ<sub>ik</sub>=π<sub>k</sub>N(x<sub>i</sub>|μ<sub>k</sub>,σ<sub>k</sub>²)/Σ<sub>j</sub>π<sub>j</sub>N(x<sub>i</sub>|μ<sub>j</sub>,σ<sub>j</sub>²)</span>（每点 Σ<sub>k</sub>γ=1；=归一化 先验×似然）</p>
+<p><b>M</b>: <span class="f">N<sub>k</sub>=Σ<sub>i</sub>γ<sub>ik</sub>；π<sub>k</sub><sup>new</sup>=N<sub>k</sub>/n；μ<sub>k</sub><sup>new</sup>=Σγ<sub>ik</sub>x<sub>i</sub>/N<sub>k</sub>；σ<sub>k</sub>²<sup>new</sup>=Σγ<sub>ik</sub>(x<sub>i</sub>−μ<sub>k</sub><sup>new</sup>)²/N<sub>k</sub></span>（软计数→位置→散布；σ² 用<b>新</b> μ！）</p>
+<div class="box"><b>Q4 完整例</b>: x={0,2,4}；π=(0.6,0.4)，μ=(0,4)，σ²=2。<br>
+一维 N 值：N(0|0,2)=.2821，N(2|0,2)=N(2|4,2)=.1038（对称⇒γ 只由 π 定=(0.6,0.4)），N(4|0,2)=.0052<br>
+γ 表：(0.9879,0.0121) / (0.6,0.4) / (0.0267,0.9733)<br>
+N₁=1.6147, N₂=1.3853（和=3✓）⇒ π=(<b>0.5382</b>, 0.4618)；μ=(<b>0.8094</b>, <b>3.3877</b>)；σ²=(<b>1.10</b>, <b>0.92</b>)<br>
+讲义例 x={1,3,5}, π=½½, μ=(1,5), σ²=1：γ=(0.9997,.0003)/(.5,.5)/(.0003,.9997)；N=1.5/1.5；μ=(1.668, 4.332)；σ²=0.891（中点各半贡献）</div>
+<p><b>t4 例</b>（直接给 p(x|z)）：s=π·p=(0.18,0.15,0.12)，Σ=0.45 ⇒ γ=(0.40,0.33,0.27)——大 π<sub>k</sub> 不一定大 γ（似然也重要）。</p>
+<p><b>M 步目标（Q 函数）</b>：Q(θ)=Σ<sub>i</sub>Σ<sub>k</sub>γ<sub>ik</sub>[log π<sub>k</sub>+log N(x<sub>i</sub>|μ<sub>k</sub>,Σ<sub>k</sub>)]（加权 MLE）；GMM 对数似然 ℓ(θ)=Σ<sub>i</sub>log(Σ<sub>k</sub>π<sub>k</sub>N(x<sub>i</sub>|μ<sub>k</sub>,Σ<sub>k</sub>))。</p><p><b>为何 EM</b>：ℓ=Σlog(ΣπN) 的 log(和) 使方程耦合无闭式。Jensen 构造下界 L(q,θ)≤ℓ；E 步 q=p(z|x) 使下界贴紧（gap=KL(q‖p)≥0），M 步最大化下界⇒似然不减，收敛局部最优。</p>
+<p><b>GMM→K-means（Q8）</b>: π<sub>k</sub>=1/K, Σ=σ²I ⇒ γ<sub>ik</sub>=exp(−‖x−μ<sub>k</sub>‖²/2σ²)/Σ<sub>j</sub>exp(−‖x−μ<sub>j</sub>‖²/2σ²)；比值 <span class="f">γ<sub>a</sub>/γ<sub>b</sub>=exp[(‖x−μ<sub>b</sub>‖²−‖x−μ<sub>a</sub>‖²)/2σ²]</span>；σ²→0 且 k* 唯一最近 ⇒ γ<sub>ik*</sub>→1 其余→0（硬分配）；M 步变 μ<sub>k</sub>=成员均值 = K-means。</p>
+<p><b>补充</b>: 协方差结构 Spherical(σ²I，等价 K-means 假设)/Diagonal/Shared/Full；过拟合：分量坍缩 σ²→0 似然∞ → 防护 N<sub>k</sub>≥5、方差下限、验证集；BIC=−2logL+d·logN（越小越好，选 K）；分量数≠真实类数。</p>
+
+<h2>⑲ KDE</h2>
+<p class="f">p̂(x)=1/(nh)·Σ<sub>i</sub>K((x−x<sub>i</sub>)/h)（d 维：1/(nh<sup>d</sup>)）</p>
+<ul><li>核：高斯 1/√(2π)·e<sup>−u²/2</sup>；Box: |u|≤1 取 ½；三角 max(0,1−|u|)。1/h 保面积=1；密度≠概率</li>
+<li>局部推导：2r·p(x)≈N<sub>r</sub>(x)/n ⇒ <span class="f">p̂=N<sub>r</sub>(x)/(2nr)</span>；直方图=计数/(nh)，缺陷：不连续+对 bin 起点敏感</li>
+<li>h 小：尖峰/方差大（训练点间隙可为 0）；h 大：平滑/偏差大；<b>h 用验证集选</b>（训练集 h→0 密度→∞ 过拟合）</li>
+<li>多维先特征归一化；维度灾难 h<sup>d</sup></li></ul>
+<div class="box"><b>例</b> {0,2,3} 三角核求 x=2：h=1 ⇒ 只有自身 K(0)=1 ⇒ 1/3；h=2 ⇒ (K(1),K(0),K(.5))=(0,1,0.5) ⇒ 1.5/6=<b>1/4</b>。验证 x=1：h=1⇒0；h=2⇒(0.5+0.5+0)/6=1/6 ⇒ 选 h=2</div>
+
+<h2>⑳ 均值漂移</h2>
+<p class="f">x<sup>new</sup>=x+m(x)，m=Σw<sub>i</sub>x<sub>i</sub>/Σw<sub>i</sub>−x，w<sub>i</sub>=exp(−‖x−x<sub>i</sub>‖²/2h²)</p>
+<ul><li>簇心=密度峰（KDE 梯度上升），无需 K；h 小⇒多簇，h 大⇒合并；峰=吸引盆，同盆同簇</li>
+<li><b>例</b> {0,2,4}，x=1，h=2：w=(.8825,.8825,.3247) ⇒ x′=3.064/2.090≈<b>1.47</b>；课堂例 {0,1,2,3} h=1 x₀=2→1.355→0.778</li>
+<li>vs K-means：软权重/任意形状/无需 K；但 O(n²d) 贵</li></ul>
+
+<h2>㉑ 谱聚类</h2>
+<p>w<sub>ij</sub>=e<sup>−‖xi−xj‖²/σ²</sup>；D=diag(行和)；<b>L=D−W</b>（每行和 0）；<span class="f">f<sup>T</sup>Lf=½Σw<sub>ij</sub>(f<sub>i</sub>−f<sub>j</sub>)²</span>（平滑度）</p>
+<p>Ncut(A,B)=cut(A,B)/vol(A)+cut(A,B)/vol(B)（vol=簇内度之和）；<b>小者优</b>（惩罚孤立小簇）；NP难→松弛 Lf=λDf 取前 k 小非零特征向量→新空间 K-means。加速：kNN 图代替全连接，O(n³)→稀疏求解。</p>
+<div class="box"><b>t5 例</b> W=[[0,3,0,0],[3,0,1,0],[0,1,0,3],[0,0,3,0]]：D=diag(3,4,4,3)<br>
+P₁={1,2}|{3,4}：cut=1（2–3 边），vol 7/7 ⇒ Ncut=2/7≈<b>0.286</b><br>
+P₂={1}|{2,3,4}：cut=3，vol 3/11 ⇒ Ncut=1+3/11≈1.273 ⇒ P₁ 优；f=[1,1,0,0] ⇒ f<sup>T</sup>Lf=2×跨割权/2=1</div>
+<p class="tiny">四聚类对比：K-means 球形 O(nkd)｜GMM 概率软分配｜mean-shift 密度峰 O(n²d)｜谱聚类非凸 O(n³) 最贵。</p>
+
+
+
+<h2>㉒ 英文术语速查（读题用）</h2>
+<table>
+<tr><td>prior 先验</td><td>posterior 后验</td><td>likelihood 似然</td><td>evidence 证据</td></tr>
+<tr><td>conjugate 共轭</td><td>posterior predictive 后验预测</td><td>MAP 最大后验</td><td>MLE 极大似然</td></tr>
+<tr><td>mean 均值</td><td>variance 方差</td><td>covariance 协方差</td><td>correlation 相关</td></tr>
+<tr><td>precision=1/var 精度</td><td>bias 偏差</td><td>unbiased 无偏</td><td>i.i.d. 独立同分布</td></tr>
+<tr><td>inverse 逆</td><td>determinant(det) 行列式</td><td>trace 迹</td><td>eigenvalue/vector 特征值/向量</td></tr>
+<tr><td>residual 残差</td><td>normal equations 正规方程</td><td>least squares 最小二乘</td><td>projection 投影</td></tr>
+<tr><td>ridge regression 岭回归</td><td>penalty 惩罚项</td><td>regularization 正则化</td><td>shrinkage 收缩</td></tr>
+<tr><td>overfitting 过拟合</td><td>generalization 泛化</td><td>validation 验证(集)</td><td>training 训练</td></tr>
+<tr><td>assignment 分配</td><td>centroid 质心</td><td>within-cluster 簇内</td><td>convergence 收敛</td></tr>
+<tr><td>mixture 混合</td><td>component 分量</td><td>responsibility 责任 γ</td><td>hard/soft 硬/软分配</td></tr>
+<tr><td>mixing weight 混合权重</td><td>covariance 结构 spherical/diag/shared/full</td><td>lower bound 下界</td><td>KL divergence KL散度</td></tr>
+<tr><td>bandwidth 带宽</td><td>kernel 核</td><td>density estimation 密度估计</td><td>mode 众数/峰</td></tr>
+<tr><td>similarity 相似度</td><td>graph cut 割</td><td>volume 体积vol</td><td>Laplacian 拉普拉斯</td></tr>
+<tr><td>sensitivity 敏感性</td><td>specificity 特异度</td><td>recall 召回</td><td>precision(分类) 精确率</td></tr>
+</table>
+<p class="tiny" style="margin-top:3px">CS5487 期中 · 半开卷 A4 · 范围=前三周+五分布+聚类 · 数值已程序复核（EM σ²=1.10/0.92 为正确值）· 详解见同目录《期中考试参考资料.md》</p>
+
+</div>
+
+</body>
+</html>

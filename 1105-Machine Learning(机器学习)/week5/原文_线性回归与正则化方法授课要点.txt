@@ -1,0 +1,489 @@
+[00:02] 发言人1: So the definition of a regression task is given. A feature vector little products that lives in dimensional space that goes to here predict a real valued. response why. 
+
+[00:25] 发言人1: And in this figure, the x axis shows the single dimension feature, and one axis is a target output. And we attempting to face a straight line here as a summary. of the whole dataset and use this. 
+
+[00:53] 发言人1: Linear model to make productions to for unseen new data. And this is yet another example, a curve fitting example, given m observations sucked from an unknown curve with no family air. Here no matter when air meaning that the suffer point is exactly on the curve. 
+
+[01:25] 发言人1: And it goes to estimate the curve that fits observations and predicts values at new inputs. And here we have a bunch of questions. Question one, how does the number of observations affect the fit? And does the locations of the observations matter? And do m observations uniquely determine the curve and in the last. 
+
+[02:00] 发言人1: How should we choose among curves of faith observations? The answer to the first question is more the more the better in general, more informative observations generally improve estimation. So how to measure informativeness? That's related to the second question. 
+
+[02:30] 发言人1: The answer to the second question is observation should cover. The input range operations are needed here. If we draw four points, we don't want to four points to cluster around this. 
+
+[02:49] 发言人1: 好，portion of the input，right？And that will completely ignore those three parts of the pole, parts of the curve. And we want this for to. 
+
+[03:07] 发言人1: Exactly located here as four point with maximum curvature, as so those can have a better description of the geometry of this curve. And the answer to the third question is without respect function class financially many observations don't determine uniquely determine occur. If we know this curve is a polynomial curve. 
+
+[03:42] 发言人1: Right，with finite many samples，we may able to unique determine，but if we don't know the underlying cause of the curve。and we may have. Infinitely possible solutions starts the face perfectly the observations. 
+
+[04:10] 发言人1: And how the answer to question four is satisfy we need to satisfy the model class. And criteria evaluation criteria that balance the fate, the accuracy as well as the complexity of model. Right? In general designs and engineering, we always would have to seek. 
+
+[04:37] 发言人1: As simple model as possible but not simpler. And let's go back to the Boston house price prediction example. We can predict the Boston house price from. 
+
+[04:55] 发言人1: the number of rooms as one feature. As percent those that house schools in neighborhoods as a second feature and those two figures. just draw the relationship between the house price with each feature, and this is a number of rooms.
+
+[05:19] 发言人1:  This presented on the status households, the right axis is predicted is a house price, as you can see. So the number of rooms is positively correlated with house price, and person knows that households is negative correlated with house price, which is as expected. And of course, we can predict house price using both features together.
+
+[05:49] 发言人1:  The excess to the first feature, the access to the second feature, and in this example we use color to encode the house price. where the.  warmer the color is, the higher the price.
+
+[06:04] 发言人1:  And we may lift two dimensional figure into three dimensions. And using the extra three dimension to. Show the predict house price and meanwhile you may as well use the color to encode the house price.
+
+[06:25] 发言人1:  So regression learning problem, even a data set of example pairs. Course with D，we also call this training set not consists of PM。Examples where Xi is a feature vector for the ice sample, and why I is corresponding real values tag output.
+
+[06:50] 发言人1:  And aim to learn a function f from R N to R that I predict y. for any feature vector x. And we would have to use mean square error or MSE as our air mail.
+
+[07:09] 发言人1:  Given a dataset D, a function F here, the function is not a classification model. It's a regressor. The MSE of F on D is deduced by. 
+
+[07:25] 发言人1: M S C D and F is equal to one over M. The sum range is from I. is equal to one up to m.
+
+[07:36] 发言人1:  this is the mean. Right, we compare the mean and here this is squared. And insider provinces is air. Right, why is a target output? F X I is predicted output on the ice example。
+
+[08:12] 发言人1: And the difference is just air and squared air. We sum over the squared air for all examples and divide by the total number of examples as mean squared air. 
+
+[08:34] 发言人1: Linear regression using one feature, we predict the response using which is developed by y hat. y hat is equal to x is equal to w x plus b, where w is a slope, b is an intercept, also called the best term. And in this particular figure, we have w is equal to this number. 
+
+[08:59] 发言人2: is equal to this number。
+
+[09:03] 发言人1: And linear regression is the features we predict the response using the following linear function. One had is to the sun. Of j is equal to one up to n w j x j plus b and this can be written as inner product of transpose x plus b where x contains input features and w contains their coefficients or so way or you can see as weights or the parameters and the model is linear in its coefficients. 
+
+[09:43] 发言人1: And the intercept announces a non zero prediction at f is equal to zero. So if f is equal to zero, the output is going to be the birus b. And we have orderly. 
+
+[10:00] 发言人1: In this squares or oh you know as the production function here. S F X is equal to W transpose X plus B. And how can we estimate W and B from the training data? And all the ready squares of OS minimize the training and then see.
+
+[10:24] 发言人1:  And we develop the optimal parameters as W star, B star. and this is because belong is in arc mean w p and this is mean squared error and this why zai is true is ice example on the training set. Here my questions, why this is a in sign, not a equal sign. 
+
+[11:01] 发言人1: 啊。
+
+[11:08] 发言人1: Because the right hand side, the argument may give you a set. The W star B star should be in the set. Alright，that's why we use this inside is that they equals sine。We can differentiate the objective with respect to w and set the derivative to0.
+
+[11:41] 发言人1:  And let's say this is our objective, and we take the, we differentiate with respect to w, and since it's quadratic. And we take this two up in front, and this gives you two x where this x is equal to. Y I minus W X I minus B，and the delta of this gradient we we may we need further take the gradient of the term inside the parentheses that is Y I minus W X I minus B respect to W。
+
+[12:24] 发言人1: This gives you negative excel, and we can gather common terms. 嗯，嗯，W。So here we first get rid of this coefficient. 
+
+[12:45] 发言人1: This is be because the right hand side is zero, right? And then. We can gather terms that is in the w that is the sun. 
+
+[12:58] 发言人1: nature W X I times nature X I gives you this term. and we have. The sun like to be like to exercise gives you this term where we extract the common factor b out. 
+
+[13:22] 发言人1: And here we have the sun. Y I. Negative x i, I'll be moving to the right hand side to get this. 
+
+[13:40] 发言人1: And we have a linear function WB，and to solve for WB，we may need another linear function，right？and and then we differentiated object respect to the other parameter e and set the derived to zero and this is our original objective. Once again, we differentiate each quadratic.
+
+[14:04] 发言人1:  We have a two in front. 嗯，why why i matters w x m s b，and we further take the gradient，this is equal to。Y I minus W X I minus D. 
+
+[14:22] 发言人1: I shall be here which will give you that you want so why I leave you up in exile. I consider as constant。And once again, we gather terms.
+
+[14:37] 发言人1:  We get rid of this coefficient by setting the grading equal to zero. We gather terms some. negative w x i negative one we will give you this term. 
+
+[14:53] 发言人1: We gather some negative b negative one which will give you this term. We can expand this to my little bit. This is a sum time from one M B right? What what does this stand for? 
+
+[15:18] 发言人1: this is equal to. We have M B, all right, which gives you. We can further get term and some y i negative one and going to right hand side to get this. 
+
+[15:44] 发言人1: And we can write this two equations in matrix form as this. So write two equations in matrix form. This corresponds to the first equation.
+
+[15:56] 发言人1:  This new vector times this. Convector gives you this, this corresponds the first equation. And this correspond to the second equation, this row vector times this column vector gives you this. 
+
+[16:23] 发言人1: And to solve for WB, we just need to invert this two by two matrix, right? This is two by two, this this inverse this to ensure that the matrix invertible. So the data should satisfy this. 
+
+[16:51] 发言人1: And if we, if we delete this matrix to have to mess with size A, right? So if A is invertible, A is invertible. 
+
+[17:10] 发言人1: This corresponds to C A has full. Column or row rank meaning that in this case rank of. a is equal to two，and this is proven to see the determinant of a is not equal to zero. if you compute determinant，it's just this times this minus this times this，which will give you something like this and this. It's all equal, it's all equal to zero. 
+
+[18:11] 发言人1: And from this point in part one, we are going to use this augmented location include intercept in the feature. So that's the first element and coefficient vector where we have one in the first dimension of the feature. And this makes x i. 
+
+[18:41] 发言人1: and plus one damage. Why we are also in plus one dimension and we construct this as. as a data matrix. 
+
+[19:06] 发言人1: I cycling observation per row. Remember that Xi is always gonna be a column vector, and we transpose it to make it a row vector. And we set this row vector in the corresponding ice row of this data metrics. 
+
+[19:26] 发言人1: Right, therefore this data matrix has dimension of n m times n plus one. We can start right accordingly to make a vector. And therefore, the prediction function can be written as this. 
+
+[19:47] 发言人1: Right，and this is this is simple，right？So here you have. X is equal to. 用哈X IS EQUAL TO。
+
+[20:13] 发言人1: If we times x if we times w。And is amounts to I W each. 你一起去了。Right, this gives our prediction. 人人得穿的比较久。This training objective. 
+
+[20:55] 发言人1: This training objective can be rewritten in matrix form as this. 
+
+[21:12] 发言人1: Alright，so let's see，we have already derived，so what's y minus x w。It's y one minus x one transpose w up to y m minus x m transpose w right? We have already developed here, we just use by matters. 
+
+[21:45] 发言人1: And what's this? So y minus x w the top squares it should be y so y minus x w is just a vector it's this transpose. 喂。And the transfers is simply the sum. iPhone one to M。四个人。
+
+[22:33] 发言人1: squares. 喂，and we have one over one over m in front。That's mean squared air exactly the same here we simply make use of this fact for vector z that is n dimension the l norm of these. 
+
+[23:00] 发言人1: Equal to a transpose z is equal to the sum j from one to n z j squared, right? And now we are going to differentiate its respect to w. 今天还是。 so here. 
+
+[23:25] 发言人1: We did all to the training M, A, C, S, L of W. We are going to differentiate with W where W already contains intercepts. We use augmented rotation.
+
+[23:37] 发言人1:  This is one over M. The gradients respect W, Y minus X, W transpose. one minus six w right and we can expand this to have y transpose y minus y transpose x w minus w transpose. 
+
+[24:00] 发言人1: Transposes X transpose Y plus W transpose X transpose X W，and here we make use of this fact。A B transpose is equal to B transpose A transpose。going to use it here. 
+
+[24:26] 发言人1: X W transpose is equal to W transpose X transpose, and the second fact we're going to use, and this is equal to, and this is equal to one over m the gradient of W Y transpose Y. And we have one minus one transpose x w，and for the third term，we can also write it as w transpose x w plus w transpose x。strongest physics w so why is that. 
+
+[25:07] 发言人1: this is because so all the four terms are just together, just a number. for example we have a chance close is equal to a right, it's just a number therefore. 嗯，W transpose X Y is equal to。W transpose x transpose y transpose and this is equal to. Y transpose X W，and we can combine the third term，third term，that's fine over M。呃gradient respect W Y transpose Y minus two Y transpose X W plus W transpose X transpose. 
+
+[26:00] 发言人1: XW and take the derivative，the first term disappears because it's constant respect W，and this gives you one over M the great respect W，and W transpose X transpose XW minus two，why transpose X transpose W。And the first term is product with with W and the second term is linear with with W and below the gradient. And this is simply. One over m，we have two x transpose x w minus two x transpose y，and we have come on factor two。
+
+[26:51] 发言人1: So if you can, you can further extract the common factor x transpose out. 
+
+[27:03] 发言人1: And this is a great end. 
+
+[27:06] 发言人2: 哎呀。
+
+[27:22] 发言人1: So it applies on the derivations. So for the last version, if we follow the gradient, we set the provide an inner terms. So you can check the matrix cookbook, also you can. 
+
+[27:37] 发言人1: Hope I can pressing you to it's a cloud codecs and ask for the earth equations. Then we have this. And this is equal to zero. We get what's known as a normal equations. 
+
+[28:04] 发言人1: At least the rank of x is n plus one. The solution is unique. So why we need to require the rank x and is n plus one? This is because the rank x is equal to. 
+
+[28:23] 发言人1: The rank of x transpose x，I have this proof in the lecture note。And this is equal to n plus one. And this x transpose x is a n plus one times n plus one matrix.
+
+[28:43] 发言人1:  And if we require it has a full run, it means that x transpose x is. 你错了，invariable。Therefore, we can invert this. 
+
+[28:56] 发言人2:  matrix. Alright. 
+
+[29:05] 发言人1: and make it W is equal to X transpose X。universe is transpose by. And for also housing production, we have a separate O A O L S model using each feature in this figure, this feature in this figure, this feature, and which feature is better. 
+
+[29:31] 发言人1: 第三个。And here what we are giving is training message, right? We can only say future with this. smaller and this is way smaller. It's highly likely that this percent of those that also is more protective of the post house price. 
+
+[29:58] 发言人1: And we can create the OS model using both features, and encode the really house price using color, and we can interpret this model. For each feature by holding the other feature fixed, so each room increase house price by this amount, which corresponds to the first feature, first coefficient. Each percent of lower status house will decrease house price by this amount, which is a second. 
+
+[30:33] 发言人1: quite efficient and the starting price is this which corresponds to the intercept and in fact the intercept is just a. Problem it has no practical mean. That's why we put the code in the. 
+
+[30:55] 发言人2:  start. 
+
+[30:58] 发言人1: I do have a. Characteristic view of minor regression here will assume. Independent Gaussian errors with a common variance where sigma squares is strictly positive and this is our. 
+
+[31:23] 发言人1: observation model. 你好乖。is equal to x w plus epsilon epsilon follows a independent. standard normal independent gaussian distribution with zero mean and independent virus. So here's this covariance matrix identical is diagonal. 
+
+[31:56] 发言人1: that mean that each noise is independent of each other, and then the conditional response follows this. 二系列是没有。Why given x follows the Gaussian distribution with mean x w various terms sigma square sign, and then its likelihood can be written as p of y given x. remember we use this vertical bar. 
+
+[32:48] 发言人1: to separate. random variables. 作为优势。semicolon to. separate parameters. meaning that Y X are all the. W Sigma Squares are more than Parameters。AND THIS IS EQUAL TO. two pi sigma squares to the power of left film over two x function of left u and no one minus x are two squares divided by two sigma squares and then for any fixed sigma squares the local likelihood. 
+
+[33:57] 发言人1: The logo like route is. Equal to left two m over two long two maximum squares minus one over two sigma squares they are two long squares of my minus w maximum is likely equivalent to minimize squared error right because the first term is constant. 
+
+[34:19] 发言人1: respect to w and we only have this term accents negative is equal to minimize the remaining term and we can get rid of this coefficient in front and it's equipment to minimize the squared airs why is squared air not mean squared air because we don't divide by one over f. If we divide by one over m, this is M square. If we don't divide by one over m, this is. 
+
+[34:54] 发言人1: the sum of the square there, but it could not affect there are me. And Gaussian errors just by the MLE interpretation，and they are not required to compute OLS。啊，对，都。have a interpretation of sigma squares, so after you solve for w, you can still for this formula you can differentiate through the sigma squares, and so for sigma squares, and in this case the optimal. Sigma star squares is actually equal to. 
+
+[35:58] 发言人1: this is this is just. 是的，M S E of the target。OUTPUTS AROUND. the regression function. 
+
+[36:30] 发言人1: And can be interpret as a form of uncertainty. 嗯，然后let's take. Let's take a closer look at this close for solution.
+
+[36:47] 发言人1:  W star is equal to x transpose x inverse x transpose y. And we call x transpose x inverse x transpose as. Denote as X dagger and call this pseudo inverse, which is a generalization of inverse to non square matrices. 
+
+[37:11] 发言人1: And even beauty source is defined over square matrix. This is a journey to non square matrix, and we can check it for square. In vertical metrics, then we have. X transpose x inverse is equal to x inverse x transpose inverse times x transpose and this gives you. 哎， identity，and we have a simmers，and for for this we make use of this property，x b inverse is equal to b inverse times a inverse。不然。
+
+[38:03] 发言人1: And what if x transpose x is not is not available? This can happen if m is less than as one. M is number of examples, N plus one is number of parameters.
+
+[38:21] 发言人1:  We have fewer data, more parameters. Right? In this case, I will add more data or enforce representation.
+
+[38:32] 发言人1:  So show later. And if m is greater than or equal to m plus one, we have enough data. Our still is not available, meaning that we have redundant features.
+
+[38:47] 发言人1:  We may remove identify remove redundant features or enforce recognition. And and x transport x is invertible, meaning that we have multiple solutions that sets like this long equation right? So we have multiple. 
+
+[39:17] 发言人1: we have multiple solutions such as such as this, and amongst those solutions we would like to have a list of one. 
+
+[39:35] 发言人1: 啊，this gives you a complex organization。And this is no wise. 
+
+[39:46] 发言人1: The least no solution。If it's also the subject is not is irreversible this means that we have multiple W that that's a solution。Equation among those three whatever we want to stick a minimum of one that's why we formulated as this complex decision problem and so so for there is no. 
+
+[40:13] 发言人2:  solution. 
+
+[40:16] 发言人1: And here, what if n is too large? 我我还有粉丝，应该是。
+
+[40:29] 发言人1: 生活管理。
+
+[40:52] 发言人1: even if. If x is invertible, but if n is too large, it's computationally invisible to invert this chat matrix. and in this case we are going to use gradient descent. remember we have derived gradients here, right? this is our gradient and we can ignore this part, ignore this coefficient. 
+
+[41:27] 发言人1: 然后x times with x after matters one。And have x transpose x w minus one and we move towards its negative gradient direction with a learning rate alpha therefore w t plus one w at t plus one equation is equal to w at t situation minus alpha x transpose x w。第四个是minus one。
+
+[42:25] 发言人1: so we have m too large. So there is transpose meaning that compute even compute x transpose x is very slow. 喂。they will go to use reading edge. 
+
+[42:53] 发言人1: Well，W I T plus one iteration is equal to. I will add this iteration minus alpha and the form of minibatch curvature quickly and with some agreement of examples in this set where xy is in the minibatch we have x x transpose w transpose x one. 这次你来会预审。And here is my question.
+
+[43:31] 发言人1:  So remember, in the grading decent case, we have x transpose x, right? However, in the mini batch. Green decent we have X X transpose，什么意思啊？
+
+[44:03] 发言人1: 这是什么？月牙十二四。
+
+[44:14] 发言人1: Why it's transport appears in the first E X but in the second E X。所以这以是一个拆播。嗯，air or issue either。This goes back to the definition of our data metrics, right? So how do we define our data metrics? We stack examples per row per row right. 
+
+[45:11] 发言人1: And this gives you a. m by m plus one. 
+
+[45:18] 发言人2:  to. 
+
+[45:18] 发言人1:  think about this question. Let's go to the extreme. Setting m is equal to one，and here this big m is equal to some little some x i。Transpose right, and here is transpose gives you. 
+
+[45:44] 发言人1: little x x gives you extra. 所以这是这里。Alright, so. 
+
+[46:00] 发言人1: 我知道，我我我我叫常关，是吧？我们有lot of information here to deploy linear regression in large scale，in practice，as scale，right？我们deal with the invertibility of x transpose x，we have this know。Regularization，we have this some solution，we can add more data，we can remove redundant features，we can enforce regularizations，I will be showing next lecture，and if x transforms x is invertible，but we cannot invert computationally because n is too large，then we use gradient descent。So increasing density there is no inverse right it's just x transpose x of x transpose y and what if m is large right the number twenty example is large. 
+
+[47:00] 发言人1: Smith and. right. And in and in actual five point three we do have a well implemented iPad or notebook that's. 
+
+[47:15] 发言人1: Implements the inner question using greeting instances. Alright, so now let's take a ten minute break. We will resume at ten thirty. 
+
+[48:52] 发言人2: 艺术和。商业负责层。嗯。P P T的东西。
+
+[49:15] 发言人2: 负责演示。他。和专门负责心理工作流的。
+
+[49:56] 发言人2: 我想。
+
+[50:14] 发言人2: 不用这个。
+
+[50:32] 发言人2: 不。
+
+[50:54] 发言人2: 我觉得。
+
+[51:09] 发言人2: 有说什么时候呀？嗯，有有说什么时候去，有没有什么？什么时候把这个可以？哎呀，我问一下。
+
+[51:31] 发言人2: 嗯我们那个哎我们正好去开会。うん。嗯，啥时候？呃，我我往上看一眼，可能系统再再再更新两个，然后就过去捏一起。你到时候做个PPT吧，你那个就是你目标的，你跟那个，跟那个校长，校长对，对，会。然后带一个那个。
+
+[52:31] 发言人2: 他是。
+
+[52:39] 发言人2: 怎么去。妈妈个屁啊！
+
+[53:26] 发言人2: 没有走。就我们平时的作业就当做是分数。嗯，那就没有没写吗？对。哦，那那个下午那个。嗯，那你找找吧。你现在哦哦。
+
+[54:01] 发言人2: 你。又交了呗今天截止这个应该以前他们正在的赶紧交了。
+
+[54:31] 发言人2: 呃，我这打不开。哦对哦其实这个我不是说过了吗期中四时期末五十平时三十分嗯我什么时候考试哎今天下午看一下今天下午咱们看他的提分手是不是他妈直接有人挂掉。是，所以讲的就是现在学的挺少。
+
+[55:13] 发言人2: ちょっとはい。
+
+[56:49] 发言人2: 钱。
+
+[58:03] 发言人2: 就是。
+
+[58:42] 发言人2: 他真的高兴。
+
+[59:13] 发言人1: 又不再见。
+
+[59:42] 发言人1: 还是办公的。So in nature, in nature five point two are going to talk about the regularized in a regression, in particular regular regression as well as a story regression. So why do we want to regularize linear regression?
+
+[60:07] 发言人1:  So you reduce over fitting. I discourage overly large coefficient. A second is input estimation when feature are strongly correlated.
+
+[60:25] 发言人1:  Astronomical we say if. the first let's say first feature is nearly created with the second feature. And retrogression remain uniquely soluble even when the design matrix is rank deficient.
+
+[60:46] 发言人1:  We have apps. As a data matrix. The delay matrix is x transpose x is rank deficient, meaning that. 
+
+[61:03] 发言人1: The rank of x transpose x is based on n plus one. It's not invertible. And third is encourage。These are properties of the coefficient vector. So now, so for example, can produce spouses models. similar as SVM support vector machine by setting some coefficients to exact this room and there is the trade off shortage can introduce fires shortage towards zero. or sits. 
+
+[62:05] 发言人1: Can introduce irises and irises is easy to understand right because we wanted to be close to zero as small as possible but well. Introduce there so how to understand this why will reduce the. 
+
+[62:33] 发言人1: let's say we want to fit. A linear model. 
+
+[62:42] 发言人2: 我看综艺。
+
+[62:45] 发言人1: I will have multiple data set on do one。We fit the model as W one。Right on D two, these are two from the same population referred as D two W two, and let's say D S,对，还有S，and this. 
+
+[63:18] 发言人1: Estimates we can compute its mean we can compute its variance this is the variance of this it's equal to v. And for shrinkage. When shrinkage is w towards a w where a is strictly less than one, we shrink shrinks towards zero.
+
+[63:47] 发言人1:  Therefore, the variance of a prime. The variance of w prime is equal to the variance of a w. What what what what's this? What's variance of a w? Is squares is squares variance of right so this a is this three days on one so it reduce variance. And if you want something more, so there is a famous serum or concept imaginarily known as. 
+
+[64:42] 发言人1: 呃，air air air air. 
+
+[64:45] 发言人2: 对了。
+
+[64:56] 发言人1: And here is the optimization object for regularization. Plus one over two the ultimate squares x w minus one plus alpha over two the ultimate squares of w. And here the data free term is half.
+
+[65:15] 发言人1:  That's one over two. Why we put one over two in front? Because we are working with producer. 
+
+[65:22] 发言人1: When take the gradient, we have two in front and two over two cancels with each other. The sum of squares y is a sum because there is no hour any front. If we have hour divided by total number twenty one, but it's me otherwise it's sum. 
+
+[65:46] 发言人1: Sum of square airs and the penalty is l two norm squares of w and this is essentially w transpose of w and. equal to the sum of j from one to n of the j squares is cover to large equations and alpha controls the regularization strength. When alpha is zero, we recover ordinary least squares. 
+
+[66:23] 发言人1: And increasing alpha place more emphasis on reducing the coefficient now. And we similar as orders where we have a. probabilistic interpretation. of which regression as a maximum posterior estimate. Once again，we'll assume Gaussian observation noise，we'll give you this likelihood function，we also have the Gaussian. 
+
+[67:00] 发言人1: Prior and in this case we treat w as a random variable instead of parameter, and then the maximum posterior estimation looks something like this. This is because we have this as p of y given x and w, every tries by sigma squares. This is the natural term. 
+
+[67:33] 发言人1: And we have a prior term. 
+
+[67:50] 发言人1: P of W park assessment by squares。And they. 你盘，我有些姿势能力，姿势的W，但是P的W给分。
+
+[68:13] 发言人1: Y and X hypermetric twice by those two variances. Right, so what is this? THIS IS EQUAL TO. 基因哦，W Y given X，parents respect Sigma squares，Lambda squares。divided by t o y given x parameter as by sigma squares gamma squares. 
+
+[69:03] 发言人1: And what's the what's the numerator is p? 哦，Y K one W X。parameter twice by sigma squares gamma squares times p。of w given x parameterized by sigma squares gamma squares divide by p o y given x parameterized by sigma squares gamma squares right and we can simplify it. 
+
+[69:49] 发言人1: 只有Y given W X is。Only parameter trust by sigma squares, not gamma squares, right? We can get rid of this gamma squares. 
+
+[70:08] 发言人1: And this P O W given X。is equal to. PW. because X and W are show to be independent相互的。
+
+[70:41] 发言人1: because. 比例about the model various model scale right and it proceeds the observing our input which right that's why我们要求的penance。And also, W is only parameterized by gamma squares. 
+
+[71:10] 发言人1: And how to compute our denominator. Denominator is integral. Of all possible w prime well p y given w prime x parameter squares and t of w prime parameter gamma squares and d double prime and from this. 
+
+[71:46] 发言人1: We can call it this is likelihood where was general. And this is no other evidence. And for this formula, you can also call it. 
+
+[72:10] 发言人1: 会看also call it. marginal. 那可以后。
+
+[72:22] 发言人1: All right. And this is a caution. This is also caution. And the developer has nothing to do with W and can be closed. And we maximize the posterior correspond to minimize this term because for those two Gaussian are correlated in w and we can multiply by sigma squares gives the rich objective with alpha is equal to sigma squares over common squares. So you guys on the side on the risk calculation of raise recreation. 
+
+[73:11] 发言人1: So why purify large efficiency. So for fixed feature scale, smaller coefficients reduce sensitive to including perturbations. For delta f, the absolute function delta f is equal that the value of w transpose delta x is less or equal to l, the length of w and length of delta x. 是how to just the equality. 
+
+[73:57] 发言人1: So this is just the definition of inner product, right? 
+
+[74:11] 发言人1: 他们说。times cosine theta the theta is angle and we put w absolute function here and this gives you. 
+
+[74:42] 发言人1: And for example, if x one x if x is two x by zero point one f two x is one hundred x minus nine ninety eight increase x by zero point one changes f one by zero point two but f two by. 成。
+
+[75:05] 发言人1: and seconds. Created features can produce unstable OLS equations. Small changes in data may cause large changes in an estimate. And rich discourage much compensating coefficient reduce estimate variance at the cost of introducing apps. So in the first size, I give you a company example why the virus. 
+
+[75:41] 发言人1: Time reduce，那就是说，所以可以飞行到zero。And here, how do we understand the equivalence? Correlated features here we can show is the x one. 
+
+[75:59] 发言人1: 也是equal. Course approximately equal to W x two. Therefore, we have W one x one plus W two x two is equal to A W one x two. 是。
+
+[76:19] 发言人1: Plus W two X two right and this is equal to A W one plus W two X two for create features we in in fact expect a lot of it. Because those creators can be combined as a compilation fact somehow，which amounts to have a large effective weight，and we don't like a large effective weight because. It's more sensitive to provisions. Right here since i create if produce extra. X is going to also. 
+
+[77:07] 发言人1: And which generally retains non zero coefficients and also can produce exact zero as visual data. 安全。Alpha is strictly positive，which has this unique solution。W star is equal to。X transpose x plus alpha i inverse x transpose one.
+
+[77:37] 发言人1:  So remember when alpha is zero, it reduce to the solution to the OLS x transpose x inverse x transpose one. So why do we have this alpha i? HERE BECAUSE. 
+
+[78:00] 发言人1: We can only focus on the quadratic terms。This data free term will give you quadratic terms。
+
+[78:16] 发言人1: 喂。I see you here。那些是contradictory。
+
+[78:29] 发言人1: W transpose X transpose X W and this. And this will only give you a quadratic term. 
+
+[78:55] 发言人1: And this is equal to. 
+
+[79:07] 发言人1: 喂。
+
+[79:14] 发言人1: And we sum these two quadratic terms will give you one over two w transpose x transpose x plus alpha i w. And we can replace this term. True what we have derived here. 
+
+[79:45] 发言人1: right invert电器。
+
+[79:53] 发言人1: And this justify this close also. The penalty adds alpha to each diagonal entries of x transpose x here x transpose x is just a full dense matrix. And what R R five does is to add R five. On to the dialogues right i think this as some bridge. Put it on to the diagonal terms of which transformation，switch your fashion。
+
+[80:38] 发言人1: By the way. X transpose X R five is invertible as always because it's positive definite. Here we have. 
+
+[81:16] 发言人1: But what class versa，there's one by that，invertibility does all by positive，definitely，but positive，definitely by invertibility，so how to define positive definitely on matrix a。As for any vector, we have great trust. A is strictly positive. 
+
+[81:50] 发言人1: Transpose X transpose X plus alpha I is equal to the L norm this is equal to V transpose X transpose X V。Plus阿尔法V transpose V and this is equal to A V transpose A V X V equal to L to square plus V啊，plus阿尔法。they also are收费，and this term for long zero we is strictly positive，and this term is greater or equal zero。
+
+[82:42] 发言人1: 啊，这是你媳妇，一问问X。你说你可以选择over X。over X. 
+
+[83:02] 发言人1: is equal to right x transpose x is this last one. And we can do retro regulation on post housing data. The data set contains thirteen features.
+
+[83:18] 发言人1:  We can vary alpha from a very small number to a very large number, as alpha approaches infinity or serves coefficient of twelve zero. And individual coefficient magnitude is little to decrease more. Monotonically, as you can see here, when with the increase of this alpha, this feature is increase a little bit, then decrease towards zero.
+
+[83:47] 发言人1:  We don't see there is no moment quantity decreasing guarantee. And we can select alpha using course radiation. We reserve the test set for final evaluation. 
+
+[84:02] 发言人1: Also for large scale redistribution, you can. Speed the data set into training validation test once and only adjust the parameters on validation set. And interpretation, we can interpretate interpret each coefficient while holding the other features fixed. 
+
+[84:26] 发言人1: Negative correlation corresponds to lower predicted house prices, and positive correlation corresponds to higher predicted house prices. And the sign describes a free model, not causal effect. We just model the linear correlation and magnitude also depends on facial scanning. 
+
+[84:54] 发言人1: right. So if you normalize the features, the matrix is going to be change. Right，also correlations，so my correlations also are important in interpreted the magnitudes，this because。
+
+[85:14] 发言人1: if we have. X one X two are very are very created or to the extreme are identical。And they were able to. 
+
+[85:32] 发言人1: allocate the coefficient. Let's say the coefficient is equal to ten. We can allocate nine one five five or even zero point one nine point nine, right? Because this one is identical. that's why they create feature creation will affect the interpretation of the importance of the. features negatives. 
+
+[86:10] 发言人1: we can not say x one is more important than x two by simply saying that nine is greater than one because we have an equally equipment solution zero point one nine point nine right. That's how it commands the interpretation. But you should be aware. So science is what the correlation of cold effect might good. They respect might also. 
+
+[86:46] 发言人1: So sparse regression, so rich generation. Show quotation without setting them exactly to zero and sparse model uses only. A subset of imperfect features.
+
+[87:04] 发言人1:  This is achieved by replacing the square L two penalty with an L one penalty. And whether sparsity improves prediction depends on the data, of course, and underlying relationship. And here is the optimization objective for linear regression.
+
+[87:29] 发言人1:  We have the same data feed term. The half of the sun was her layers. And we have this L one norm as penalty term.
+
+[87:41] 发言人1:  And I source that for. List absolute shrinkage，absolute shrinkage means that。instead of squared air we use the absolute air. 
+
+[88:07] 发言人1: And select selection operator because NASA can select some coefficients to exactly zero, which essentially has a feature selection mechanism. And penalty is the sum of absolute coin，所以 it should be absolute value。Absolute function not air, so absolute coefficient value L one norm is equal to sum from j is equal to one to n absolute value of w j.
+
+[88:45] 发言人1:  The L one penalty can produce coefficients that are exactly zero. And objective is convex but has no general close from solution. And both both rate regression and author regression convex optimization problem because they are just non negative combination of two convex function make it convex and it is optimize overall convex set making the convex optimization problems. 
+
+[89:22] 发言人1: And regression has closed solution, but as well as not have closed solution in general. And we do similar like SVM. For SVM, we have sequential minimum occupation to solve it efficiently.
+
+[89:37] 发言人1:  And we do have some dedicated algorithms forlasso regression to solvelasso regression problem efficiently, including coded recent. So we introduce quality listen when we when we talk about sequential demo calculation right or approximate gradient. Or the most famous one is the least angle regression.
+
+[89:59] 发言人1:  Least angle regression is the optimization algorithm to solve not so regression. And we can vary alpha from ten to negative three to ten to two and falling coefficient parts as representation space changes. So we select alpha using the creation, of course, crucifixation.
+
+[90:26] 发言人1:  I see you can see here. If we increase alpha to this point. Or with. i shrink shrink to be the exact zero and making the test m S constant because i always give for any input always the term. 
+
+[90:57] 发言人1: And the number of return features depends on alpha. We use validation air to choose a shoe for to know is British actually and as fast. Once again, interpretation features include from the fit model includes features we tend the fit model includes. 
+
+[91:23] 发言人1: And a zero coefficient does not establish that features in terms of information because. It depends on the realization effect. It depends on this two in two alpha or selection depends on alpha. The two examples as well as a correlation among features, right? So for two identical features, you can keep one, discard one, but which one to keep, which one to discard. 为啥都在我微信上备注？Now let's talk about shrinkage with a also normal design assume the design matrix satisfy x transports i d c客户端，and we call this. 
+
+[92:29] 发言人1: 我说了，你。管理这些是有什么目的的？现在是release the data metrics。
+
+[92:53] 发言人1: 首先，我们会put examples per row，right？我们会put examples per row。
+
+[93:12] 发言人1: 那我这尝试多时间。
+
+[93:27] 发言人1: This is M times M plus one, and this is M plus one. Pass one time same。哎，what's x transpose x？This is equal. 
+
+[93:50] 发言人2:  to. 
+
+[94:03] 发言人1: 嗯。喂，you can think of this i see。
+
+[94:20] 发言人1: journalize. 
+
+[94:29] 发言人1: 应该播了，播。In the vector the element is a column vector and in the column vector the element is a robot and this is equal to. 
+
+[94:58] 发言人1: And for what's this? This is standard out product. 
+
+[95:12] 发言人1: 喂。
+
+[95:25] 发言人1: I one. I am plus one。
+
+[95:49] 发言人1: 这一块是收发。
+
+[96:05] 发言人1: This is equal to X I one squares. X I one times X I two up to. X I one plus X I then plus one and we have here X. 
+
+[96:32] 发言人1: 啊，two times x啊，one。up to x i two times x i plus two. the last row we have x and it n plus one times x i one up to x i n plus one squares this is equal. 
+
+[97:00] 发言人1: 出。呃，整体性的就是。我打最醒的。是，我是，是，是，是。
+
+[97:21] 发言人1: different features. 
+
+[97:31] 发言人1: so what's what's this term. 
+
+[97:40] 发言人1: 是，是。嗯。
+
+[98:01] 发言人1: This is the square of the first features. Some of the examples, right? We want the sun to be equals one.
+
+[98:12] 发言人1:  I normalize. We want the first feature to be normalized across examples. 喂。我最started。X Y等于X。
+
+[98:47] 发言人1: This is. creation between. First and second features。Right，of course，every time because there is a sun correlation，and we want the correlation be zero，we want to. The normal S picture咱们的鞋子。那也是normal，yeah，我们不要future，increase the other，and we want future，we long life。
+
+[99:38] 发言人1: And originally we have this as x。Orange那里。
+
+[99:53] 发言人1: we. 
+
+[99:53] 发言人2:  have. 
+
+[99:56] 发言人1: This as the extra. Suppose x inverse x transpose y and this gives you I inverse transpose y and we give you. X transpose Y and for regression similarly we have X transpose X plus alpha I inverse X transpose Y and this gives you. I plus alpha I inverses transpose Y and this give you transpose Y. 
+
+[100:37] 发言人1: Right along around，and for the case statement is just，and we use this as our O S，that this is W O L S one over alpha，right for the case statement is just this。啊，for all the regression。会。Two in this case have close solutions for our regression under the also normal design but in general are so regression don't admit analytic solutions don't have close solutions. 
+
+[101:16] 发言人1: And last one for each coefficient j is equal to the sine function of w j o l s remember how to calculate the maximum maximized w j o l s. And that is not so sets a coefficient to zero whenever the absolute function of w j o s is necessary alpha because we take the maximum of the two if this happens the first term is going to be active. Or smaller than zero and maximum will be zero zero times. 
+
+[102:00] 发言人1: Sign will give you that's why they all wait to be exactly zero. Say questions on this and actually I will have I don't have time to give you deeper derivation so this close solutions of flash under some design in the class but the details. 嗯。
+
+[102:44] 发言人1: Are in the next row, alright? And for also normal design transports that is called I reach scales each L S coefficient by this amount this is. is less than one，that's why its shear linkage is towards zero。哎，unless it is easy our suit for one decades，why is equal to。W X plus B which went this towards zero and this corresponds to slope slope towards zero meaning that the slope is towards the x axis. And I saw apply so stretch in small coefficients becomes exactly zero. 
+
+[103:44] 发言人1: And then we have this known as a dead zone. Where in this way do we use alpha instead of阿尔法？然后呢，是summary。So linear regression summary of l s coefficients are unique when design metrics. 
+
+[104:15] 发言人1: As four corner round or or low round because squares and plus one or the data matrix the data matrix has four round or the data matrix the data matrix has four corner round or the data matrix has. has four rank and when n features and with n features and intercept this requires at least m is greater than n plus one and no linear dependence among augmented columns. And regularization controls coefficient size. 
+
+[104:56] 发言人1: 嗯他有时候最近我继续。conditions also can produce one solutions by setting some coefficient to be exactly zero and the number of zeros depend on the hyperparameter alpha and remember all three methods use square layer. the. little feature right and remain sensitive about nurses。Why do we miss senses of all guys in this space? 
+
+[105:48] 发言人1: because we scare we scare the air if the air is large we scare it it becomes much harder and we make it. As a snigger submission to objective and those larger square layers will for sure dominate the twenty objective and we will. airs towards those outairs in order to increase those excessive large square there. 
+
+[106:20] 发言人1: But this is not what we want because they are terrorists. We want our army to be robust to terrorists. And then we will in next lecture we will talk about techniques for robust regression, so how. 
+
+[106:37] 发言人2:  to. 
+
+[106:39] 发言人1:  equip regression models with capabilities of identifying and discussing. Outliers also we can replace square error with absolute error. and then we arrived at what's known as s v r support vector regression and it's a regression it's an extension to the regression say. 
+
+[107:09] 发言人1: and the models are linear in the coefficients. this is function along our linear relationships in orange inputs, right? that's why we only claim. the models are linear coefficients because if we have effects. 
+
+[107:30] 发言人1: is equal to w transpose x on the we don't know this x this x may be compute from another feature transform making x prime the growing space this x is a transformed input space. And FX is linear in transforming，所以是are not in the。Original input space express and here this basis function is generally referred as or as this feature transport. 
+
+[108:08] 发言人1: I will talk about. 那我们需要refreshing the next sector，啊，how to make feature啊，从所有设备。Y首先就那个logy。And in lecture five point three, we have a well implemented Python notebook linear regression using great distance, so you can compare it. 
+
+[108:42] 发言人1: The close one solution and to see the increase of the final solution to see the efficiency and you may as well to make it a little bit larger scale by some datasets online and to see the efficiency and you can also have. Midnight parents to see a turn efficiency how many equations you beat or so do they arrive at the same exact the same private solutions. Right, so that's all more. For this lecture and the two weeks later our E P A will make the explorers. 
+
+[111:37] 发言人2: 摄像头比较好，AI有一个整合版的。重庆比较怪。
+
+[113:30] 发言人2: 有什么国行那肯定没有 AI 啊有。
+
+[116:03] 发言人2: 大陆可以访问苹果官网了。嗯。

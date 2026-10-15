@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模拟卷解题指引（不含答案）</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, { delimiters: [
+    {left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false}
+  ], throwOnError: false });
+});
+</script>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#ccc;
+    --blue-bg:#eef4fb; --blue-bd:#3a6ea5; --orange-bg:#fdf3e7; --orange-bd:#c07a1f;
+    --green-bg:#eef7ee; --green-bd:#3a7d44; --red-bg:#fbeeee; --red-bd:#b03a3a; --gray-bg:#f5f5f5; }
+  * { box-sizing:border-box; }
+  body { font-family:"Segoe UI","Microsoft YaHei",sans-serif; color:var(--ink); margin:0; background:#fafafa; line-height:1.55; font-size:15px; }
+  .page { max-width:920px; margin:0 auto; padding:24px 32px 80px; background:#fff; }
+  header.hero { border-bottom:3px solid var(--blue-bd); padding-bottom:14px; margin-bottom:18px; }
+  header.hero h1 { margin:0 0 6px; font-size:24px; }
+  header.hero .sub { color:var(--muted); font-size:13.5px; }
+  h2 { font-size:19px; border-left:5px solid var(--blue-bd); padding-left:10px; margin:30px 0 10px; page-break-after:avoid; }
+  h3 { font-size:16px; margin:18px 0 8px; page-break-after:avoid; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 14px; font-size:13.5px; page-break-inside:avoid; }
+  th,td { border:1px solid var(--line); padding:5px 8px; text-align:left; vertical-align:top; }
+  th { background:var(--gray-bg); }
+  .box { border-radius:5px; padding:10px 14px; margin:10px 0; page-break-inside:avoid; }
+  .formula { background:var(--blue-bg); border:1px solid var(--blue-bd); }
+  .method { background:var(--green-bg); border:1px solid var(--green-bd); }
+  .warn { background:var(--red-bg); border:1px solid var(--red-bd); }
+  .tip { background:var(--gray-bg); border:1px solid #999; }
+  .formula .tag,.method .tag,.warn .tag,.tip .tag { display:inline-block; font-size:11.5px; font-weight:700; margin-bottom:4px; }
+  .formula .tag { color:var(--blue-bd);} .method .tag { color:var(--green-bd);}
+  .warn .tag { color:var(--red-bd);} .tip .tag { color:#555;}
+  ol.steps > li { margin-bottom:7px; }
+  ul { padding-left:22px; }
+  pre { background:#f7f7f9; border:1px solid #e0e0e6; border-radius:4px; padding:10px 12px; overflow-x:auto; font-size:13px; page-break-inside:avoid; }
+  .kw { font-weight:700; } .en { color:var(--muted); font-size:12.5px; }
+  .katex-display { margin:6px 0; }
+  footer { margin-top:40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:10px; }
+  @media print { body{background:#fff;font-size:10.5pt;} .page{max-width:none;padding:0;} h2{page-break-before:always;} h2:first-of-type{page-break-before:avoid;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>模拟卷解题指引（不含答案）</h1>
+  <div class="sub">CS5491 Practice Midterm（Spring 2026 Version A · 40 分 / 110 分钟）｜ 每题：考点 → 公式规则 → 详细步骤 → 易错点 ｜ 自己动手做，答案见另一份文档</div>
+</header>
+
+<div class="box tip"><span class="tag">考试情报</span>
+<ul>
+  <li>本题分布：Q1 选择 10 分｜Q2 搜索 9 分｜Q3 Minimax 9 分｜Q4 CSP 5 分｜Q5 LP 7 分。</li>
+  <li><b>今年新增考点</b>：卷面说明写了 "this year's assessed scope also includes integer and convex optimization" —— IP（分支定界）和凸优化（凸性判断、梯度下降）也会考，参考手册 §7、§9、模板 T8/T9/T10。</li>
+  <li>练习时忽略负分规则（正式考试猜错倒扣，练习不计）。</li>
+</ul>
+</div>
+
+<!-- Q1 -->
+<h2>Q1 多选题（10 分）</h2>
+
+<h3>(b) 可采纳启发函数的组合（2 分）</h3>
+<div class="box formula"><span class="tag">所需规则</span>
+<ul>
+  <li>Admissible 定义：$0 \le h(n) \le h^*(n)$（不超过真实代价、非负）。</li>
+  <li><b>凸组合规则</b>：若 $\sum_i w_i = 1,\ w_i \ge 0$，则 $h = \sum_i w_i h_i$ 仍 admissible（每个 $h_i \le h^*$ ⟹ 加权和 $\le h^*\sum w_i = h^*$）。</li>
+  <li>$\min(h_1,\dots,h_k)$ 与 $\max(h_1,\dots,h_k)$ 都 admissible（每个都不超过 $h^*$，min/max 也不超过）。</li>
+</ul>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>对 6 个选项逐一分类：先看是不是"权重和为 1 的凸组合"。</li>
+  <li>不是凸组合的：构造反例——取 $f=g=h=h^*$ 代入，看结果是否 $&gt; h^*$（例如取 $h^*=2$，各启发都取 2）。</li>
+  <li>乘积选项：注意即使每个因子 $\le h^*$，多个大于 1 的数相乘会爆掉。</li>
+</ol>
+</div>
+
+<h3>(c) Forward Checking 改动哪些域（2 分）</h3>
+<div class="box tip"><span class="tag">题目数据（约束图，已核实）</span>
+<pre>A — D        A — B        B — C        B — E        C — F
+邻接：A:{B,D}  B:{A,C,E}  C:{B,F}  D:{A}  E:{B}  F:{C}</pre>
+</div>
+<div class="box formula"><span class="tag">所需规则</span>
+<p>卷面约定："Forward checking changes only <b>unassigned neighbors</b> of the newly assigned variable." —— 只改<span class="kw">新赋值变量的未赋值邻居</span>的域；非邻居、已赋值变量都不改。</p>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>i) 读图找 A 的邻居集合 → 去掉已赋值的（此时只有 A 已赋值）→ 勾选。</li>
+  <li>ii) 关键陷阱：此时 A、B 都已赋值 → FC for B 只改 B 的邻居中<span class="kw">仍未赋值</span>的那些。别把 A 勾上。</li>
+</ol>
+</div>
+
+<h3>(d) 判断题 ×5（5 分）</h3>
+<div class="box method"><span class="tag">逐条思路提示</span>
+<table>
+<tr><th>小题</th><th>考点</th><th>思考方向</th></tr>
+<tr><td>i</td><td>环境分类</td><td>Tic-tac-toe 双方都能看到整个棋盘 → 属于哪一类可观测性？</td></tr>
+<tr><td>ii</td><td>IDS vs BFS</td><td>"definitely expand more" 是全称命题——只需构造<b>一个反例</b>即可推翻。想想：目标在最左路径深处时，限深 DFS 一头扎下去，BFS 却要把浅层全部铺开。算一个小例子（如 $b$ 很大、目标在深度 3 最左）比较两者的扩展数。</td></tr>
+<tr><td>iii</td><td>A* 退化</td><td>把 $h(n)=0$ 代入 $f=g+h$，排序键变成什么？那个算法叫什么？</td></tr>
+<tr><td>iv</td><td>IP 图解法</td><td>2 变量 IP 能否画图？回想 LP 可行域 + 整数格点，以及分支定界的图上演示。</td></tr>
+<tr><td>v</td><td>凸集运算</td><td>两个凸集的并：想两个例子（并起来仍凸 / 并起来不凸）。参考手册 §9 表格。</td></tr>
+</table>
+</div>
+
+<!-- Q2 -->
+<h2>Q2 搜索追踪（9 分）</h2>
+<div class="box tip"><span class="tag">题目数据（图，已核实）</span>
+<pre>启发值：  S:6   A:4   B:3   C:3   D:1   E:2   G:0
+边(代价)：S–A=2   S–C=4   S–D=2   A–B=4   B–E=6
+         C–E=4   C–G=4   D–G=8   E–G=2
+结构： S 的邻居 A,C,D；A–B–E–G 一线；C 连 E,G；D 只连 S,G</pre>
+</div>
+
+<div class="box warn"><span class="tag">本题专属约定（务必按此执行）</span>
+<ul>
+  <li><b>树搜索</b>：同一状态的不同路径分开保留；同一状态再次被 visit 就再写一次。</li>
+  <li><b>Visit = 出队/出栈那一刻</b>；目标测试在 visit 时做，不是生成时。</li>
+  <li>平局：先按端点字母序，同字母再按先入队。</li>
+  <li>IDS：深度限制从 0 开始 0,1,2,…；<b>cutoff 节点的 visit 也要数</b>；孩子按字母序探索。</li>
+  <li>"Path length" = <b>总边代价</b>，不是边数。</li>
+</ul>
+</div>
+
+<h3>(a) 迭代加深 DFS（3 分）</h3>
+<div class="box formula"><span class="tag">所需规则</span>
+<ul>
+  <li>限深 DFS：节点深度 = 限制深度时只 visit、不扩展（cutoff）。</li>
+  <li>每轮限深从根重新开始；前几轮的 visit 都计入答案。</li>
+</ul>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>L=0：visit S（深度即达限制，cutoff）。写下一个。</li>
+  <li>L=1：visit S（扩展）→ 孩子按字母序 A, C, D 依次 visit（都是 cutoff）。</li>
+  <li>L=2：S → A → A 的孩子 B（cutoff，visit B）；回溯 → S → C → C 的孩子（排除父节点 S）按字母序 visit；visit 到 G 时做目标测试 → 停。</li>
+  <li>注意栈序陷阱：题目规定孩子按字母序探索（不是 LIFO 弹出的逆字母序）。</li>
+  <li>把各轮 visit 顺序连起来写；解路径 = S 到 G 的实际路径，path length = 路径边代价之和。</li>
+</ol>
+</div>
+
+<h3>(b) UCS（3 分）</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>建优先队列，键 = $g$（累计代价）。visit S，$g=0$。</li>
+  <li>循环：弹出 $g$ 最小者（平局字母序）→ <b>此时</b>做目标测试 → 不是目标则扩展，生成孩子 $g' = g + c$ 入队（树搜索：重复状态照常入队）。</li>
+  <li>逐步记录：弹出谁、它的 $g$、队列快照。建议列三列：Visit | g | Frontier。</li>
+  <li>visit 到 G 时停止，沿父指针回溯路径，加总边代价。</li>
+</ol>
+</div>
+
+<h3>(c) A*（3 分）</h3>
+<div class="box formula"><span class="tag">所需公式</span>
+$$f(n)=g(n)+h(n),\qquad h:\ S{=}6,\ A{=}4,\ B{=}3,\ C{=}3,\ D{=}1,\ E{=}2,\ G{=}0$$
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>同 UCS，只是队列键换成 $f = g + h$。</li>
+  <li>visit 时目标测试；弹出 G 停止。</li>
+  <li>对比：A* 的 visit 序应明显比 UCS 少（启发式把搜索拉向 G 一侧）——做完可自检这一点。</li>
+</ol>
+</div>
+
+<!-- Q3 -->
+<h2>Q3 Minimax 与 α-β（9 分）</h2>
+<div class="box tip"><span class="tag">题目数据（树，已核实）</span>
+<pre>根 ROOT(MAX △)
+├── 叶 10
+├── MIN₁(▽)
+│   ├── 叶 15
+│   └── MAXa(△)
+│       ├── 叶 1
+│       └── MINa(▽): 叶 5, 叶 2
+├── MIN₂(▽)
+│   ├── 叶 15
+│   └── MAXb(△)
+│       ├── 叶 20
+│       └── MINb(▽): 叶 50, 叶 2
+└── 叶 20
+图例：△ 上三角 = max；▽ 下三角 = min；叶子共 10 个</pre>
+</div>
+<div class="box warn"><span class="tag">本题专属约定</span>
+<ul>
+  <li>从左到右探索；<b>α ≥ β 即剪（含等号）</b>。</li>
+  <li>剪枝后返回的是"界"不是真值（"bounds returned after a cutoff need not be identical"）——打分看过程不看中间值。</li>
+</ul>
+</div>
+
+<h3>(a) 填 minimax 值（2 分）</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>自底向上：先算最深的 MINa、MINb（各自 min 两个孩子）。</li>
+  <li>再算 MAXa、MAXb，然后 MIN₁、MIN₂，最后根 = max(四个孩子)。</li>
+  <li>7 个内部节点 + 根 = 每个都要填。</li>
+</ol>
+</div>
+
+<h3>(b) α-β 剪枝（5 分）</h3>
+<div class="box formula"><span class="tag">所需规则</span>
+<ul>
+  <li>MAX 节点：每看完一个孩子，若 $v \ge \beta$ → <b>立即返回</b>（剪掉剩余孩子）；否则 $\alpha \leftarrow \max(\alpha, v)$。</li>
+  <li>MIN 节点：每看完一个孩子，若 $v \le \alpha$ → <b>立即返回</b>；否则 $\beta \leftarrow \min(\beta, v)$。</li>
+  <li>窗口 $(\alpha, \beta)$ 由父辈传入；根从 $(-\infty, +\infty)$ 开始。</li>
+</ul>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>根的第一个孩子是叶子 10 → 根 $\alpha$ 更新为 10（记住这个基准，后面所有 MIN 都拿它当砍刀）。</li>
+  <li>进 MIN₁：逐孩子看，随时检查"当前 $v \le \alpha=10$？"；MIN 内部的 MAX 子节点同样把窗口往下传。</li>
+  <li>提示：左子树深处有一个 MIN 节点，第一个孩子就会触发剪枝；右子树的 MAXb 也会在第一个孩子后剪掉整个子树。<b>原顺序是有剪枝的</b>，别想当然说没有。</li>
+  <li>被剪的枝画斜线；未探索节点涂阴影；数一数共几个叶子没被探索。</li>
+  <li>验证：根的最终值应与 (a) 相同（α-β 不改变根值）。</li>
+</ol>
+</div>
+
+<h3>(c) 更好的孩子顺序（2 分）</h3>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>α-β 的原则：MAX 节点先看<span class="kw">大的</span>孩子（尽早抬高 α），MIN 节点先看<span class="kw">小的</span>。</li>
+  <li>把根的孩子按 (a) 中算出的值降序排一排，写出新顺序。</li>
+  <li>在新顺序下重跑一遍：每个 MIN 应在第一个孩子后就触发 $v \le \alpha$ 剪枝，整棵子树砍掉；数出未探索叶子数（应远多于 (b)）。</li>
+</ol>
+</div>
+
+<!-- Q4 -->
+<h2>Q4 排课 CSP（5 分）</h2>
+<div class="box tip"><span class="tag">题目数据</span>
+<pre>课（[起,止) 区间）：C1 8:00–9:00   C2 8:30–9:30   C3 9:00–10:00
+                  C4 9:00–10:00  C5 9:30–10:30
+教师资质：A:{C3,C4}  B:{C2,C3,C4,C5}  C:{C1,C2,C3,C4,C5}
+约定：back-to-back 不算重叠；区间含起点不含终点</pre>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li><b>先算重叠对</b>：两课重叠 ⟺ $\max(start_i, start_j) &lt; \min(end_i, end_j)$。逐对检查 10 对，注意 9:00 结束与 9:00 开始<b>不</b>重叠、9:30 结束与 9:30 开始<b>不</b>重叠。</li>
+  <li>(a) 变量 $X_i$ = 教第 $i$ 门课的老师，$i=1..5$；域 = 各课的合格老师集合（C1 的域只有一个人！）；约束 = 每对重叠课 $X_i \ne X_j$（隐式即可）。</li>
+  <li>(b) 约束图：5 个节点，重叠对连边（应为 6 条边，含 C3–C4 这条"同档期"边）。</li>
+  <li>(c) 找一个解：从域最小的 $X_1$（被迫 = C）开始，逐课分配并检查不等约束；写出一个完整五元组即可。</li>
+</ol>
+</div>
+<div class="box warn"><span class="tag">易错点</span>
+<p>区间约定 $[start, end)$ 下：C1(8–9) 与 C3(9–10) <b>不重叠</b>；C2(8:30–9:30) 与 C5(9:30–10:30) <b>不重叠</b>；C3 与 C4 完全同时<b>重叠</b>。重叠对共 6 对，漏一对 (b) 就画错。</p>
+</div>
+
+<!-- Q5 -->
+<h2>Q5 营养片 LP（7 分）</h2>
+<div class="box tip"><span class="tag">题目数据</span>
+<pre>每片含量(mg)：        铁    钙    维生素
+Xtravit (x 片)         6     3      2
+Yeastalife (y 片)      2     3      4
+需求下限：铁≥18，钙≥21，维生素≥16；约定：含 x≥0, y≥0，变量视为连续</pre>
+</div>
+<div class="box method"><span class="tag">步骤</span>
+<ol class="steps">
+  <li>(a) 每种营养素一行：含量×数量 ≥ 需求。三条 $\ge$ 不等式。</li>
+  <li>(b) 画三条约束线（各求两个截距点即可画直线）：铁线 $6x+2y=18$、钙线 $x+y=7$、维线 $x+2y=8$；三条都是<b>上方</b>可行（≥）；再加 $x,y\ge0$。</li>
+  <li>求顶点：两两解方程组得三个交点，<b>逐个代回第三条约束验证</b>，不可行的丢弃（有一个交点会掉队）。</li>
+  <li>注意可行域<b>无上界</b>（往右上方开）——题目要求在图上用箭头标出超出绘图窗口的部分。</li>
+  <li>(c) 目标 $\min\ 10x+5y$：把每个可行顶点代进去算成本取最小；或画等值线 $10x+5y=k$ 沿 $-\mathbf{c}=(-10,-5)$ 方向平移。验证最优点的三条约束取值都达标。</li>
+</ol>
+</div>
+<div class="box warn"><span class="tag">易错点</span>
+<ul>
+  <li>顶点必须验证全部约束——两条线的交点可能在第三条约束的不可行侧。</li>
+  <li>无界区域别只交两条线就下结论；(c) 的最优在顶点上，但要在报告里说明"沿无界方向成本增加"。</li>
+  <li>别忘 $x, y \ge 0$ 也要画（坐标轴本身）。</li>
+</ul>
+</div>
+
+<div class="box tip"><span class="tag">做完后自检清单</span>
+<ul>
+  <li>Q2 三小问的解路径和 path length 应<b>一致</b>（同一个最优/可行解，代价相同）。</li>
+  <li>Q3 (b) 根值 = (a) 根值；被剪叶子数 ≤ 总叶子数 10。</li>
+  <li>Q4 (c) 的解必须同时过"资质"和"不重叠"两关。</li>
+  <li>Q5 (c) 的最优点坐标代回三条约束全部满足。</li>
+</ul>
+</div>
+
+<footer>CS5491 模拟卷解题指引 · 不含答案 · 答案见《模拟卷_参考答案.html》· 2026-10-15</footer>
+</div>
+</body>
+</html>

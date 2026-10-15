@@ -1,0 +1,148 @@
+--- Slide 1 ---
+CS5187: Vision & Image
+Feature invariance
+--- Slide 2 ---
+Local features: main components
+Detection: Identify the interest points
+
+
+
+
+
+
+Description: Extract vector feature descriptor surrounding each interest point.
+
+
+
+
+
+
+Matching: Determine correspondence between descriptors in two views
+Kristen Grauman
+--- Slide 3 ---
+Harris features (in red)
+--- Slide 4 ---
+Image transformations
+Geometric
+
+		     Rotation
+
+             Scale
+Photometric
+   Intensity change
+--- Slide 5 ---
+Invariance and equivariance
+We want corner locations to be invariant to photometric transformations and equivariant to geometric transformations
+Invariance: image is transformed and corner locations do not change
+Equivariance: if we have two transformed versions of the same image, features should be detected in corresponding locations
+(Sometimes “invariant” and “equivariant” are both referred to as “invariant”)
+(Sometimes “equivariant” is called “covariant”)
+--- Slide 6 ---
+Harris detector invariance properties: image translation
+Derivatives and window function are equivariant
+Corner location is equivariant w.r.t. translation
+--- Slide 7 ---
+Harris detector invariance properties: image rotation
+Second moment ellipse rotates but its shape (i.e. eigenvalues) remains the same
+Corner location is equivariant w.r.t. image rotation
+--- Slide 8 ---
+Harris detector invariance properties: Affine intensity change
+Only derivatives are used to compute Harris scores   	invariance to intensity shift I  I + b
+Intensity scaling: I  a I
+Partially invariant to affine intensity change
+I  a I + b
+--- Slide 9 ---
+Harris detector invariance properties: scaling
+All points will be classified as edges
+Corner
+Neither invariant nor equivariant to scaling
+--- Slide 10 ---
+Scale invariant detection
+Suppose you’re looking for corners
+
+
+
+
+
+
+
+Key idea:  find scale that gives local maximum of f
+in both position and scale
+One definition of f: the Harris operator
+--- Slide 11 ---
+Slide from Tinne Tuytelaars
+Lindeberg et al, 1996
+Slide from Tinne Tuytelaars
+Lindeberg et al., 1996
+--- Slide 12 ---
+--- Slide 13 ---
+--- Slide 14 ---
+--- Slide 15 ---
+--- Slide 16 ---
+--- Slide 17 ---
+--- Slide 18 ---
+--- Slide 19 ---
+Implementation
+Instead of computing f for larger and larger windows, we can implement using a fixed window size with a Gaussian pyramid
+(sometimes need to create in-between levels, e.g. a ¾-size image)
+--- Slide 20 ---
+Feature extraction: Corners and blobs
+--- Slide 21 ---
+Another common definition of f
+The Laplacian of Gaussian (LoG)
+(very similar to a Difference of Gaussians (DoG) – i.e. a Gaussian minus a slightly smaller Gaussian)
+--- Slide 22 ---
+Laplacian of Gaussian
+“Blob” detector
+
+
+
+
+
+
+Find maxima and minima of LoG operator in space and scale
+*
+=
+maximum
+minima
+--- Slide 23 ---
+Scale selection
+At what scale does the Laplacian achieve a maximum response for a binary circle of radius r?
+r
+image
+Laplacian
+--- Slide 24 ---
+Characteristic scale
+We define the characteristic scale as the scale that produces peak of Laplacian response
+characteristic scale
+T. Lindeberg (1998). "Feature detection with automatic scale selection." International Journal of Computer Vision 30 (2): pp 77--116.
+--- Slide 25 ---
+Find local maxima in 3D position-scale space
+K. Grauman, B. Leibe
+ List of           (x, y, s)
+--- Slide 26 ---
+Scale-space blob detector: Example
+--- Slide 27 ---
+Scale-space blob detector: Example
+--- Slide 28 ---
+Scale-space blob detector: Example
+--- Slide 29 ---
+covariant
+Note: The LoG and DoG operators are both rotation equivariant
+Scale Invariant Detection
+--- Slide 30 ---
+Questions?
+--- Slide 31 ---
+Feature descriptors
+We know how to detect good points
+Next question: How to match them?
+
+
+
+
+
+
+
+
+Answer: Come up with a descriptor for each point, find similar descriptors between the two images
+?

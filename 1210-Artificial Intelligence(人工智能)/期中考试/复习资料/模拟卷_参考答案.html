@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模拟卷参考答案（做完再看）</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, { delimiters: [
+    {left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false}
+  ], throwOnError: false });
+});
+</script>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#ccc;
+    --blue-bg:#eef4fb; --blue-bd:#3a6ea5; --orange-bg:#fdf3e7; --orange-bd:#c07a1f;
+    --green-bg:#eef7ee; --green-bd:#3a7d44; --red-bg:#fbeeee; --red-bd:#b03a3a; --gray-bg:#f5f5f5; }
+  * { box-sizing:border-box; }
+  body { font-family:"Segoe UI","Microsoft YaHei",sans-serif; color:var(--ink); margin:0; background:#fafafa; line-height:1.55; font-size:15px; }
+  .page { max-width:920px; margin:0 auto; padding:24px 32px 80px; background:#fff; }
+  header.hero { border-bottom:3px solid var(--red-bd); padding-bottom:14px; margin-bottom:18px; }
+  header.hero h1 { margin:0 0 6px; font-size:24px; }
+  header.hero .sub { color:var(--muted); font-size:13.5px; }
+  h2 { font-size:19px; border-left:5px solid var(--red-bd); padding-left:10px; margin:30px 0 10px; page-break-after:avoid; }
+  h3 { font-size:16px; margin:18px 0 8px; page-break-after:avoid; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 14px; font-size:13.5px; page-break-inside:avoid; }
+  th,td { border:1px solid var(--line); padding:5px 8px; text-align:left; vertical-align:top; }
+  th { background:var(--gray-bg); }
+  .box { border-radius:5px; padding:10px 14px; margin:10px 0; page-break-inside:avoid; }
+  .ans { background:var(--green-bg); border:1px solid var(--green-bd); }
+  .warn { background:var(--red-bg); border:1px solid var(--red-bd); }
+  .tip { background:var(--gray-bg); border:1px solid #999; }
+  .formula { background:var(--blue-bg); border:1px solid var(--blue-bd); }
+  .ans .tag,.warn .tag,.tip .tag,.formula .tag { display:inline-block; font-size:11.5px; font-weight:700; margin-bottom:4px; }
+  .ans .tag { color:var(--green-bd);} .warn .tag { color:var(--red-bd);} .tip .tag { color:#555;} .formula .tag{color:var(--blue-bd);}
+  pre { background:#f7f7f9; border:1px solid #e0e0e6; border-radius:4px; padding:10px 12px; overflow-x:auto; font-size:13px; page-break-inside:avoid; }
+  ul { padding-left:22px; }
+  .kw { font-weight:700; } .en { color:var(--muted); font-size:12.5px; }
+  .katex-display { margin:6px 0; }
+  footer { margin-top:40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:10px; }
+  @media print { body{background:#fff;font-size:10.5pt;} .page{max-width:none;padding:0;} h2{page-break-before:always;} h2:first-of-type{page-break-before:avoid;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>模拟卷参考答案（做完再看）</h1>
+  <div class="sub">CS5491 Practice Midterm · 完整推演过程 ｜ 图/树数据已从原卷矢量图形逐边核实 ｜ 建议先独立完成再对照</div>
+</header>
+
+<!-- Q1 -->
+<h2>Q1 多选题</h2>
+
+<h3>(a) 写姓名学号 — 送分（1 分）</h3>
+<div class="box ans"><span class="tag">答案</span><p>照做即可。</p></div>
+
+<h3>(b) 可采纳启发组合（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p><b>勾选 4 项</b>：$\frac{f}{3}+\frac{g}{3}+\frac{h}{3}$ ✓、$\frac{f}{6}+\frac{g}{3}+\frac{h}{2}$ ✓、$\min(f,g,h)$ ✓、$\max(f,g,h)$ ✓</p>
+<p><b>推理</b>（设三者都 admissible：各 $\le h^*$ 且 $\ge 0$）：</p>
+<ul>
+  <li>和 $f+g+h$：$\le 3h^*$，可超 $h^*$（反例 $f=g=h=h^*=2$ → 和 = 6 &gt; 2）✗</li>
+  <li>$\frac{f+g+h}{3}$：权重和为 1 的凸组合 ⟹ $\le \frac{h^*+h^*+h^*}{3}=h^*$ ✓</li>
+  <li>$\frac{f}{6}+\frac{g}{3}+\frac{h}{2}$：$\frac16+\frac13+\frac12=1$，同为凸组合 ✓</li>
+  <li>乘积 $f\cdot g\cdot h$：$2\cdot2\cdot2=8&gt;2$ ✗（每个都 $\le h^*$ 也救不了乘法）</li>
+  <li>$\min$：不超过任何一个 ⟹ $\le h^*$ ✓（但可能太弱）</li>
+  <li>$\max$：被三个 $h^*$ 封顶 ⟹ $\le h^*$ ✓（三者中最强且仍 admissible）</li>
+</ul>
+<p class="en">口诀：凸组合、min、max 保 admissible；求和、乘积不保。</p>
+</div>
+
+<h3>(c) Forward Checking（各 1 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p>约束图（已核实）：A—D、A—B、B—C、B—E、C—F</p>
+<ul>
+  <li>i) FC for A 只改 A 的<b>未赋值邻居</b> → <b>B、D</b>（A 自身刚赋值、C/E/F 不是 A 的邻居）</li>
+  <li>ii) FC for B 只改 B 的未赋值邻居。此时 A、B 已赋值 → B 的邻居 {A, C, E} 去掉已赋值的 A → <b>C、E</b>（陷阱：A 不会被改——它已赋值）</li>
+</ul>
+</div>
+
+<h3>(d) 判断题（各 1 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<table>
+<tr><th>小题</th><th>答案</th><th>理由</th></tr>
+<tr><td>i) Tic-tac-toe 完全可观测</td><td><b>T</b></td><td>双方都看到整个棋盘，无隐藏信息</td></tr>
+<tr><td>ii) IDS 一定比 BFS 扩展更多</td><td><b>F</b></td><td>反例：目标在最左路径深处（如 $b$ 大、深度 3），限深 DFS 直插目标只访问个位数节点，BFS 要先铺满整个浅层（$O(b^{s-1})$ 个）。"definitely" 被一个反例推翻</td></tr>
+<tr><td>iii) $h(n)=0$ 的 A* ≡ UCS</td><td><b>T</b></td><td>$f=g+0=g$，排序、扩展、终止完全一致</td></tr>
+<tr><td>iv) 2 变量 IP 不能图解</td><td><b>F</b></td><td>可以：画 LP 可行域 + 标整数格点，图上做分支定界（课件演示过）</td></tr>
+<tr><td>v) 两凸集之并可能凸也可能不凸</td><td><b>T</b></td><td>可能凸：$[0,1]\cup[1,2]=[0,2]$（相邻）；可能不凸：$\{0\}\cup\{2\}$ 缺中点 1</td></tr>
+</table>
+</div>
+
+<!-- Q2 -->
+<h2>Q2 搜索追踪</h2>
+<div class="box tip"><span class="tag">图数据（核实版）</span>
+<pre>h: S=6 A=4 B=3 C=3 D=1 E=2 G=0
+边: S-A=2  S-C=4  S-D=2  A-B=4  B-E=6  C-E=4  C-G=4  D-G=8  E-G=2</pre>
+</div>
+
+<h3>(a) 迭代加深 DFS（3 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<pre>L=0: S                              （S 即达深度限制，cutoff）
+L=1: S, A, C, D                     （A,C,D 均在深度1 = 限制，cutoff）
+L=2: S, A, B, C, E, G               （G 在 visit 时命中目标，停）
+全部 visit 序：S | S,A,C,D | S,A,B,C,E,G
+解：S → C → G，path length = 4 + 4 = 8</pre>
+<p><b>L=2 推演</b>：S(0) → 孩子 A,C,D 字母序先 A(1) → A 的孩子 B(2)=限制，visit B 即回溯 → C(1) → C 的孩子（除父 S）E,G 字母序 → visit E(2,cutoff) → visit G(2) = <b>目标</b>，终止。</p>
+</div>
+
+<h3>(b) UCS（3 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<pre>Visit  g   Frontier（按 g 排序）
+S      0   A(2), D(2), C(4)
+A      2   D(2), C(4), B(6)          ← A/D 平局 g=2，字母序 A 先
+D      2   C(4), B(6), G(10)         ← D 扩展出 G(2+8=10)
+C      4   B(6), E(8), G(8), G(10)   ← C 扩展出 E(8)、G(4+4=8) 新路径
+B      6   E(8), G(8), G(10), E(12)  ← B 扩展出 E(6+6=12)
+E      8   G(8), G(10), G(10), E(12) ← E(8) 与 G(8) 平局，字母序 E 先
+G      8   ★ 目标！停止
+visit 序：S, A, D, C, B, E, G
+解：S → C → G，path length = 8</pre>
+<p>注意 G 被生成三次（树搜索：g=10、8、10 各一条路径），弹出的是 g=8 的那条。</p>
+</div>
+
+<h3>(c) A*（3 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<pre>Visit  g   h   f    Frontier（按 f 排序）
+S      0   6   6    A(6), C(7), D(3)
+D      2   1   3    A(6), C(7), G(10)        ← f=2+1=3 最小
+A      2   4   6    C(7), B(9), G(10)        ← B: g=6, f=6+3=9
+C      4   3   7    G(8), B(9), E(10), G(10) ← E: g=8,f=10；G: g=8,f=8
+G      8   0   8    ★ 目标！停止
+visit 序：S, D, A, C, G
+解：S → C → G，path length = 8</pre>
+<p>验证：A* 只 visit 5 个节点（UCS 7 个），启发式把搜索拉向 C–G 一侧；三问的解与代价一致（S-C-G, 8）。</p>
+</div>
+
+<!-- Q3 -->
+<h2>Q3 Minimax 与 α-β</h2>
+<div class="box tip"><span class="tag">树数据（核实版：△=max ▽=min）</span>
+<pre>ROOT(MAX): [叶10, MIN₁, MIN₂, 叶20]
+MIN₁(▽): [叶15, MAXa(△)]
+MAXa(△): [叶1, MINa(▽)]      MINa(▽): [叶5, 叶2]
+MIN₂(▽): [叶15, MAXb(△)]
+MAXb(△): [叶20, MINb(▽)]     MINb(▽): [叶50, 叶2]</pre>
+</div>
+
+<h3>(a) Minimax 值（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<table>
+<tr><th>节点</th><th>计算</th><th>值</th></tr>
+<tr><td>MINa</td><td>min(5, 2)</td><td>2</td></tr>
+<tr><td>MAXa</td><td>max(1, 2)</td><td>2</td></tr>
+<tr><td>MIN₁</td><td>min(15, 2)</td><td>2</td></tr>
+<tr><td>MINb</td><td>min(50, 2)</td><td>2</td></tr>
+<tr><td>MAXb</td><td>max(20, 2)</td><td>20</td></tr>
+<tr><td>MIN₂</td><td>min(15, 20)</td><td>15</td></tr>
+<tr><td><b>ROOT</b></td><td>max(10, 2, 15, 20)</td><td><b>20</b></td></tr>
+</table>
+</div>
+
+<h3>(b) α-β 剪枝（5 分）</h3>
+<div class="box ans"><span class="tag">答案：原顺序有两处剪枝</span>
+<pre>root MAX(-∞,+∞)
+├─叶10 → α=10
+├─MIN₁(α=10,β=+∞)
+│   ├─叶15 → β=15
+│   └─MAXa(α=10,β=15)
+│       ├─叶1  → v=1, α 仍 10
+│       └─MINa(α=10,β=15)
+│           ├─叶5 → v=5 ≤ α=10 ✂ 剪！返回 5（界，非真值 2）
+│           └─叶2  ← 未探索
+│       → MAXa 返回 max(1,5)=5
+│   → MIN₁ 返回 min(15,5)=5，root α 仍 10
+├─MIN₂(α=10,β=+∞)
+│   ├─叶15 → β=15
+│   └─MAXb(α=10,β=15)
+│       ├─叶20 → v=20 ≥ β=15 ✂ 剪！返回 20
+│       └─MINb(50,2) ← 整个子树未探索
+│   → MIN₂ 返回 min(15,20)=15，root α=15
+└─叶20 → v=20 → root = 20 ✓（与 (a) 一致）</pre>
+<p><b>被剪内容</b>：① MINa 的第二个孩子（叶 2，左下）；② MAXb 的第二个孩子 MINb 及其两个叶（50、2，右下）。共 <b>3 个叶子未探索</b>。在图上给这两条枝画斜线、给叶 2 / MINb / 50 / 2 涂阴影。</p>
+<p class="en">注意卷面约定 α ≥ β 含等号即可剪——本题两处剪枝都是严格不等（5&lt;10、20&gt;15），用哪种教材约定结果相同。</p>
+</div>
+
+<h3>(c) 更优顺序（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p><b>有</b>。把根的孩子按 minimax 值降序：<b>[叶20, MIN₂, MIN₁, 叶10]</b>（或 [20, MIN₁, MIN₂, 10]，前两个换序效果相同）。</p>
+<pre>叶20 → α=20
+MIN₂(α=20): 叶15 → v=15 ≤ 20 ✂ 剪掉 MAXb 子树（20,50,2 未探索）
+MIN₁(α=20): 叶15 → v=15 ≤ 20 ✂ 剪掉 MAXa 子树（1,5,2 未探索）
+叶10 → 10 < 20，无剪枝
+root = 20 不变；未探索叶子 6 个（对比原顺序 3 个）</pre>
+<p class="en">原理：MAX 先看大孩子尽早抬 α；之后每个 MIN 第一个孩子就触发 $v \le \alpha$ 剪枝。</p>
+</div>
+
+<!-- Q4 -->
+<h2>Q4 排课 CSP</h2>
+<h3>(a) 形式化（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p><b>重叠对</b>（$\max(s_i,s_j) &lt; \min(e_i,e_j)$，back-to-back 不算）：</p>
+<pre>{C1,C2} {C2,C3} {C2,C4} {C3,C4} {C3,C5} {C4,C5}   共 6 对
+（C1–C3 不重叠：9:00 边界相接；C2–C5 不重叠：9:30 相接；C1 与 C4/C5 不相交）</pre>
+<p><b>变量</b>：$X_i$ = 教 Class $i$ 的教授，$i = 1..5$</p>
+<p><b>域</b>（资质隐含在域里）：$D(X_1)=\{C\}$，$D(X_2)=\{B,C\}$，$D(X_3)=\{A,B,C\}$，$D(X_4)=\{A,B,C\}$，$D(X_5)=\{B,C\}$</p>
+<p><b>约束</b>：对每对时间重叠的课 $(i,j)$：$X_i \ne X_j$（一位教授不能同时上两门）</p>
+</div>
+<h3>(b) 约束图（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<pre>C1 ── C2 ──┬── C3 ── C5
+            │    │
+C4 ─────────┴────┘
+（边：C1-C2, C2-C3, C2-C4, C3-C4, C3-C5, C4-C5；节点 = 5 门课）</pre>
+</div>
+<h3>(c) 一个解（1 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p>$(X_1, X_2, X_3, X_4, X_5) = (C,\ B,\ A,\ C,\ B)$</p>
+<p>验证：C1=C（唯一选择）→ C2≠C 且资质 → C2=B → C3=A（A 资质 {3,4}）→ C4≠A,C3 与 C2 都不重叠约束：C4 vs C3(同档)=A → C4≠A；C4 vs C2=B → C4≠B → C4=C ✓ → C5≠C4=C → C5=B ✓（B 资质含 5）。全部 6 对约束通过。</p>
+<p class="en">另一组等价解：(C, B, C, A, B)。</p>
+</div>
+
+<!-- Q5 -->
+<h2>Q5 营养片 LP</h2>
+<h3>(a) 三条不等式（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+$$\text{铁：}\ 6x + 2y \ge 18\qquad \text{钙：}\ 3x + 3y \ge 21\qquad \text{维生素：}\ 2x + 4y \ge 16$$
+<p class="en">（画图时另加 $x \ge 0,\ y \ge 0$。）</p>
+</div>
+<h3>(b) 可行域（3 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+<p>三条直线（各取两个截距即可画）：</p>
+<pre>铁线  6x+2y=18：过 (3,0) 和 (0,9)   → 取直线上方
+钙线  3x+3y=21：过 (7,0) 和 (0,7)   → 取直线上方
+维线  2x+4y=16：过 (8,0) 和 (0,4)   → 取直线上方</pre>
+<p>顶点：两两求交并代回第三条约束：</p>
+<table>
+<tr><th>交点</th><th>解得</th><th>验证第三条</th><th>可行?</th></tr>
+<tr><td>铁∩钙</td><td>$3x{+}y{=}9,\ x{+}y{=}7$ → $(1, 6)$</td><td>维：$2+24=26\ge16$ ✓</td><td>✓ 顶点</td></tr>
+<tr><td>钙∩维</td><td>$x{+}y{=}7,\ x{+}2y{=}8$ → $(6, 1)$</td><td>铁：$36+2=38\ge18$ ✓</td><td>✓ 顶点</td></tr>
+<tr><td>铁∩维</td><td>$3x{+}y{=}9,\ x{+}2y{=}8$ → $(2, 3)$</td><td>钙：$6+9=15 &lt; 21$ ✗</td><td>✗ 丢弃</td></tr>
+</table>
+<p>可行域 = 两顶点 $(1,6)$、$(6,1)$ 之间沿钙线 $x+y=7$ 的边界 + 向右上方<b>无界展开</b>（图上画箭头伸出绘图窗口）。</p>
+</div>
+<h3>(c) 最低成本（2 分）</h3>
+<div class="box ans"><span class="tag">答案</span>
+$$\min\ 10x + 5y:\quad (1,6) \to 10+30=\$40;\qquad (6,1) \to 60+5=\$65$$
+<p>沿无界方向（增大 $x$ 或 $y$）成本只增不减 → 最优顶点 $(1,6)$。</p>
+<p><b>买 1 片 Xtravit + 6 片 Yeastalife，最低成本 $40。</b>（验证：铁 $6+12=18$✓ 钙 $3+18=21$✓ 维 $2+24=26$✓；LP 最优恰好是整数解。）</p>
+</div>
+
+<div class="box warn"><span class="tag">对照后的复盘建议</span>
+<ul>
+  <li>Q2 错了 → 重做参考手册 T1 模板，注意"visit=出队、树搜索重复入队、字母序平局"。</li>
+  <li>Q3 (b) 漏剪 → 你的 α 没有从根的孩子（叶 10）正确传进子树；每个节点都要问"我收到的窗口是什么"。</li>
+  <li>Q4 漏重叠对 → 区间 $[start, end)$ 的边界处理；C3–C4 同档是最容易漏的边。</li>
+  <li>Q5 顶点没验证 → 铁∩维的交点 $(2,3)$ 不可行，直接画进可行域会连错 (c)。</li>
+</ul>
+</div>
+
+<footer>CS5491 模拟卷参考答案 · 图/树数据经矢量图形逐边核实 · 2026-10-15</footer>
+</div>
+</body>
+</html>

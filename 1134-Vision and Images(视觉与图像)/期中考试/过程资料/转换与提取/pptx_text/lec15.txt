@@ -1,0 +1,288 @@
+--- Slide 1 ---
+Neural networks
+CS5187: Computer Vision
+--- Slide 2 ---
+Input: an image
+Assume it is of fixed size, e.g. 128x128 pixels
+Output: the class label for that image
+
+Label is generally a discrete label from a pre-defined set
+e.g. {cat, dog, cow, toaster, apple, tomato, truck, … }
+New problem: Image classification
+def classifier(image):
+	//Do some stuff
+	return class_label;
+--- Slide 3 ---
+Image classification demo
+https://cloud.google.com/vision/docs/drag-and-drop
+See also: 
+https://aws.amazon.com/rekognition/
+https://www.clarifai.com/
+https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/
+   …
+--- Slide 4 ---
+The Semantic Gap
+What we see
+What the computer sees
+--- Slide 5 ---
+The same class of object can appear very differently in different images
+Variation Makes Recognition Hard
+--- Slide 6 ---
+Distinct realities can produce the same image…
+We generally can’t compute the “right” answer, but we can compute the most likely one…
+We need some kind of prior to condition on. We can learn this prior from data:
+The Problem is Under-constrained
+--- Slide 7 ---
+An image is just a bunch of numbers
+Let’s stack them up into a vector
+Our training data is just a bunch of high-dimensional points now
+Images As High-Dimensional Vectors
+--- Slide 8 ---
+An image is just a bunch of numbers
+Let’s stack them up into a vector
+Our training data is just a bunch of high-dimensional points now
+
+Divide space into different regions for different classes
+Images As High-Dimensional Vectors
+--- Slide 9 ---
+An image is just a bunch of numbers
+Let’s stack them up into a vector
+Our training data is just a bunch of high-dimensional points now
+
+Divide space into different regions for different classes
+Images As High-Dimensional Vectors
+--- Slide 10 ---
+Define a distribution over space for each class
+or
+An image is just a bunch of numbers
+Let’s stack them up into a vector
+Our training data is just a bunch of high-dimensional points now
+
+Divide space into different regions for different classes
+Images As High-Dimensional Vectors
+--- Slide 11 ---
+How high-dimensional is an image?
+Let’s consider an iPhone X photo:
+4032 x 3024 pixels
+Every pixel has 3 colors
+36,578,304 pixels (36.5 Mega pixels)
+In practice, images sit on a lower-dimensional manifold
+Think of image features and dimensionality reduction as ways to represent images by their location on such manifolds
+Image Features and Dimensionality Reduction
+--- Slide 12 ---
+Image Features and Dimensionality Reduction
+How high-dimensional is an image?
+Let’s consider an iPhone X photo:
+4032 x 3024 pixels
+Every pixel has 3 colors
+36,578,304 pixels (36.5 Mega pixels)
+In practice, images sit on a lower-dimensional manifold
+Think of image features and dimensionality reduction as ways to represent images by their location on such manifolds
+--- Slide 13 ---
+Collect a database of images with labels
+Use ML to train an image classifier
+Evaluate the classifier on test images
+Training & Testing a Classifier
+Slide from Andrej Karpathy and Fei-Fei Li   http://vision.stanford.edu/teaching/cs231n/
+--- Slide 14 ---
+Training & Testing a Classifier
+--- Slide 15 ---
+Training & Testing a Classifier
+--- Slide 16 ---
+Nearest Neighbor
+kNN  (“k-Nearest Neighbors”)
+Linear Classifier
+Neural Network
+Deep Neural Network
+Transformers
+…
+Classifiers
+--- Slide 17 ---
+Nearest Neighbor
+kNN  (“k-Nearest Neighbors”)
+Linear Classifier
+Neural Network
+Deep Neural Network
+Transformers
+…
+Classifiers
+--- Slide 18 ---
+Linear Classifiers
+--- Slide 19 ---
+Linear Classifier
+Store hyperplanes that best separate different classes
+We can compute continuous class score by calculating (signed) distance from hyperplane
+Linear Classification vs. Nearest Neighbors
+--- Slide 20 ---
+Score functions
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 21 ---
+Parametric Approach
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 22 ---
+Parametric Approach: Linear Classifier
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 23 ---
+Parametric Approach: Linear Classifier
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 24 ---
+Linear Classifier
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 25 ---
+Interpretation: Algebraic
+Slide adapted from Andrej Karpathy and Fei-Fei Li http://vision.stanford.edu/teaching/cs231n/
+--- Slide 26 ---
+Parameters define a hyperplane for each class:
+
+
+We can think of each class score as defining a distribution that is proportional to distance from the corresponding hyperplane
+Interpretation: Geometric
+--- Slide 27 ---
+Hard Cases for a Linear Classifier
+--- Slide 28 ---
+We can think of the rows in         as templates for each class
+Interpretation: Template matching
+--- Slide 29 ---
+Linear Classifier: Three Viewpoints
+--- Slide 30 ---
+So far: Defined a (linear) score function f(x, W) = Wx + b
+--- Slide 31 ---
+Linear classification
+Output scores
+--- Slide 32 ---
+Loss functions
+--- Slide 33 ---
+Given ground truth labels (yi), scores f(xi, W)
+how unhappy are we with the scores?
+Loss function or objective/cost function measures unhappiness
+
+During training, want to find the parameters W that minimize the loss function
+Loss function, cost/objective function
+--- Slide 34 ---
+Two classes (e.g., “cat” and “not cat”)
+AKA “positive” and “negative” classes
+Simpler example: binary classification
+--- Slide 35 ---
+Linear classifiers
+Which hyperplane is best? We need a loss function to decide
+Find linear function (hyperplane) to separate positive and negative examples
+--- Slide 36 ---
+One possibility: Number of misclassified examples
+Problems: discrete, can’t break ties
+We want the loss to lead to good generalization
+We want the loss to work for more than 2 classes
+What is a good loss function?
+--- Slide 37 ---
+Interpret Scores as unnormalized log probabilities of classes
+Softmax classifier
+--- Slide 38 ---
+Softmax classifier
+--- Slide 39 ---
+Cross-entropy loss
+(score function)
+We call Li cross-entropy loss
+--- Slide 40 ---
+Cross-entropy loss
+(score function)
+We call Li cross-entropy loss
+--- Slide 41 ---
+Cross-entropy loss
+(score function)
+We call Li cross-entropy loss
+--- Slide 42 ---
+Cross-entropy loss is just one possible loss function
+One nice property is that it reinterprets scores as probabilities, which have a natural meaning
+
+SVM (max-margin) loss functions also used to be popular
+But currently, cross-entropy is the most common classification loss
+Losses
+--- Slide 43 ---
+The story so far: linear classification
+What we have: a score function and loss function
+Score function maps an input data instance (e.g., an image) to a vector of scores, one for each category
+Last time, our score function is based on linear classifier
+
+
+Find W and b that minimize a loss over labeled training data, e.g. cross-entropy loss
+f:  score function
+x: input instance
+W, b: parameters of a linear (actually affine) function
+--- Slide 44 ---
+Questions?
+--- Slide 45 ---
+Neural networks
+Slide credit: Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 46 ---
+Neural networks
+Slide credit: Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 47 ---
+Neural networks
+Slide credit: Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 48 ---
+Neural networks
+Total number of weights to learn: 
+	3,072 x 100 + 100 x 10 = 308,200
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 49 ---
+Neural networks
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 50 ---
+Neural networks
+Very coarse generalization of neural networks:
+Linear functions chained together and separated by non-linearities (activation functions), e.g. “max”
+
+
+Why separate linear functions with non-linear functions?
+Very roughly inspired by real neurons
+--- Slide 51 ---
+Neural network architecture
+Computation graph for a 2-layer neural network
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 52 ---
+Deep networks typically have many layers and potentially millions of parameters
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+Neural networks: architectures
+--- Slide 53 ---
+Deep neural network
+Inception network (Szegedy et al, 2015)
+22 layers
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 54 ---
+Just like a linear classifer – but in this case, just one layer of a larger network
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 55 ---
+Summary so far
+A classic neural network arranges neurons into fully-connected layers. This kind of neural network is also called a Multi-Layer Perceptron
+The layer abstraction enables efficient implementations of neural networks using vectorized operations like matrix multiplication
+Adapted from Fei-Fei Li & Andrej Karpathy & Serena Leung
+--- Slide 56 ---
+Optimizing parameters with gradient descent
+How do we find the best W and b parameters?
+In general: gradient descent
+Start with a guess of a good W and b (or randomly initialize them)
+Compute the loss function for this initial guess and the gradient of the loss function
+Step some distance in the negative gradient direction (direction of steepest descent)
+Repeat steps 2 & 3
+Note: efficiently performing step 2 for deep networks is called backpropagation
+--- Slide 57 ---
+Gradient descent: walk in the direction opposite gradient
+Q: How far?
+A: Step size: learning rate
+Too big: will miss the minimum
+Too small: slow convergence
+--- Slide 58 ---
+2D example of gradient descent
+In reality, in deep learning we are optimizing a highly complex loss function with millions of variables (or more)
+More on this later…
+https://laptrinhx.com/gradient-descent-animation-2-multiple-linear-regression-3070246823/
+--- Slide 59 ---
+2D example: TensorFlow Playground
+https://playground.tensorflow.org
+--- Slide 60 ---
+Questions?
+--- Slide 61 ---
+Multi-layer perceptrons: just the beginning
+MLPs can work well with simple image classification problems (e.g., digit recognition)
+For more complex recognition problems (e.g., recognizing 1,000s of categories), we need more technology (convolutional neural networks and transformers)
+MLPs have a surprising application: 3D reconstruction!
+See NeRFs (neural radiance fields) next time
