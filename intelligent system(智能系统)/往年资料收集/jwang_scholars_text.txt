@@ -1,0 +1,51 @@
+Overview
+Fingerprint
+Network
+Research output
+(549)
+Projects
+(11)
+Prizes
+(20)
+Press/Media
+(6)
+Activities
+(6)
+Researchers
+(3)
+Similar Profiles
+(1)
+Supervised Work
+(6)
+Personal profile
+Author IDs
+ORCID iD:
+0000-0002-1305-5735
+Scopus Author ID:
+56486169700
+ResearcherID:
+A-2807-2011
+Google Scholar Profile:
+TBcb-1kAAAAJ
+Impact
+Metrics for Academic and Research Impact
+Biography
+Jun Wang is a Chair Professor of Computational Intelligence in the Department of Computer Science and Department of Data Science at City University of Hong Kong. Prior to this position, he held various academic positions at Dalian University of Technology, Case Western Reserve University, University of North Dakota, and Chinese University of Hong Kong. He also held various part-time visiting positions at US Air Force Armstrong Laboratory, RIKEN Brain Science Institute, Huazhong University of Science and Technology, Dalian University of Technology, and Shanghai Jiao Tong University. He received a B.S. degree in electrical engineering and an M.S. degree in systems engineering from Dalian University of Technology, Dalian, China. He received his Ph.D. degree in systems engineering from Case Western Reserve University, Cleveland, Ohio, USA. His current research interests include neural networks and their applications. He published about 330 journal papers, 16 book chapters, 11 edited books, and numerous conference papers in these areas. He has served on the editorial boards of many journals in different capacities, such as the
+IEEE Transactions on Artificial Intelligence; IEEE Transactions on Cybernetics; IEEE Transactions on Neural Networks; IEEE Transactions on Systems, Man, and Cybernetics–Part C; International Journal of Neural Systems;
+and
+Neural Networks.
+He was also a guest editor of special issues in the
+European Journal of Operational Research
+;
+IEEE Transactions on Systems, Man and Cybernetics: Systems; International Journal of Neural Systems; Neurocomputing; International Journal of Fuzzy Systems
+; and J
+ournal of the Franklin Institute
+. He was an organizer of several international conferences. He was a distinguished lecturer of the IEEE Computational Intelligence Society and IEEE Systems, Man and Cybernetics Society. In addition, he served as President of the Asia Pacific Neural Network Assembly  and many organizations such as the IEEE Fellow Committee; IEEE Computational Intelligence Society Awards Committee, IEEE Systems, Man, and Cybernetics Society Board of Governors and Awards Committee. He is a life fellow of the IEEE, a fellow of the International Association for Pattern Recognition and Hong Kong Academy of Engineering, and a foreign member of Academia Europaea.
+Research Interests/Areas
+Computational inteligence
+Neural computation
+Optimization methods
+Data processing
+Intelligent control
+Research Grants
+Collaborative neurodynamic approaches to distributed optimization, global optimization and multi-objective optimization, Basic research, National Natural Science Fou

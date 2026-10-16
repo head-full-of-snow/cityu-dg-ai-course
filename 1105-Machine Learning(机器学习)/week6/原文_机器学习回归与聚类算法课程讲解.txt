@@ -1,0 +1,427 @@
+[00:00] 发言人1: For the most using the largest concert person here's your example. For one team linear regression，they subset with just enough points to pick the models too。Here we have this two。And we set this property and this is a hyper parameter and it is in a stretch as a dash line. 
+
+[00:32] 发言人1: And what was in the tube? 啊，in nurse points outside the church about our nurse。Similarly, we do it again. We run the samples this example. And we fit with set to tall may be different as you can see the second in the second example we fit a different tall and we identify. 算起来within this two. 
+
+[01:03] 发言人1: 啊，首先，我们some way the latter two points we identify the inners not leaves not live within the tube。I reject those outliers，and in this case，the number in there for the first time is thirty one，six times eight eight，and the third time is one one，and one one is indeed the largest consensus set，and this is our training set。With identify our errors removed，and we are going to fit our model using this one one data。所以他去啊。软塞。
+
+[01:57] 发言人1: Alright，my question is， how many hyperparameters do I have in my model？
+
+[02:28] 发言人1: 出来。The one is the number iteration the number of trials. the number one is twelve the second is one is h. So let's do a little bit calculations. 首先一到S B的三包size. 
+
+[02:59] 发言人1: in the out clarification fraction. 啊，delta they desired possibility of drawing at least。One or in another sample，so when you draw samples to form the sets。You may likely to draw an outside right with your various prediction. 
+
+[03:28] 发言人1: And the probability of an error in our sample is approximately one mercy。To the power of little s，so think about it，why this is approximately。This is because this corresponds to. 嗯。
+
+[04:00] 发言人1: with replacement and what we really want is. Without replacement when we choose we don't put back right but when the initial set is not enough where we put back lot does not affect the for read calculation. Right, they are both in the same. Assuming independent trust, the probability of at least one or in our sample after t trials is going to be one minus one minus q to the power of t. What is this? 
+
+[04:48] 发言人1: 嗯。我。
+
+[04:56] 发言人1: or ability of. 爱情。你也是。我。哦出来了。嗯。散步。来。Example，the set of training set for a part of team。
+
+[05:29] 发言人1: This is probability of at least one our class in a sample. 我。Independent teachers. And one matters，this is just for visual，at least one or inner sample after two times，right？And we want this probability. And we want this probability one minus one minus Q to T should be greater than or equal to the desired probability of going at least one or in our sample. 啊，然后来说做题。
+
+[06:38] 发言人1: Take close on both sides. 
+
+[06:56] 发言人1: Right move local one to the other side。
+
+[07:21] 发言人1: And t should be integer so we a little same function over it. And here's my question, why? Here we have filter are equal to one，and after we divide by work，my marble will have this are equal to。
+
+[08:00] 发言人1: 现在。
+
+[08:18] 发言人1: This is because look one and two is negative. 来。one minus q is less than one，log of number less than one is less than zero，and we divide negative number on both side，which is the direction of the equality。And from this direction，more trials increase the probability of selecting a or in larger sample，returning a accurate model。Also depends on the loss level that is in. 
+
+[09:07] 发言人1: 三火专门吹。So where is this depends on how your sample your arm is right. Or in there how you sum the data and in there stretch. 
+
+[09:23] 发言人1: And the number runs positively increases typically with the sample size when setting the success probability delta is equal to0..99 and we fix proportion while delta c from5 percent to50 percent. 啊，这是sample size from two，two is just with one d regression line。I will say from this paper t increase deeply. 
+
+[10:00] 发言人1: 啊第二意思。my sick combine with orderly squares. And it actually identify those six layers. 
+
+[10:14] 发言人1: And using the remaining largest consistency to fit the model. And this is estimate value. This is channel W and B, which is very close. 
+
+[10:27] 发言人1: 啊，那类似归的去。The robustness of the regression model. I identifying and removing their outliers对，要讲完三。
+
+[10:55] 发言人1: Now let's move to another regression. So far we have only considered inner question right that is f x is equal to w transpose x plus b and similar to classification we can do. Linear relation by performing feature mapping. 
+
+[11:17] 发言人1: Five ads followed by dinner question on the new facial vector. And well polynomial regression as this order polynomial functions define as this here。F X is our one D input feature mapping。And this is here, F X is our decision function, and we can collect the terms into a vector.
+
+[11:54] 发言人1:  F X is equal to W zero, W one, after W P. That's a more vector and one x x squares up x to power p. That's a common vector.
+
+[12:08] 发言人1:  This is equal to transpose five. Actually this five. is a function from R. two R. 这plus one right from r one to r plus one。So we have vector W zero one，呃，W P one，W zero corresponding to the barrage term。
+
+[12:47] 发言人1: And that polynomial feature vector phi x is equal one x x square sum the transpose. 啊，十六。This polynomial regression model is linear is coefficients. 
+
+[13:04] 发言人1: Right，so we can fit the coefficients using linear regression。We consider this function y is equal sine x plus zero point one eta where x and eta are both independent standard variables i.e.
+
+[13:23] 发言人1:  x eta follows n with zero mean and. unit terrace and we can fit first the polynomial by setting t is equal to one to six and then following six figures showing the regression results. And we do can apply this regression model on Boston housing data.
+
+[13:58] 发言人1:  And here we use percentage of those. Status households feature，啊，那个inclusive equity。cannot increase the minimum training capacity. When the model are nested and fitted by unrequested skirts。security. So by nested it means high order models include all low degree terms right a p plus one order model increase all terms in from p's order word p is this side. 
+
+[14:44] 发言人1: 一百万。So if a lower degree term lower degree model is indeed indeed。The best model，the higher degree。Model may oh may for back to the snow degree model by setting the corresponding weights of the higher order terms to zero。哎，and this gives greater flexibility。The downside that can lead to overfitting. 
+
+[15:31] 发言人1: As you can see here. So from one to six we have msc。
+
+[15:43] 发言人1: That is at least the same as rivers model，因为谈到increase，他only decrease。Therefore, we can only select a polynomial way. Using the validation later right to select the using twenty M S C alone can do trade. 
+
+[16:08] 发言人1: When you ever see that slot mayor globalization. And use cross validation to say the polynomial degree and the hyper planner P controls the feature transformation. And this is the for long feature into the example this is our. 
+
+[16:31] 发言人1: input vector and we feature up the degree two is five two one x one x two x one squares x one x two x two squares and here this is x y. And that's the idea of invested. This is a transpose and feature up to degree three find three is equal to find two transpose because. 
+
+[17:00] 发言人1: I two is a column vector we need to transpose it to a row vector and we add the third terms third order terms. Open to the several terms on transforming transports it right to a corner. And see they. 
+
+[17:22] 发言人1: Third order model contains all features for the second order model, right? That's the meaning of nesting. And if we use for the Boston Housing example, if we use the number of rooms. 
+
+[17:39] 发言人1: 按这个percentage，low status households。I will give it. Prediction like this where the color you go to predict price with warmer color indicating higher price. 
+
+[17:55] 发言人1: 啊，从这个speaker. 所谓条例就每个一个月做一个月。嗯。这个花的已经。
+
+[18:17] 发言人1: 我。
+
+[18:28] 发言人1: So when we compare two models, right, we need to make sure that on which data we compare. So in this case we don't want to compare on train data we want to assess the utilization big big that is we want to compare it on the on same data and if we focus on this portion of the data. Which prediction is more reasonable? 你会手软。So this gives a strong motivation to select degree two over degree three. 
+
+[19:19] 发言人1: 我来。And turtle tricks in machine learning. We have color function key that takes two data points examples. 
+
+[19:37] 发言人1: that's x x five which is equal to phi x transpose. five x five. And a kernel can evaluate inner product without explicitly constructing feature vectors.
+
+[19:54] 发言人1:  Advisor express entirely through inner products between inputs. can be personalized and the way we do this is just to replace this inner products with a nonlinear kernel. And allows nonlinear production in the original input space. Let's let's introduce Carlos regression recall Carlos regression. Objective that's mean with a W we have one word two X W minus Y. 
+
+[20:34] 发言人1: 儿童squares plus呃，儿童squares of W。And the close form solution exist, right? it's X transpose X plus阿尔法。他们是。I university transits Y，and here why do we want to put N plus one？Here because we want to emphasize that this identity matrix is a M plus one M plus one matrix. So let's remember. 我们的metrics right with stacking examples per row。
+
+[21:25] 发言人1: Unless gives you m by m plus one, therefore this is m plus one by m plus one. 人是一生格拉斯湾格拉斯湾。
+
+[21:46] 发言人1: And this is equal to x transpose x x transpose plus alpha times identity matrix universe y And here what's the dimension. 我要先擦这个东西。
+
+[22:24] 发言人1: 谁买谁买。
+
+[22:32] 发言人1: And take this equation for granted。说了，so here give you two。Here we just give you two solutions for solving regression that is star and which one do you choose in which situations. 
+
+[22:59] 发言人1: And in those classical solutions we have some matrix inverse right and the general principle is that we always want to invert. A smaller matrix. not a larger one. So whichever be smaller we are going to talk about closest solution. 来打这什么真实。
+
+[23:35] 发言人1: 啊，to prove this equality. Welcome to make use of these matrix。哎登记记。And in assignment three, I will put this as a matrix and ask you to prove this matrix identity. 
+
+[23:57] 发言人1: follow我加check it. So that p be one over alpha i n plus one p equals x r equals i m we can recover it right so here p inverse is just alpha. I am plus one and what's B is X plus plus R R is identity matrix and high go that what's B B is X what's B. 
+
+[24:30] 发言人1: X. 而I think that that can be. and this is equal to. 
+
+[24:39] 发言人1: 联系他们。So they this part. is equal to this part。excel是滚动的客户。Right，that's the. For the right heart side what's being is one over alpha identity. 
+
+[25:00] 发言人1: matrix the matrix is squares so we don't write identity matrix but we do write its coefficient while alpha was b on the x transpose. 我是第一X. P one over D one over R方。And since it's in the middle we write it explicitly and x transpose what's r identity. 
+
+[25:33] 发言人1: And this is equal to one over alpha x transpose。And this is equal to one over alpha X X transpose plus I. 我试一试。And we take one hour alpha in front. 
+
+[26:08] 发言人1: And this is plus alpha I M and have inverse。Right and one over alpha universe is equal to alpha that's one over alpha let's transpose alpha. 
+
+[26:32] 发言人1: Unless cancels. if you. 
+
+[26:45] 发言人1: 嗯，那space二。
+
+[27:04] 发言人1: and the equation. Can be rewritten as w star is equal to the sum i from one to m lambda x i with lambda is equal to this. Here now, let's make a clear picture. 
+
+[27:31] 发言人1: this is. what's this this is n plus one times m and this is n plus one times one and this must be a the whole must be a. vector not same by one and we delete this vector as lambda and it's equal lambda one up to lambda n. 
+
+[27:59] 发言人1: 啊，如果是X传输，X传输是just。X one X two. up to x n，and we have number one，number two，up number m，this is general single product。啊你是一个瑞士。
+
+[28:25] 发言人1: And it's so that the solution WSR must lie in the spine of all two examples. The spine just a linear weighted combination of all two examples. And we can indeed arrive at the same solution.
+
+[28:43] 发言人1:  By same solution, we mean. This close for solution. Using the bronchiality similar face. And I will show. The durations of exactly the same solution using approach reality in the natural。
+
+[29:13] 发言人1: 啊喂。然后由此。For any points x star we make prediction y star is equal x star transpose w is equal to x star transpose x transpose x x transpose plus alpha i tell me what's right on this. is equal to x transpose x transpose plus alpha i inverse i and what's this. 应该不知道，所以这行应该不知道。
+
+[30:02] 发言人1: We just put here up here Alice Alice contains better containing the curl containing the inner products between x time and all training examples and we can replace it with the curl。啊，what's this this still inner product so this expression is entirely expressed by the inner products. right what's exact transports. 
+
+[30:57] 发言人1: You can consider this as a general as our product. 
+
+[31:27] 发言人1: 咳，反正说inner products，listen to their voice，right，and we can replace those inner products。With circular matrix where K ij is equal to the K Xi Xi j is in correspond to Phi Xi transpose Xi j。And that is no extra competition really is incurred, but now it becomes a much more powerful nonlinear equation model. 
+
+[32:01] 发言人1: If they will express double star in this there is no inner product we cannot correlate so this expression but we can correlate this expression so you need to manipulate the expression a little bit to identify to express. The model in terms surely in terms of the products presented hours。So now examples polynomial kernel polynomial kernel gives regression in its corresponding polynomial feature space. 
+
+[32:42] 发言人1: 这个kernel determines both the longer terms and scaling，and scaling is the coefficients。multiplied by one is a coefficient in front of each term. I'm talking to construct those features six basically. Like we do polynomial regression and we instead we write the kernel between training points and we can use rbf kernel and in this case we call the data to set alpha. 
+
+[33:23] 发言人1: Lots hyperparameter. 
+
+[33:31] 发言人1: In reach of the question right to treat of the totem作词干嘛？
+
+[33:43] 发言人1: 哦，最worst time is VIP program，so this is alpha index。This is gamma index and we fit this on the validation set to get this mini the minimal validation MSE. And here. Still applied towards the house data this number of rooms switcher this present still start house switcher and you get something like this. 
+
+[34:19] 发言人1: Or so we have. Support vector regression or SVR，they borrow ideas from classification specifically，as you say，not this SVM，right？We suppose we form a tube around other feature。Within the epsilon chip encircle slots outside the chip encircle proportional. to their excess两epsil. 
+
+[35:04] 发言人1: And C control street off between Snows and regularization. We allow some points to be inserted to. Don't be outside the tube and not tube once outside the tube can be controlled by the hyperbender and here this is our fifty model. 
+
+[35:25] 发言人1: This is our absolute two。来，你你拉起。这是十二飞机的model。And these are epsilon two epsilon two meaning that so this vertical distance is equal to. 
+
+[35:49] 发言人1: absolutely，so this vertical distance is equal to epsilon。And here the orange vertical distance. 希尔比斯加四。Excess一样的exception。那这里是这里。is equal to the word is equal to prediction error. is equal to y. 
+
+[36:37] 发言人1: 来，for this part we don't give penalty，we only give it penalty on excessive access beyond exponential，as you show here。Right, this is our loss, and this is known as an edge, edge absolutely sensitive loss. And then we have a platform so much version we do have platform how much always there. 
+
+[37:07] 发言人1: 啊，in this case we work is soft form and have epsilon epsilon insensitive air that is the absolute the epsilon function respect to epsilon e is zero is the absolute function value of this make some recall epsilon。啊的优势。This is not optional.
+
+[37:30] 发言人1:  This is where they exist, right? And the corresponding figure is shown here and this is not as a dead zone so we don't feel nice for space in that situation. Under the under the. And I also mention penalties linear. 
+
+[38:11] 发言人1: 多少字儿了？Square right for this linear area，it's naturally more a little more robust to the outside。because we don't square that larger quotation larger. 
+
+[38:34] 发言人1: equivalently. we have. The SVR object function by introduce the slack variables。Consistency star for each data we choose not like the classification here for each example we introduce two static variables. 
+
+[39:01] 发言人1: 可C I可C三可C I points above the tube可C三points below the tube。嗯，sense of points cannot be both above and both below the tube，right？you you see that，can see i can see i start with greater to zero。And K C I times K C I star should be equal to zero. 
+
+[39:32] 发言人1: because at least one of them must be zero. Right，this makes sense，right？It cannot both above the tube and below the tube。And this I try is。About the two please cut price below the two and we go the linear over here。Alright，let's take a ten minute break，then then we will then we will exactly equivalence between these two objective as we doing as well。
+
+[40:57] 发言人1: 嗯。
+
+[42:27] 发言人1: 嗯。
+
+[43:31] 发言人1: 不。
+
+[47:42] 发言人1: 这一块。就。
+
+[49:06] 发言人1: 这个。
+
+[49:20] 发言人1: 自己。政府工作。一定要去。
+
+[49:35] 发言人1: 嗯。
+
+[50:51] 发言人1: 你说的。
+
+[51:02] 发言人1: 是。现在是。
+
+[51:36] 发言人1: 起来。
+
+[52:00] 发言人1: All right。Why can't continue. 
+
+[52:13] 发言人1: So we first write the select variable version this way。
+
+[52:38] 发言人1: Subject to proof. 
+
+[53:18] 发言人1: And here for this two. THIS IS. 一部分区。
+
+[53:39] 发言人1: 嗯。
+
+[53:48] 发言人1: 啊，只能洗一次。You going to the absolute function. 你说你不用看B看D R. 
+
+[54:20] 发言人1: 嗯，那么这个function的absolute value的operation must be xr equal to the maximum of the value of the two ends。
+
+[54:38] 发言人1: 你看。So here we have equipment to. 对，是，是，是，对吧？
+
+[55:01] 发言人1: We move epsilon to an F I side. 嗯。
+
+[55:12] 发言人1: and this max maximo is equal to cosec i plus cosec star this is because. Products video at least one of the video. 
+
+[55:32] 发言人1: And combine with this two and for this one. This is you going to. 
+
+[55:46] 发言人1: Or so because. 
+
+[56:01] 发言人1: And then by combining this with this。
+
+[56:18] 发言人1: 网吧你累死。
+
+[56:28] 发言人1: 为什么意思？为他。
+
+[57:01] 发言人1: 啊，this is our essential。As you know here. 
+
+[57:20] 发言人1: All right。And we can. So if I replace this with this, it's actually. Replace with this actually we have here as a CI cosine star and this is our lower bound we first minimize lower bound and set cosine cosine star to equal to its optimized lower bound which makes them equal. 是。
+
+[57:56] 发言人1: And now school vector has now zero due coefficient and now on or outside the epsilon tube and the epsilon is halfway of the tube and its core vertical width is two epsilon. And this SR can also be called as through a branchuality turn linear equation to nonlinear equation and through duality we can derive the dual forms of marginalization of SR. 
+
+[58:27] 发言人1: As where alpha alpha star are corresponding variables from this as you see is purely characterized by inner product。And we can make this as a curl function。口渴了。I I use polynomial curl to give this kind of predictions we can use the ocean curl or a very curl give you this kind of predictions for different number primes. 
+
+[58:58] 发言人1: And for all the holiday we need to crossride the side of the C. S加S V R，the C trade of two terms，他吗？啊， referral epsil is in the most time to have epsil insensitive grows。Everything says。和和和背影。At gamma minus and same expect the minimum by taking air and this is a reproduction even for ratios. 
+
+[59:35] 发言人1: So let's do a. Regression summary，the regression task of relation x，the real vector feature。 Titles by your number email operation pretty quiet order is squares linear minimum square error close for solution as that's particle sex inverse sex transports for. And since it about that and rotating regression minimize the square error once again square with the ultimate squares regularization term close form solution and x transpose x. 
+
+[60:16] 发言人1: Plus阿尔法I university，就是算，那其实也可以去看reduce overfitting，那才是真正好看的。咳，我们把所有linear with L one relation term，it has a big features selection，since it outfires because of square。Aggressive same as this model repeated samples of the largest is using. 
+
+[60:47] 发言人1: And can resist substantial recognition and require many trials to find useful consumers. So I have curl with regression nonlinear, apply curl trick. 可能从子路军。I require calculate a current metrics orientation and opportunity examples have have requires validation we have curl as you are now leader minimize the red west have some sense rules instead of rules. Now in the regression, you can use only the vectors which you made it sparse models. 
+
+[61:26] 发言人1: 啊，the constraint can be similar we use a various virtual minimum of population method and have have the clarified. And future scanning and type transformation so scanning is usually important for regular models。When features differ it makes coefficient markets more comparable or local relations switch creation as the paper relation in each course by each state the company's skin parameters from the training data alone and at the same. 
+
+[62:00] 发言人1: to the vibration data. And we may transform the target outputs such as your nothing for production and then recover it by take expansion afterwards. 所以发现。
+
+[62:23] 发言人1: Alright, let's move to the classroom. The super occurs on super learning super learning consists of input pairs we learn mapping from input outputs to my classification output is category or regression well as well and super learning use it with spread type outputs and super learning use it results. supply它的receive structure. 
+
+[62:54] 发言人1: 大家现在是classroom，然后现在去安排。啊，但是呢，training is a central problem of super learning，and it's a foundation for many germ germ models，and this estimation is often said to be the mother of all unsupervised problem，because all kinds of unsupervised problem can be recast as a dense estimation problem。This can also be conditional here what provides conditional information if why supply the class labels that is said in this operation. 
+
+[63:38] 发言人1: At our classroom，we find clusters of similar items and data，we repeat each cluster by summary。such as the centraloid，for example，in this figure，we can group iris flowers by their measurements into three clusters encoded by different colors。我单位现在对大军传送。
+
+[64:00] 发言人1: Hiding vector into loading vectors dimension in hiding data may have some medical meaning and in the case of document analysis the hadam which document is type of words vector documents you have experiments like words encoding into job one i think. 否则就是他呃building. Please have the similarity to do a topic here，reduce the dimension from the higher to two。The first dimension course on topic one，second dimension course on topic two，and then for example for topic two。We use two coefficient0..50..5 to represent it.
+
+[64:50] 发言人1:  And this is that we have equal for B to. The social topic one which is financial oriented and photo which is natural oriented and for the this one also have two. orientation one one zero zero zero，that means this document is fully financialoriented，so yeah。
+
+[65:21] 发言人1: At the manifold embedding project high dimensional vector is slow inside the two or three dimensional space for visualization points in the low dimension space have similar pairwise distances in the high dimension space. For example, the zip code atlas map seeks to preserve essential geodesic. Not square distance，but geodesic distance along the manifold data，along the data for the manifold。So if you don't know the meaning of geodesic distance，just ask your AI models。So let's begin our discussion to class. 
+
+[66:00] 发言人1: First exhaustive clustering，let's first define clustering，even m data points d，where Xi is r n，the clustering。into k clusters partitions d into k not empty. 因为确实destroy groups，我。因为就使用C那C卡key classes and CI intersect CG is. 
+
+[66:33] 发言人1: empty对吧，通常disjoint and collectively exhaustive。But the you know this case equal to the the data the data set and each book has a cluster index they are. Now suppose we have a function f that takes clustering of the data set clustering of the data set as inputs. 
+
+[67:02] 发言人1: And return a score with lower value indicating better clustering and optimal clustering according to F. It's simply given by this, right? This is the one side if you have a question minimize this question and the question is what's complexity of this exhaustive classroom. And here the capacity involves the number. 
+
+[67:29] 发言人1: 呃，how many words to partition？诶，但是自己看出来。And the number of clustering for exactly k now nt unlabeled clusters unlabeled mean we don't we treat all clusters the same we don't order them or label them the number of partition is so consider number as takes. M the total number k k cluster and around any number clusters any number means k can be equal to one one means. 
+
+[68:13] 发言人1: 我先问classroom or那个啊。partitioning to the same cluster，and m means individual that forms a single cluster。And we just sum over k from one to m and here m is square times one and it is because b zero equals one there is only one way to publish an empty set and this one recency and have a larger recency on itself in. plus one is equal to sub over k from zero to m and the m choose is k times dp. 按这才才中台判断。
+
+[68:59] 发言人1: 可以。Build the derivation of this formula I will put the details in the lecture notes it is an excellent exercise in calculators and the first value starting at m equals zero are these and you can it's quickly. slowly the number and search quickly becomes impressing. 
+
+[69:26] 发言人1: Also，it's very hard to space a reasonable function for a class。So the K means clustering，the idea is assume K clusters，K as a hyperparameter，each cluster is represented by its class center at C J，and assign each endpoint to a closed class center according to the clicking distance。And fix key choose. 
+
+[70:00] 发言人1: centers that minimize the sum minimize the sum of square list the sum of a square list to the nearest center here this computes the. Sense to the nearest center. 老师。here this is. 
+
+[70:31] 发言人1: Earlier center and this is just a submission。I will meet by C one up to C K. Given the centers we assign each point to its zero center. right. 
+
+[70:47] 发言人1: Given centers we sign we compare we calculate distance between Xi and each of the center and we find the closest one and we output the index for the CG. And given the assignments each empty cluster has has mean adjust average features. in the set and the set that to be the central. 
+
+[71:15] 发言人1: Right，and here they said should be not empty，otherwise we are going to be divided by zero，which is not defined。So I will give you the fallback when we deal with empty sets during operation。啊，然后还有一个鸡和蛋问题，right class of assignments of each one depends on the class of singers。And location of center itself. 
+
+[71:48] 发言人1: depends on which point or scientific，then how to resolve this issue。我们用skinme咋个弄？我们first pick initial cluster centers，and then repeat。During the assignment step，we assign each point to its nearest center by solving this problem。During updates we replace each node cluster center with its associated point mean. 
+
+[72:21] 发言人1: 啊，and we retain the previous center if a cluster is empty and reserve the distance ties consistently。According to some period rule and the software assignments slowly changing all of their improvements below tolerance. And here is a simple example with first initialize. 
+
+[72:48] 发言人1: This this this and do the assignment. And then we recompute the center and do a lot of science stuff. And we compute the center, do another assignment step.
+
+[73:03] 发言人1:  We compute the center, do another step assignments. We compute the center, do another assignment. We compute the center, do last assignment. Compare these two. The objective proves is very shittiness that we saw. 
+
+[73:23] 发言人1: And the equivalent way to write games of the year is within cluster some squares the loss is respect z and class centers i from one to m where z is a simon vector now k means just performs block called distance. For the science we minimize l o v c with center fixed。right for others that maybe my sale over centers with assignment fixes. 
+
+[73:55] 发言人1: And each set can not increase your at least best previous set。啊，甚至要收到bounded的。And this doesn't guarantee a global optimal clustering. By global optimality, it means the smallest possible objective function. Ways. 
+
+[74:24] 发言人1: Some face the K S have a parameter。And after all，you will global minimum is road correspond to the most important classroom because the said to have a key，因为说比上greater one，我们don't know the online key before。And important note give me as many more coffee吗？
+
+[74:49] 发言人1: In general，and each corresponds to a different clustered classroom，and we find the global optimal is not computationally feasible，and thus the five not can be high。Sensitivity calculation and some bad initial cluster centers will yield poor clustering results. As here, if we initialize three centers here, it will move a little bit and start this to the stop me. 
+
+[75:26] 发言人1: And solution to initialization very well mutual initialization and tend to without with those within clusters squares. And the simple edition of the list S K distinct data points and centers. あ、でも、まだ改善した方法をK means plus plus。K means plus plusは、改善されたバージョンのK means algorithm。それは、初期化方法のK means。
+
+[75:55] 发言人1: Spread out our the usual center select the first center uniformly at random from data and sample each subsequent center with probability proportional to its square distance from the nearest select center。We need that intuition， we want to initial light centers are far apart from each other。For different k we need to choose the appropriate k and this is for total clusters three clusters four clusters and five clusters. 
+
+[76:35] 发言人1: And the number classes he is用的两龙。And they do have a elbow method for each day we use multiple initializations and record the lowest within clusters on the squares. I look for diminishment to my skate increases because as long as we increase A, they. 
+
+[77:00] 发言人1: I think other someone who is always going to be depressed right the dream is to say k is equal to f where l is equal to zero. And we look for diminishment of input a clear elbow and if fortunately a clear elbow this and we process. And in some cases a clear apple they all exist. 
+
+[77:30] 发言人1: And we may have different pairs to determine the hyperplane K the number cluster. Yeah，and limitation of including distance，so including distance fake figures compact clusters or roughly spherical clusters。what means and means他。
+
+[77:53] 发言人1: States in language groups emerge nearby groups. And as you showing this figure, we really want. The data to form this four groups right this four what can be is give you something like this. 
+
+[78:14] 发言人1: 那一起吃，我不会忘记。And feature scaling change the distance and can change the clustering subsequently. Or any questions they may ask me. 
+
+[78:46] 发言人1: 高星mix models，so G M for shoot for shoot，the multivariate高星can model a digital cluster and G M M is simply。average the sum of densities. P X C C和三J从one to K five K total key components pi j times the N X Sigma J where pi j is nonnegative and some of all pi j is equal to one and. 那个Sigma意思是。dispose of the equipment. 
+
+[79:37] 发言人1: meaning that for all vector as we we. 
+
+[79:48] 发言人1: 啊对。或者。
+
+[79:58] 发言人1: And mu g is the mean of component g for country location and sigma g is graph. And it covers a shape and orientation of the cities and policy is a mutual rate the prior property of how likely of each cluster and we provide example of jmm. Its culture is amounts to。
+
+[80:27] 发言人1: If I see mountain. And for two D example of JMM，each Gaussian defense of a mountain and the contours are ellipses。And clustering with GMM，and in this case，every four minutes。
+
+[80:48] 发言人1: Classroom as a dense estimation problem，然后点D。我觉得姐妹model还蛮有用的。Right this is. 
+
+[81:28] 发言人1: 类似于谁？Likelihood for theta and with some more likelihood over m and the standard method is expectation optimization with m. With close form updates for the gaoxin component during the maximization step。they like to can become unfounded if one component. 
+
+[81:59] 发言人1: Claps on Monday的。啊，你玩第一。This corresponds to receive the GIS component. the variance of this j is going to be zero and since this lives in the diagonal and that would be going to be close to infinity. 
+
+[82:24] 发言人1: I look I use coareas organizations or constraints。And we initialized the parameter and then alternating the e and m step until the local improvement is small. Instead we compute each points posterior probability. 
+
+[82:46] 发言人1: Or organize responsibility for each control use base work. 来得及。现在就是come up with and responsibility R I G is. Probability of the ice example belonging to the cheese cluster，and according to this is equal to p。哦probability. 
+
+[83:23] 发言人1: device by. 别着急，on this relationship。
+
+[83:43] 发言人1: And then this is equal to. 
+
+[84:00] 发言人1: 来签个和B A T. And for this，they for the demometer，just total total probability。
+
+[84:28] 发言人1: And for the denominator we have further weighted according to the change of ability. 
+
+[84:47] 发言人1: And since this is prior. This is probability and this is equal to hi j and what's this this is given j i is. From even the is from the jesus cluster was a likelihood plus. 这倒取出来。
+
+[85:13] 发言人1: And we know the high quality component practices and we are able to complete the responsibility. And for each point R I G is with nonnegative and the sum of R I G over P components is equal to Y because it's still mobility. Over pick up. 
+
+[85:41] 发言人1: 咳，既然你你MC，我们都是primary using the east responsibility。and soft. counts还没撤回，是不是number of soft counts is defined by this？Right，welcome，compute。The fractional contribution over all examples，对吧？I will sum over one to m，two，the genes cluster，a p m j，and hi jiu is equal mg divide m，and the mean variance，the mean is simply the weighted sub weighted summation。Of this and if we know the engine right it just wait waited. 为钱命。
+
+[86:50] 发言人1: 你叫什么位置？然后after we compute the mu mu j we. All of it in are new commerce metrics. 
+
+[87:06] 发言人1: still the way to version. And here，what's this？This just out product. 
+
+[87:22] 发言人1: Between a column vector and a row vector will give you a matrix. 啊，那个course after uses。呃刘伟啊对前面。
+
+[87:41] 发言人1: And in next close，I will give you the details of those closing solutions，you have said。Right it's almost to manipulating multitasking student. 所以。We face the prior I G Sigma K meaning of all clusters are equal to I. 
+
+[88:12] 发言人1: And sigma j is equal to i. We we all wanted to be compact spherical right identity means spherical magic spherical shape of the ellipse. through dating then is insects. Your responsibility right so this. 
+
+[88:40] 发言人1: So this becomes one over k，this becomes one over k，and this cancels，and for the gaokao components。我们只有这个。Because the constant can also be canceled and themselves are the only means. 
+
+[89:00] 发言人1: Why update me? Because we fix right way to fix the career expectations. 他的卡片。This to he needs。
+
+[89:24] 发言人1: Kim is do hard assignment right. 我知道你最喜欢那个to exactly one class。
+
+[89:41] 发言人1: And here we just do. here we just do. so the sign. We compute the fractional contribution. 
+
+[90:00] 发言人1: Of x i the example to each of the key classes by r i g and we use this to update the corresponding. centers in wait waiting solution measure. 啊，this is indeed a soft。
+
+[90:27] 发言人1: And for GM M plus example，就是来我们去到刚才，and the GM M can indeed give you。也已经是去安徽看。have this four elongated elliptical shape ships as design. 
+
+[90:52] 发言人1: And here I have one one question so K M F gives you soft assignment right instead of hard assignment and for clustering. 我我都忘他的三年级。And for visualization right we do want to visualize these points belongs to this cluster instead of. instead of this or this class，so how to convert this soft assignments into a hard assignments in the case of GM。
+
+[91:48] 发言人1: So for that example we've been on the responsibilities. So what's the responsibility of IIT remember the definition. 
+
+[92:13] 发言人1: The ice example belongs to the GIS cluster. 
+
+[92:24] 发言人1: 来。This is the second. 
+
+[92:42] 发言人1: We just do art much right. 
+
+[92:57] 发言人1: 都都。
+
+[93:06] 发言人1: 解释。
+
+[93:18] 发言人1: 反正回来都做的是这个。yeah! 
+
+[93:29] 发言人1: Any question on this? 
+
+[93:40] 发言人1: Alright，regarding the covariance matrix，see an n by n covariance matrix is symmetric，right？Here symmetric means this. 
+
+[94:03] 发言人1: And has嗯。times plus one independent problems. This number is easy to drive. 这是。Since it's independent，we only to come come conserve this portion of data，right？
+
+[94:26] 发言人1: For the first row，we have one parameter，for the second row，we have two，and up to for the end row，we have a total of2 parameters。And this part is just really great。Transports are available to the same and it is how many total privacy is one plus two. 
+
+[94:48] 发言人1: up to n and they see see did n times n plus one divide. 啊，在这个case，我们anydesk，所以我们only need to come calculate this portion of data。啊，谢谢。right. 
+
+[95:17] 发言人1: And simpler structure require fewer parameters per component。If you only want to work with environments, right? I know. 
+
+[95:39] 发言人1: And they in solid axis align with coil axis，and this is similar to and class class you argue for learn before，and what is this？我需用个Q M C三S. 或者其他思维，他会走。
+
+[96:10] 发言人1: 哪一个失败。恶心。大家都做游戏。Now this give you this where the principal axes。
+
+[96:34] 发言人1: 嗯，是。sphere call we have one covariance and equal variance on other story for sphere call we have just A A A and issue below. 一强功能他还非常累。
+
+[96:56] 发言人1: Because each components the. smaller as spherical but can be different spherical that's why we draw two spherical of different sizes here because the one develops can be even for different components. And this gives you the full. 
+
+[97:25] 发言人1: This is the full version。So that's what summary the peers make hard assignments. 来。So how does Imitate compute arc? 
+
+[97:47] 发言人1: C I is equal to R零。谁。X I minus C J的平方，with squared。Square including distance。Is that work well for compact clusters? come back here means. 
+
+[98:29] 发言人1: so roughly spherical. Cluster with comparable scales is feasible，different actors comparable。啊你啊做的equal class size. 
+
+[98:47] 发言人1: This class may contains one hundred examples，but another class may contains only one or two examples，largely five。That's why here we may. Encounter. 
+
+[99:11] 发言人1: 嗯，play set during。我部门的人。呃，G M M提供soft assignment by computing the responsibilities are I J，and can learn different with service，and programmers matrix，and it has great flexibility，I J sigma J，and that's嗯。extension to. 
+
+[99:46] 发言人1: K means is special have close close direct soft K means derived from J M by make I G is equal to one hour K. And both methods are sensitive to initialization. And neither generally guarantee global global are under their respective. population check one is within clusters and the other is they look like the woods but here we should write a prerequisite that is with. 
+
+[100:33] 发言人1: Pre selected or re fixed, okay? Otherwise，it double makes sense to talk about global money because global money global money can be truly equal to zero when they equal k is equal to m。好的，依然。Also applies to other data and variable models。when. Expectation and observations。same as i try to for example when we do model the components. 
+
+[101:29] 发言人1: We can use let's say student T or other containers distributions model instead of using of that give you a difference with your with a different components. Sorry. And the actual six point three is because I assume that you have a master students you must the payments so I introduce payments a little fast but I do with. 淘宝VG团队，have the well implement games classroom，再发生那个都。
+
+[102:12] 发言人1: And you can compare with the two goals to see the code efficiency you can even also other the air bottles to see whether the code in the two goals will have improved in terms of and you can see in terms of. 因为因为来说。Alright，that's all for today's lecture，so。嗯。And this will be doing the sex tutorial, I think, and see you guys next week. 
+
+[102:59] 发言人1: 这里啊他们意思说你看他们意思。
+
+[103:16] 发言人2: 注意这个。嗯，一种小。那订单找了一个订单。一样。
+
+[103:36] 发言人2: 我这个。这个。
+
+[103:46] 发言人2: 这好像。具体的这个产品也没有。所有的我相信就是。所以像这些也可以然后就是然后比方说这个。然后是否满足。在网络对接上的一个。都可以找到就那个事啊相相应都有不一样但是他这个事估计。两个方。他限限制他限制起来但是嗯所有的。嗯。方便。哦。那我还要那我就不用改了去改那个logo. 
+
+[104:41] 发言人2: 嗯。这里我跟我讲过。我还是觉得那个都不好看因为定金的那个。金属金属打字都有那个。我我用用你打字。这样子这个的话就是很好，就是可以都可以。这个应该时间在输出。
+
+[105:05] 发言人2: 结束了结束了。来，你们工作，然后你们做工作，然后。然后还有就是。骗子这边估计很多，然后退出了没做什么，然后我准备做一个公控，本来就是能退出的。我退出这个账户回到主界面。恢复了这个业务啊，好的，过了啊，过了，好的，这个我会改掉。这个下单框也少了一个啊下单框有好几个啊我我我这版少了一个主要是这几还有我准备一个我准备在这加一个我准备加一。加一个就是纯炫技的这一块，就是车间的这一个类似于实况的那年好像我觉得是，把直接拿每日风光那个就接上去吧，比如说比如说这个有点深，后面这是纯粒子粒子效果，都是啊。然后鼠标就是鼠标的那个拖拽可以实现一个三维教室的一个常态，那我不是还得等你做。
+
+[106:40] 发言人2: 你有意向是什么。如果你不用小看当年。呃，就是就是。就稳定了但但这个故障到部位的是需要慢慢的可能是把这个。我觉得就是我的。那就可以说这个是符合印度那边的。
+
+[107:05] 发言人2: 你这在这呢这这还有在这呢。就是是一个助手。然后创建一个订单通知通知这个创建然后通知进去啊。可以确认完了以后自己恢复就好了。我这玩意还在。嗯下午办一个名额那你就那个嘛你说那个你修改之后就放里面内置一个小的可以操作它的规则对对对人呢。
+
+[107:53] 发言人1: 这个。

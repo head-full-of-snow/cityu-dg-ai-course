@@ -4,3 +4,6 @@ __pycache__/
 # 超过 GitHub 100MB 单文件限制，仅保留在本地
 1134-Vision and Images(视觉与图像)/course_files_export.zip
 1134-Vision and Images(视觉与图像)/week6/lec15_neural_networks_for_web.pptx
+
+# macOS 解压残留
+__MACOSX/
