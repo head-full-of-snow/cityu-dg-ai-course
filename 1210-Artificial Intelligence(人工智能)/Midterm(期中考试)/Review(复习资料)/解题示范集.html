@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CS5491 解题示范集</title>
+<style>
+  @page { size: A4; margin: 10mm 10mm 9mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 11px; line-height: 1.38; color: #1a1a1a; margin: 0; }
+  h1 { font-size: 19px; text-align: center; margin: 2px 0 2px; }
+  .sub { text-align: center; color: #555; margin-bottom: 7px; font-size: 10.5px; }
+  .demo { page-break-inside: avoid; margin-bottom: 7px; }
+  .dhead { background: #1a3a5c; color: #fff; padding: 4px 9px; border-radius: 4px 4px 0 0; font-weight: 600; font-size: 12.5px; display: flex; justify-content: space-between; }
+  .dhead .tag { font-weight: 400; font-size: 10px; opacity: .9; }
+  .q { background: #f0f4f9; border: 1px solid #c9d6e8; border-left: 4px solid #1a3a5c; padding: 5px 9px; margin: 6px 0; border-radius: 3px; }
+  .q b { color: #1a3a5c; }
+  table { border-collapse: collapse; margin: 4px auto; font-size: 10.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #999; padding: 2px 7px; text-align: center; }
+  th { background: #e8eef5; }
+  .sol { margin: 3px 0; }
+  .keybox { background: #fffbe8; border: 1px solid #e0d080; border-radius: 3px; padding: 4px 9px; margin-top: 6px; font-size: 10.5px; }
+  .keybox b { color: #7a5c00; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 10.5px; line-height: 1.3; background: #fafafa; border: 1px solid #ddd; padding: 5px 9px; border-radius: 3px; overflow-x: auto; }
+  .formula { text-align: center; font-family: "Cambria Math", Georgia, serif; font-size: 12.5px; margin: 4px 0; }
+  .ok { color: #0a7a2a; font-weight: 600; } .no { color: #c02020; font-weight: 600; }
+  .small { font-size: 10px; color: #555; }
+  ul { margin: 3px 0; padding-left: 19px; } li { margin: 1px 0; }
+  .cover table { width: 100%; }
+</style>
+</head>
+<body>
+
+<!-- ================= 封面索引 ================= -->
+<div class="demo cover">
+<h1>CS5491 期中解题示范集</h1>
+<div class="sub">每个考点一道<b>完整执行到底</b>的例题（数据为示范专用，模拟卷保持未做状态）｜约定与模拟卷完全一致｜2026-10-18</div>
+<table>
+<tr><th style="width:22%">考点</th><th>示范</th><th style="width:18%">配合材料</th></tr>
+<tr><td>开卷索引（先看这页）</td><td>本页</td><td>期中指南.md</td></tr>
+<tr><td>BFS / IDS 追踪</td><td><b>D1</b></td><td>手册 §2–3 · 模拟卷 Q2a</td></tr>
+<tr><td>UCS / A* / Greedy 追踪</td><td><b>D2</b></td><td>手册 §3 · 模拟卷 Q2b,c</td></tr>
+<tr><td>可采纳启发函数组合判定</td><td><b>D3</b></td><td>手册 §3 · 模拟卷 Q1b</td></tr>
+<tr><td>CSP：回溯 + MRV + FC + AC-3</td><td><b>D4</b></td><td>手册 §4 · 模拟卷 Q1c, Q4</td></tr>
+<tr><td>Minimax + α-β 剪枝全过程</td><td><b>D5</b></td><td>手册 §5 · 模拟卷 Q3</td></tr>
+<tr><td>Expectimax（防考）</td><td><b>D6</b></td><td>手册 §5 · L08</td></tr>
+<tr><td>LP 建模 + 顶点枚举图解</td><td><b>D7</b></td><td>手册 §6 · 模拟卷 Q5</td></tr>
+<tr><td>整数规划分支定界全流程</td><td><b>D8</b></td><td>手册 §7 · L10 课件原例</td></tr>
+<tr><td>凸集 / 凸函数判断</td><td><b>D9</b></td><td>手册 §9 · 模拟卷 Q1d-v</td></tr>
+<tr><td>梯度下降迭代 + 步长</td><td><b>D10</b></td><td>手册 §9 · L12 课件原例</td></tr>
+<tr><td>优化建模三经典（TSP/八皇后/拟合）</td><td><b>D11</b></td><td>手册 §8 · L11</td></tr>
+</table>
+<div class="keybox"><b>考场用法：</b>先翻<b>手册 §11 一页速查</b>定方法 → 来本集看同类型题的<b>答题格式</b>照抄结构 → 细节回手册对应 §。本集每题的表格列名 = 建议在答卷上画的列名。</div>
+</div>
+
+<!-- ================= D1 ================= -->
+<div class="demo">
+<div class="dhead"><span>D1 · BFS 与迭代加深 IDS 追踪</span><span class="tag">L03 · 模拟卷 Q2a 型</span></div>
+<div class="q"><b>例题（示范数据）</b>：无向图边：S–A=2，S–B=4，A–C=3，A–G=9，B–C=2，C–G=4。起点 S，目标 G。
+按模拟卷约定：<b>树搜索</b>（不同路径分开保留，visit 时重复照写）；<b>visit = 出队/出栈那一刻</b>，目标测试在 visit 时做；生成孩子时<b>排除父节点</b>；孩子按<b>字母序</b>探索；IDS 深度限制从 0 起，<b>cutoff 节点的 visit 也要数</b>。</div>
+<div class="sol"><b>解：BFS（队列，FIFO）</b>
+<table>
+<tr><th>步</th><th>Visit</th><th>入队（按字母序）</th><th>队列快照</th></tr>
+<tr><td>1</td><td><b>S</b></td><td>A, B</td><td>[A, B]</td></tr>
+<tr><td>2</td><td><b>A</b></td><td>C, G</td><td>[B, C, G]</td></tr>
+<tr><td>3</td><td><b>B</b></td><td>C（重复也入队）</td><td>[C, G, C]</td></tr>
+<tr><td>4</td><td><b>C</b>（经 A）</td><td>B, G</td><td>[G, C, B, G]</td></tr>
+<tr><td>5</td><td><b>G</b> ✔目标，停</td><td>—</td><td>—</td></tr>
+</table>
+Visit 序：<b>S, A, B, C, G</b>。沿父指针回溯：解路径 <b>S–A–G</b>（2 条边，边代价 11）。</div>
+<div class="sol"><b>解：IDS（限深 DFS，L = 0,1,2,…）</b>
+<table>
+<tr><th>限深 L</th><th>visit 序</th><th>说明</th></tr>
+<tr><td>0</td><td>S</td><td>深度即达限制 → cutoff（仍算 visit）</td></tr>
+<tr><td>1</td><td>S, A, B</td><td>S 扩展；A、B 深度 1 = cutoff</td></tr>
+<tr><td>2</td><td><b>S, A, C, G</b> ✔</td><td>S→A（扩展）→A 的孩子 C(cutoff visit)、G(visit→目标测试→停)</td></tr>
+</table>
+合并 visit 序：<b>S, A, B, S, A, C, G</b>。解路径 <b>S–A–G</b>（深度 2，最优深度）。
+<div class="small">注意 L=2 内 A 的孩子按字母序 C 先于 G：C 被 visit（cutoff，不扩展），随后 G 被 visit → 命中目标。若目标藏在更深的字母序靠前分支，需继续加大 L。</div></div>
+<div class="keybox"><b>要点</b>：① BFS/IDS 以<b>边数</b>最优（返回 S–A–G，2 边），不管边代价（11）；代价最优见 D2 的 UCS/A*（S–A–C–G，代价 9）——两类算法的"最优"含义不同，答题时点明。② cutoff visit 计数是常见丢分点。③ "path length"=总边代价，不是边数。</div>
+</div>
+
+<!-- ================= D2 ================= -->
+<div class="demo">
+<div class="dhead"><span>D2 · UCS / A* / Greedy 追踪表</span><span class="tag">L03–04 · 模拟卷 Q2b,c 型</span></div>
+<div class="q"><b>例题（承 D1 图）</b>：启发值 h：S=7，A=5，B=6，C=4，G=0。（可验证 admissible：真实最短代价 h*：S=9, A=7, B=6, C=4，均有 h ≤ h*。）</div>
+<div class="sol"><b>解：UCS（优先队列键 = g）</b>
+<table>
+<tr><th>步</th><th>Visit</th><th>g</th><th>生成（g'=g+c，排除父节点）</th><th>Frontier 快照（键）</th></tr>
+<tr><td>1</td><td><b>S</b></td><td>0</td><td>A(2), B(4)</td><td>A2, B4</td></tr>
+<tr><td>2</td><td><b>A</b></td><td>2</td><td>C(5), G(11)</td><td>B4, C5, G11</td></tr>
+<tr><td>3</td><td><b>B</b></td><td>4</td><td>C(6)</td><td>C5, C6, G11</td></tr>
+<tr><td>4</td><td><b>C</b>（经 A）</td><td>5</td><td>B(7), G(9)</td><td>C6, B7, G9, G11</td></tr>
+<tr><td>5</td><td><b>C</b>（经 B，重复 visit 照写）</td><td>6</td><td>A(9), G(10)</td><td>B7, G9, A9, G10, G11</td></tr>
+<tr><td>6</td><td><b>B</b>（经 C）</td><td>7</td><td>S(11)</td><td>G9, A9, G10, S11, G11</td></tr>
+<tr><td>7</td><td><b>S</b>（经 B）</td><td>8</td><td>A(10)</td><td>G9, A9, G10, A10, G11</td></tr>
+<tr><td>8</td><td><b>A</b>（经 C；平局 G9/A9 按字母序 A 先）</td><td>9</td><td>C(12), G(18)</td><td>G9, G10, A10, G11, …</td></tr>
+<tr><td>9</td><td><b>G</b> ✔目标，停</td><td>9</td><td>—</td><td>—</td></tr>
+</table>
+Visit 序：<b>S, A, B, C, C, B, S, A, G</b>。回溯父指针：解路径 <b>S–A–C–G，path length = 2+3+4 = 9</b>（最优）。</div>
+<div class="sol"><b>解：A*（键 = f = g + h）</b>
+<table>
+<tr><th>步</th><th>Visit</th><th>g</th><th>h</th><th>f</th><th>生成（f'）</th><th>Frontier（f）</th></tr>
+<tr><td>1</td><td><b>S</b></td><td>0</td><td>7</td><td>7</td><td>A(2+5=7), B(4+6=10)</td><td>A7, B10</td></tr>
+<tr><td>2</td><td><b>A</b>（f=7 最小）</td><td>2</td><td>5</td><td>7</td><td>C(5+4=9), G(11+0=11)</td><td>C9, B10, G11</td></tr>
+<tr><td>3</td><td><b>C</b>（f=9）</td><td>5</td><td>4</td><td>9</td><td>B(7+6=13), G(9+0=9)</td><td><b>G9</b>, B10, G11, B13</td></tr>
+<tr><td>4</td><td><b>G</b> ✔目标，停</td><td>9</td><td>0</td><td>9</td><td>—</td><td>—</td></tr>
+</table>
+Visit 序：<b>S, A, C, G</b>。解路径同 <b>S–A–C–G = 9</b>。A* 的 visit 数（4）远少于 UCS（9）——启发式把搜索拉向 G 一侧，<b>做完可自检这一点</b>。</div>
+<div class="sol"><b>解：Greedy（键 = h）</b>：visit S(h7) → 生成 A(h5), B(h6) → visit <b>A</b>(h5) → 生成 C(h4), G(h0) → visit <b>G</b> ✔。Visit 序 <b>S, A, G</b>，路径 S–A–G 代价 11 &gt; 9：<b>贪心不最优</b>，只保证快。</div>
+<div class="keybox"><b>要点</b>：① 三列表（Visit | g/f | Frontier）是阅卷友好格式；② 树搜索下同一状态重复 visit 必须照写（UCS 第 5、6、7、8 步）；③ 平局规则：先端点字母序，同字母先入队先出；④ h=0 时 A* 退化为 UCS（Q1d-iii 答案）。</div>
+</div>
+
+<!-- ================= D3 ================= -->
+<div class="demo">
+<div class="dhead"><span>D3 · 可采纳启发函数组合判定</span><span class="tag">L04 · 模拟卷 Q1b 型</span></div>
+<div class="q"><b>例题</b>：f(s), g(s), h(s) 均可采纳（admissible：0 ≤ h ≤ h*）。判定下列哪些仍保证可采纳：(1) f+g+h；(2) f/3+g/3+h/3；(3) f/6+g/3+h/2；(4) f·g·h；(5) min(f,g,h)；(6) max(f,g,h)。</div>
+<div class="sol"><b>判定工具</b>
+<ul>
+<li><b>凸组合规则</b>：若 Σwᵢ = 1 且 wᵢ ≥ 0，则 h = Σwᵢhᵢ 可采纳。证明一行：每个 hᵢ ≤ h* ⟹ Σwᵢhᵢ ≤ Σwᵢh* = h*；非负性显然。</li>
+<li><b>min / max 规则</b>：min ≤ 某个 hᵢ ≤ h*；max = 某个 hᵢ ≤ h*（max 恰取到某一个，而那个 ≤ h*）。两者均可采纳。</li>
+<li><b>反例构造法</b>（证"不保证"）：取 h*=2，f=g=h=2 代入。</li>
+</ul>
+<b>逐项</b>：
+<table>
+<tr><th>选项</th><th>判定</th><th>理由 / 反例</th></tr>
+<tr><td>f+g+h</td><td class="no">✗</td><td>权重和=3≠1；反例 2+2+2=6 &gt; 2</td></tr>
+<tr><td>f/3+g/3+h/3</td><td class="ok">✓</td><td>凸组合（1/3+1/3+1/3=1）</td></tr>
+<tr><td>f/6+g/3+h/2</td><td class="ok">✓</td><td>凸组合（1/6+2/6+3/6=1）</td></tr>
+<tr><td>f·g·h</td><td class="no">✗</td><td>反例 2×2×2=8 &gt; 2（均大于 1 的数相乘会爆）</td></tr>
+<tr><td>min(f,g,h)</td><td class="ok">✓</td><td>min ≤ h* </td></tr>
+<tr><td>max(f,g,h)</td><td class="ok">✓</td><td>max 是三者之一，该值 ≤ h*</td></tr>
+</table></div>
+<div class="keybox"><b>要点</b>：① "guaranteed"类题目证 ✓ 要一般证明、证 ✗ 只要一个反例；② 常见陷阱：max 看起来"激进"，但它只是<b>取到某一个</b>可采纳函数，所以仍 ≤ h*；乘积才是爆掉的那个。③ 一致性（consistent，|h(a)−h(b)| ≤ c(a,b)）是更强性质：可采纳 ⊅ 一致；一致 ⟹ 可采纳。</div>
+</div>
+
+<!-- ================= D4 ================= -->
+<div class="demo">
+<div class="dhead"><span>D4 · CSP：回溯 + MRV + Forward Checking + AC-3</span><span class="tag">L05–06 · 模拟卷 Q1c/Q4 型</span></div>
+<div class="q"><b>例题（澳大利亚地图着色，课件 L05–06 原例）</b>：变量 {WA, NT, SA, Q, NSW, V, T}，域 {r, g, b}，相邻不同色。邻接（9 条边）：WA–NT, WA–SA, NT–SA, NT–Q, SA–Q, SA–NSW, SA–V, Q–NSW, NSW–V；T 无邻接。</div>
+<div class="sol"><b>解 1：回溯 + MRV + Forward Checking 全程</b>
+<table>
+<tr><th>步</th><th>赋值（MRV 选变量）</th><th>FC 域收缩（只改未赋值邻居）</th><th>各域快照（未赋值变量）</th></tr>
+<tr><td>1</td><td>WA = r</td><td>NT, SA 各删 r</td><td>NT{g,b}, SA{g,b}, Q{rgb}, NSW{rgb}, V{rgb}, T{rgb}</td></tr>
+<tr><td>2</td><td>NT = g（MRV：NT/SA 并列 2 值，字母序取 NT）</td><td>SA 删 g；Q 删 g</td><td>SA{b}, Q{r,b}, NSW{rgb}, V{rgb}, T{rgb}</td></tr>
+<tr><td>3</td><td>SA = b（MRV：只剩 1 值）</td><td>Q, NSW, V 各删 b</td><td>Q{r}, NSW{r,g}, V{r,g}, T{rgb}</td></tr>
+<tr><td>4</td><td>Q = r（MRV：1 值）</td><td>NSW 删 r</td><td>NSW{g}, V{r,g}, T{rgb}</td></tr>
+<tr><td>5</td><td>NSW = g（1 值）</td><td>V 删 g</td><td>V{r}, T{rgb}</td></tr>
+<tr><td>6</td><td>V = r；T = r（T 无约束，任取）</td><td>—</td><td>完成 ✔</td></tr>
+</table>
+解：WA=r, NT=g, SA=b, Q=r, NSW=g, V=r, T=r。逐边验证 9 条不等约束全部满足。</div>
+<div class="sol"><b>解 2：AC-3 单弧执行示范</b>（在 WA=r, NT=g 已赋值后）
+<div class="formula">弧 X→Y 一致 ⟺ X 域中每个 x，在 Y 域中存在 y 使 (x,y) 满足约束；不满足的 x <b>从尾 X 删除</b>；X 有删减 ⟺ 邻居弧 (Xₖ, X) 重新入队。</div>
+取弧 Q→SA（此时 Q{r,b}，SA{b}，约束 ≠）：r≠b 有支撑 ✓ 保留；b≠b 无支撑 ✗ 删 b → Q{r}。因 Q 的域变了，(NT,Q)、(NSW,Q)、(SA,Q) 重新入队检查。
+<div class="small">对比 FC：FC 只在<b>赋值后</b>改未赋值邻居的域；AC-3 还能传播"域与域之间"的矛盾（如课件例：NT 和 SA 都只剩 blue 时，FC 察觉不到，AC-3 能删空一个域报错）。AC-3 复杂度 O(n²d³)；弧一致后仍可能无解（不保证有解，也不保证解唯一）。</div></div>
+<div class="keybox"><b>要点</b>：① MRV = 最少剩余值（fail-fast）选<b>变量</b>；LCV = 最少约束值选<b>值</b>（留余地给邻居）——两者方向相反，别混；② 模拟卷约定"FC 只改新赋值变量的<b>未赋值邻居</b>"——非邻居、已赋值变量都不改（Q1c 陷阱：A、B 都赋值后，FC for B 不再动 A 的域）；③ 域被删空 = 立即回溯。</div>
+</div>
+
+<!-- ================= D5 ================= -->
+<div class="demo">
+<div class="dhead"><span>D5 · Minimax 填值 + α-β 剪枝全过程</span><span class="tag">L07 · 模拟卷 Q3 型</span></div>
+<div class="q"><b>例题</b>：根为 MAX，三个 MIN 子节点，叶值从左到右：MIN₁=[3, 12, 8]，MIN₂=[2, 4, 6]，MIN₃=[14, 5, 2]。约定：从左到右探索；<b>α ≥ β 即剪（含等号）</b>；剪枝后返回的是"界"不必写真值。</div>
+<div class="sol"><b>解 (a)：minimax 值（自底向上）</b>
+<pre>                 ROOT (MAX) = <b>3</b>
+        ┌──────────┼──────────┐
+      MIN₁       MIN₂       MIN₃
+      = <b>3</b>        = 2         = 2
+   ┌──┴──┐    ┌──┴──┐     ┌──┴──┐
+   3    12    2     4     14    5    2   （MIN₂ 三叶、MIN₃ 三叶）</pre>
+MIN₁ = min(3,12,8) = 3；MIN₂ = min(2,4,6) = 2；MIN₃ = min(14,5,2) = 2；ROOT = max(3,2,2) = <b>3</b>。七个内部值（含根）全填。</div>
+<div class="sol"><b>解 (b)：α-β（窗口写在节点旁：α | β）</b>
+<pre>根 (α=-∞, β=+∞)
+├─ MIN₁ (α=-∞, β=+∞)：看叶 3 → β=min(+∞,3)=3；看 12 → β 仍 3；看 8 → β 仍 3
+│   返回 3 → 根 α = max(-∞, 3) = <b>3</b>   ← 这个 3 是后面所有 MIN 的"砍刀"
+├─ MIN₂ (α=3, β=+∞)：看叶 2 → v=2 ≤ α=3 → <b>立即剪掉剩余两叶(4, 6)</b>，返回界 2
+└─ MIN₃ (α=3, β=+∞)：看 14 → β=14；看 5 → β=5；看 2 → β=2（无剪，2 &gt; 3 不成立…）
+    返回 2 → 根 α 不变（max(3,2)=3）
+最终根值 = <b>3</b>，与 (a) 相同 ✔（α-β 不改变根值）
+未探索叶子：<b>2 个</b>（MIN₂ 的 4 和 6）</pre>
+<div class="small">规则原文：MAX 节点每看完一个孩子，若 v ≥ β 立即返回，否则 α ← max(α, v)；MIN 节点若 v ≤ α 立即返回，否则 β ← min(β, v)。窗口由父辈传入：子节点初始窗口 = 父的 (α, β)。</div></div>
+<div class="sol"><b>解 (c)：更优的孩子顺序</b>：原则 <b>MAX 先看大的、MIN 先看小的</b>。把 MIN₃ 的叶序改为 [2, 5, 14]：看 2 → v=2 ≤ α=3 → 第一叶后就剪掉 (5, 14)。加上 MIN₂ 原有 2 个，未探索叶共 <b>4 个</b> &gt; (b) 的 2 个——好顺序显著增加剪枝。（若再把根的孩子按 (a) 值降序排 3,2,2，效果相同。）</div>
+<div class="keybox"><b>要点</b>：① 每个节点旁写 (α, β) 窗口是给过程分的最好方式；② 剪枝后返回值可以只是界（题目明说 bounds need not be identical）——阅卷看过程；③ 被剪的枝画斜线、未探索叶涂阴影并<b>数出个数</b>；④ 验证：根值与纯 minimax 一致。</div>
+</div>
+
+<!-- ================= D6 ================= -->
+<div class="demo">
+<div class="dhead"><span>D6 · Expectimax（期望最大值，防考）</span><span class="tag">L08 · 模拟卷未直接考</span></div>
+<div class="q"><b>例题</b>：根为 MAX；左孩子为机会节点（chance，概率各 1/2，叶 [2, 6]）；右孩子为机会节点（概率各 1/2，叶 [5, 1]）。求根值。</div>
+<div class="sol"><b>解</b>：
+<pre>              MAX = <b>4</b>
+        ┌────────┴────────┐
+   chance×0.5         chance×0.5
+   = (2+6)/2 = <b>4</b>     = (5+1)/2 = 3
+   ┌─┴─┐             ┌─┴─┐
+   2   6             5   1</pre>
+机会节点取<b>期望</b>（加权平均），MAX 层照常取 max。根值 = max(4, 3) = <b>4</b>。</div>
+<div class="keybox"><b>要点</b>：① 机会节点<b>不能剪枝</b>：右边看到 5 时不能像 MIN 那样砍掉 1——期望还可能被拉低/拉高，除非概率为 0；② 区分三层算子：MAX 取 max，MIN 取 min，chance 取 Σp·v；③ expectiminimax（混合层）同理逐层换算子；④ 深度受限时叶用评估函数值。</div>
+</div>
+
+<!-- ================= D7 ================= -->
+<div class="demo">
+<div class="dhead"><span>D7 · LP：建模 + 顶点枚举图解法</span><span class="tag">L09 · 模拟卷 Q5 型</span></div>
+<div class="q"><b>例题</b>：两种食物 X（¥4/单位）、Y（¥3/单位）。营养约束：A: x+y ≥ 4；B: 2x+y ≥ 6；C: x+6y ≥ 12；x, y ≥ 0。求 min 4x+3y。</div>
+<div class="sol"><b>解：顶点枚举法（课件"Finding a Vertex"方法：每条约束边界取等式，两两联立 → 解出交点 → 代回<b>全部</b>约束验证）</b>
+<table>
+<tr><th>交点来源</th><th>联立求解</th><th>验证其余约束</th><th>可行?</th><th>目标 4x+3y</th></tr>
+<tr><td>A ∩ B</td><td>(2, 2)</td><td>C: 2+12=14 ≥ 12 ✓</td><td class="ok">✓</td><td><b>14</b> ← 最优</td></tr>
+<tr><td>A ∩ C</td><td>(2.4, 1.6)</td><td>B: 4.8+1.6=6.4 ≥ 6 ✓</td><td class="ok">✓</td><td>14.4</td></tr>
+<tr><td>B ∩ C</td><td>(24/11, 18/11)</td><td>A: 42/11 ≈ 3.8 &lt; 4 ✗</td><td class="no">舍弃</td><td>—</td></tr>
+<tr><td>x=0 轴</td><td>(0, 6)</td><td>A ✓ B ✓ C: 36 ≥ 12 ✓</td><td class="ok">✓</td><td>18</td></tr>
+<tr><td>y=0 轴</td><td>(12, 0)</td><td>A ✓ B ✓ C ✓</td><td class="ok">✓</td><td>48</td></tr>
+</table>
+全部为 ≥ 约束 ⟹ 可行域在三条线上方，<b>无上界</b>（向右上方开放，图上用箭头标出超出窗口部分）。等值线 4x+3y=k 沿 −c=(−4,−3) 方向平移，最后触点 = 顶点 (2,2)。<div class="formula"><b>最优解 x* = (2, 2)，z* = 4(2)+3(2) = 14</b>（代回三条约束：4 ✓ / 6 ✓ / 14 ✓ 全部达标）</div></div>
+<div class="keybox"><b>要点</b>：① 交点<b>必须代回所有约束</b>（B∩C 交点掉队是本例考点）；② n 个变量取 n 条独立约束边界联立（课件记号 A_I x = b_I）；③ 无界域别慌——最优点仍在顶点，答题时说明"沿无界方向目标增加"；④ 坐标轴 x,y≥0 也是约束边界，别漏轴上顶点；⑤ 建模套路：决策变量→单位统一→每营养素一行"含量×数量 ≥/≤ 需求"→目标为价格和。</div>
+</div>
+
+<!-- ================= D8 ================= -->
+<div class="demo">
+<div class="dhead"><span>D8 · 整数规划：分支定界全流程（课件 L10 原例）</span><span class="tag">L10 · 今年新增考点</span></div>
+<div class="q"><b>例题（课件原数值）</b>：min x − 4y（整数规划，x, y ∈ Z≥0；约束含 5x+10y ≤ 49 等）。LP 松弛最优 (3.8, 3)，值 −8.2。</div>
+<div class="sol"><b>规则框</b>
+<ul>
+<li><b>节点下界 L</b> = 该节点 LP 松弛最优值；<b>U</b> = 当前最优整数解（incumbent）的目标值，初始 +∞。</li>
+<li><b>分支</b>：取分数变量 xᵢ*，分 xᵢ ≤ ⌊xᵢ*⌋ 与 xᵢ ≥ ⌈xᵢ*⌉（如 3.8 → ≤3 或 ≥4）；两子树覆盖全部整数解且都不含当前分数点。</li>
+<li><b>三种关闭节点</b>：① LP 不可行；② LP 解已是整数（更好则更新 U）；③ L ≥ U（剪枝：该子树不可能改进 incumbent）。</li>
+<li>LP 松弛是下界：整数可行集 ⊆ LP 可行集 ⟹ z*_LP ≤ z*_IP。</li>
+</ul>
+<b>完整搜索表（课件数值，逐节点核对过）</b>
+<table>
+<tr><th>节点（继承约束）</th><th>LP 解</th><th>L</th><th>动作</th></tr>
+<tr><td>根</td><td>(3.8, 3)</td><td>−8.2</td><td>分数 → 分支 x≤3 / x≥4，先探 x≥4</td></tr>
+<tr><td>x ≥ 4</td><td>(4, 2.9)</td><td>−7.6</td><td>y 分数 → 分支 y≤2 / y≥3</td></tr>
+<tr><td>　x≥4, y≤2</td><td>(4, 2)</td><td>−4</td><td><b>整数 → incumbent U=−4</b></td></tr>
+<tr><td>　x≥4, y≥3</td><td>—</td><td>—</td><td>不可行 → 关闭</td></tr>
+<tr><td>x ≤ 3</td><td>(3, 2.6)</td><td>−7.4</td><td>y 分数 → 分支（进入时 U=−4）</td></tr>
+<tr><td>　x≤3, y≥3</td><td>—</td><td>—</td><td>不可行 → 关闭</td></tr>
+<tr><td>　x≤3, y≤2</td><td>(1.8, 2)</td><td>−6.2</td><td>x 分数 → 分支 x≤1 / x≥2</td></tr>
+<tr><td>　　x≤3, y≤2, x≥2</td><td>(2, 2)</td><td>−6</td><td><b>整数且 −6 &lt; −4 → 更新 U=−6</b></td></tr>
+<tr><td>　　x≤3, y≤2, x≤1</td><td>(1, 1.6)</td><td>−5.4</td><td><b>L=−5.4 ≥ U=−6 → 剪枝</b></td></tr>
+</table>
+<div class="formula"><b>最优证书：x* = (2, 2)，z*_IP = 2 − 4(2) = −6</b>；所有叶子均已关闭（不可行 / 整数 / 被界剪掉）⟹ 无未探索分支能含更优解。</div></div>
+<div class="keybox"><b>要点</b>：① 不能在第一个整数解就停（−4 后来改进到 −6）；② 剪枝判断写成不等式（−5.4 ≥ −6）给过程分；③ 为什么 LP 是下界要会一句话证（更大可行集上的 min 不会更大）；④ rounding 不可靠（课件例：LP (3.8,3) 取整 (4,3) 违反 5x+10y≤49 不可行）；⑤ 与 A* 类比：节点 LP 界 ≈ f(n) 的乐观估计，用于排除分支。</div>
+</div>
+
+<!-- ================= D9 ================= -->
+<div class="demo">
+<div class="dhead"><span>D9 · 凸集 / 凸函数判断</span><span class="tag">L12 · 今年新增考点 · Q1d-v 型</span></div>
+<div class="q"><b>例题</b>：(1) 证明 Zⁿ（整数格点）不是凸集；(2) 判断 f(t)=(t−2)²+1、f(x,y)=x²−y² 的凸性；(3) 两个凸集的并/交是否必凸？</div>
+<div class="sol"><b>解 (1)</b>：取 x=(0,…,0), y=(2,…,0) ∈ Zⁿ，中点 θ=1/2 得 (1,…,0) ∈ Zⁿ？若取 x=(0,0), y=(1,0)：中点 (0.5, 0) ∉ Zⁿ —— <b>中点不必是整数</b>，违反凸集定义 ⟹ 非凸。
+<b>解 (2)</b>：f(t)=(t−2)²+1：f''(t) = 2 &gt; 0 对所有 t ⟹ 凸（且严格凸）。f(x,y)=x²−y²：H = diag(2, −2)，特征值 2 与 −2 一正一负（不定）⟹ <b>非凸</b>（原点是鞍点）。
+对照正例：f(x,y)=x²+2y²：H = diag(2,4) ⪰ 0 ⟹ 凸。
+<b>解 (3)</b>：交 ✓（两个凸集的交集仍凸：交集中的线段同时在两个集内）；并 ✗ 不必凸——反例：两个不相交圆盘各自凸，取各一点连线穿过中间空隙。判定工具表：
+<table>
+<tr><th>工具</th><th>用法</th></tr>
+<tr><td>定义法</td><td>x, y ∈ F, θ∈[0,1] ⟹ θx+(1−θ)y ∈ F</td></tr>
+<tr><td>二阶导（1 维）</td><td>f 凸 ⟺ f'' ≥ 0（开区间上）</td></tr>
+<tr><td>Hessian（n 维）</td><td>f 凸 ⟸ H ⪰ 0（半正定：特征值全 ≥ 0）</td></tr>
+<tr><td>运算保凸</td><td>凸函数的非负加权和 Σwᵢfᵢ (wᵢ≥0)；凸 g 与仿射复合 g(Ax+b)</td></tr>
+</table></div>
+<div class="keybox"><b>要点</b>：① 凸集 9 连问的必考答案：Rⁿ ✓、超平面 ✓、半空间 ✓、球 ✓、凸集之交 ✓、凸集之并 ✗、Zⁿ ✗、有限点集（&gt;1 点）✗；② 仿射函数既凸又凹；③ 凸优化 = 凸目标 + 凸可行域（min）；max 凹函数 ⟺ min 其负（凸）；④ 凸问题的局部最优 = 全局最优（这是凸优化全部意义的来源）。</div>
+</div>
+
+<!-- ================= D10 ================= -->
+<div class="demo">
+<div class="dhead"><span>D10 · 梯度下降迭代 + 步长选择（课件 L12 原例）</span><span class="tag">L12 · 今年新增考点</span></div>
+<div class="q"><b>例题 1（课件原例）</b>：q(t) = (t−2)² + 1，t₀ = 0，步长 α = 1/4。求前两步迭代并指出极小点。<br><b>例题 2（课件 Practice）</b>：r(t) = (t+1)² + 3，t₀ = 1，α = 1/4。走一步，并求最优点。</div>
+<div class="sol"><b>解 1</b>：q'(t) = 2(t−2)。
+<table>
+<tr><th>k</th><th>tₖ</th><th>q'(tₖ)=2(tₖ−2)</th><th>tₖ₊₁ = tₖ − α·q'</th><th>q(tₖ)</th></tr>
+<tr><td>0</td><td>0</td><td>−4</td><td>0 − (1/4)(−4) = <b>1</b></td><td>5</td></tr>
+<tr><td>1</td><td>1</td><td>−2</td><td>1 − (1/4)(−2) = <b>3/2</b></td><td>2</td></tr>
+<tr><td>2</td><td>3/2</td><td>−1</td><td>7/4</td><td>5/4</td></tr>
+</table>
+单侧单调逼近 t* = 2，q(t*) = 1。误差每步 ×(1−2α) = 1/2：0 → 1 → 1.5 → 1.75 …<br>
+<b>解 2</b>：r'(t) = 2(t+1)；r'(1) = 4 ⟹ t₁ = 1 − (1/4)(4) = <b>0</b>，r(0) = (0+1)²+3 = <b>4</b>。（可再走一步：r'(0)=2，t₂ = −1/2，r = 3.25。）全局极小在 ∇r = 0 即 <b>t* = −1，r(t*) = 3</b>；无约束可微凸函数 ∇f = 0 即全局最优证书。</div>
+<div class="sol"><b>步长表（课件原表，q(t)=(t−2)²+1，t₀=0）</b>
+<table>
+<tr><th>α</th><th>因子 1−2α</th><th>轨道</th><th>行为</th></tr>
+<tr><td>1/4</td><td>1/2</td><td>0, 1, 3/2, …</td><td class="ok">收敛到 2</td></tr>
+<tr><td>1</td><td>−1</td><td>0, 4, 0, 4, …</td><td>振荡</td></tr>
+<tr><td>5/4</td><td>−3/2</td><td>0, 5, −5/2, …</td><td class="no">发散</td></tr>
+</table>
+收敛 ⟺ |1−2α| &lt; 1 ⟺ 0 &lt; α &lt; 1（本例）。</div>
+<div class="keybox"><b>要点</b>：① 更新式 xₖ₊₁ = xₖ − αₖ∇f(xₖ)，α &gt; 0；② 梯度 = 最速上升方向，负梯度 = 局部下降方向；③ 答题格式 = 上表四列（tₖ、梯度、更新、目标值）；④ 停机：梯度范数小 / 目标变化小 / 迭代上限——"更新量小"单独不能说明收敛（可能只是步长小）；⑤ 投影梯度下降（带约束版）课件明说<b>不考</b>。</div>
+</div>
+
+<!-- ================= D11 ================= -->
+<div class="demo">
+<div class="dhead"><span>D11 · 优化建模三经典（L11）</span><span class="tag">L11 · 建模题模板</span></div>
+<div class="sol"><b>① TSP（旅行商）</b>：数据 d(i,j)；决策 = 访问序 x = (x₁,…,xₙ)（n 城市的排列）；可行域 = 全体排列；
+<div class="formula">f(x) = Σₖ₌₁ⁿ⁻¹ d(xₖ, xₖ₊₁) + d(xₙ, x₁)　（闭合边回到起点）</div>
+<b>② 八皇后（可行性问题）</b>：xᵢ = 第 i 列皇后所在行，xᵢ ∈ {1,…,8}；对每对 i &lt; j：
+<div class="formula">xᵢ ≠ xⱼ（不同行）　且　|xᵢ − xⱼ| ≠ |i − j|（不同对角线）</div>
+"每列一个皇后"已含在表示法里；目标取常量 f ≡ 0——可行即最优。<br>
+<b>③ 过原点直线拟合</b>：观测 (1, 2.1), (2, 3.98), (3, 7.0)；决策 = 斜率 a；预测 ŷᵢ = a·xᵢ；残差 eᵢ = yᵢ − a·xᵢ。
+平方损失 L₂(a) = Σ(yᵢ − a·xᵢ)²，令导数为零：
+<div class="formula">a* = Σxᵢyᵢ / Σxᵢ² = (2.1 + 7.96 + 21) / (1 + 4 + 9) = 31.06 / 14 ≈ 2.22</div>
+（课件在 a=2 处对比：残差 (0.10, −0.02, 1.00)，L₁(2) = 1.12，L₂(2) = 1.0104——不同损失最优解不同。）</div>
+<div class="keybox"><b>要点</b>：建模四件套答题格式：<b>决策变量（含单位/域）→ 目标函数 → 约束 → 可行域一句话</b>。整数/二进制变量记法：n ∈ Z≥0（个数）、z ∈ {0,1}（选/不选）、t ∈ R≥0（可分量）；先定单位再写模型（课件：8oz 一份则 amount = 8n）。LP/ILP/BIN/MILP 的区别 = 变量域不同。</div>
+</div>
+
+</body>
+</html>

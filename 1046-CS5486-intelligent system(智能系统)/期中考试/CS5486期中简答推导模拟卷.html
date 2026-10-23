@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5486 期中简答与推导模拟卷</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f2f2f2; color: #111; font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 14px 16px 90px; }
+  .topbar { position: sticky; top: 0; z-index: 9; background: #1a3a5c; color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .topbar b { font-size: 16px; }
+  .topbar .meta { font-size: 13px; color: #cfe0f0; }
+  .topbar button { border: 0; border-radius: 4px; padding: 7px 16px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  #gradeBtn { background: #ffd54a; color: #111; }
+  #resetBtn { background: #4a6a8a; color: #fff; }
+  h1 { font-size: 20px; margin: 14px 0 4px; }
+  .note { background: #fff8dc; border: 1px solid #d9c77a; padding: 8px 12px; border-radius: 4px; font-size: 13.5px; margin: 10px 0; }
+  .sec { background: #1a3a5c; color: #fff; padding: 5px 12px; border-radius: 3px; margin: 22px 0 8px; font-size: 15px; font-weight: 700; }
+  .q { background: #fff; border: 1px solid #bbb; border-radius: 6px; padding: 10px 14px; margin: 10px 0; }
+  .q h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .q h3 .pts { float: right; color: #1a3a5c; font-size: 13px; }
+  .q .zh { font-size: 13px; color: #555; margin-bottom: 6px; }
+  .q textarea { width: 100%; min-height: 64px; font-family: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid #bbb; border-radius: 4px; resize: vertical; }
+  .q .btnrow { margin: 6px 0; }
+  .q button.rev { border: 1px solid #1a3a5c; background: #eef4fa; color: #1a3a5c; border-radius: 4px; padding: 4px 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .ans { display: none; border-top: 1px dashed #999; margin-top: 8px; padding-top: 8px; }
+  .ans .en { background: #eef7ee; border: 1px solid #9c9; border-radius: 4px; padding: 6px 10px; font-size: 14px; margin-bottom: 6px; }
+  .ans .zhx { font-size: 13px; color: #444; margin-bottom: 8px; }
+  .rub { font-size: 13.5px; }
+  .rub b { display: block; margin-bottom: 3px; }
+  .rub label { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 3px 8px; margin: 3px 0; cursor: pointer; }
+  .rub label.off { background: #fdecea; border-color: #c62828; text-decoration: line-through; }
+  .rub label:has(input:checked) { background: #f4f9f4; }
+  .rub .pv { float: right; color: #1a3a5c; font-weight: 700; }
+  .qscore { margin-top: 6px; font-size: 13.5px; font-weight: 700; color: #1a3a5c; }
+  #result { display: none; background: #fff; border: 2px solid #1a3a5c; border-radius: 8px; padding: 14px 18px; margin: 16px 0; }
+  #result h2 { font-size: 18px; margin-bottom: 6px; }
+  #scoreLine { font-size: 22px; font-weight: 800; margin: 6px 0; }
+  #breakdown { font-size: 14px; margin: 8px 0; white-space: pre-wrap; }
+  #reportBox { width: 100%; height: 150px; font-family: Consolas, monospace; font-size: 12.5px; margin-top: 8px; }
+  .copyrow { display: flex; gap: 10px; margin-top: 8px; }
+  .copyrow button { border: 0; border-radius: 4px; padding: 6px 14px; font-weight: 700; cursor: pointer; background: #1a3a5c; color: #fff; }
+  em { font-family: Georgia, serif; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>CS5486 简答·推导模拟卷</b>
+  <span class="meta" id="prog">已作答 0/17 · 自评 0/111</span>
+  <span class="meta" id="timer">00:00</span>
+  <button id="gradeBtn" onclick="makeGrade()">生成成绩单</button>
+  <button id="resetBtn" onclick="resetAll()">重置</button>
+</div>
+<div class="wrap">
+  <h1>期中模拟 · 简答与推导卷（17 题 / 111 分）</h1>
+  <div class="note">仿真题风格：<b>Ⅰ 概念简答（英文作答）→ Ⅱ 公式推导（大题）→ Ⅲ 网络对比（大题）</b>。用法：先在输入框写你的答案（建议英文，可留空），再点「对答案」——对照标准答案，<b>把没拿到的得分点取消勾选</b>，系统累计自评分。全部对完后「生成成绩单」复制发我，我做诊断并更新参考纸急救卡；想让我逐句批改英文表述，就把你的作答原文一起贴过来。建议 90 分钟内完成。</div>
+  <div id="result">
+    <h2>自评成绩</h2>
+    <div id="scoreLine"></div>
+    <div id="breakdown"></div>
+    <div class="copyrow"><button onclick="copyReport()">复制成绩单（发给我诊断）</button><span id="copyHint" style="font-size:13px;color:#555;align-self:center"></span></div>
+    <textarea id="reportBox" readonly></textarea>
+  </div>
+  <div id="quiz"></div>
+</div>
+
+<script>
+const SECTIONS = [
+  ["I", "Ⅰ · 概念简答（英文作答，每题 3 分）"],
+  ["II", "Ⅱ · 公式推导（大题）"],
+  ["III", "Ⅲ · 网络对比（大题）"],
+];
+// rubric: [得分点, 分值]，勾选=拿到分
+const QS = [
+// ===== I 概念 =====
+{sec:"I", zh:"定义线性可分。", t:"Define linear separability.", rub:[["存在线性决策边界/超平面（n+1 个实权重，含阈值）",1],["两类<b>所有</b>样本被完全正确分开（all samples correctly classified）",1],["句子结构完整：A dataset is linearly separable if …",1]],
+ ans:{en:"A dataset (two sets of data) is linearly separable if there exists a linear decision boundary (a hyperplane, i.e., n+1 real weights including a threshold) that correctly separates all samples of the two classes.", zh:"二维是直线、高维是超平面；要点是“存在”＋“完全分开”。"}},
+{sec:"I", zh:"陈述感知机收敛定理。", t:"State the perceptron convergence theorem.", rub:[["前提：<b>if</b> the training data are linearly separable",1],["converges <b>in a finite number of steps</b>（有限次更新）",1],["结果：to a set of weights <b>and a threshold</b> that correctly classify all samples",1]],
+ ans:{en:"If the training data are linearly separable, the perceptron learning algorithm converges to a set of weights and a threshold that correctly classify all training samples in a finite number of steps.", zh:"急救卡①：三要素缺一不可；拼写 boundary / in a finite number of steps。"}},
+{sec:"I", zh:"为什么单层感知机不能解决 XOR？", t:"Why can a single-layer perceptron not solve the XOR problem?", rub:[["A single-layer perceptron can only form a <b>linear decision boundary</b>",1],["the XOR problem is <b>not linearly separable</b>（正类两点对角）",1],["therefore it cannot classify all XOR inputs（完整逻辑链；<b>勿提“权重不足”</b>）",1]],
+ ans:{en:"A single-layer perceptron can only form a linear decision boundary, but the XOR problem is not linearly separable. Therefore, it cannot classify all XOR inputs correctly.", zh:"急救卡②：原因是线性不可分，与权重/神经元数量无关。"}},
+{sec:"I", zh:"什么是支持向量？为何重要？", t:"What are support vectors and why are they important?", rub:[["离决策边界最近的样本，位于间隔边界上（on the margin）",1],["由 KKT，只有它们 αᵢ&gt;0（其余 αᵢ=0）",1],["它们<b>唯一决定</b>最大间隔超平面；删除其余样本不改变解",1]],
+ ans:{en:"Support vectors are the training samples closest to the decision boundary, lying on the margin (they are the only samples with αᵢ>0 by the KKT conditions). They alone determine the maximum-margin hyperplane; removing any other sample does not change the solution.", zh:"→ 参考纸 §6.4。"}},
+{sec:"I", zh:"定义核函数并解释核技巧。", t:"Define the kernel function and explain the kernel trick.", rub:[["公式 K(x,z)=φ(x)ᵀφ(z)",1],["计算映射后高维（expanded）特征空间中的内积",1],["无需显式构造映射 φ，即可处理非线性可分数据",1]],
+ ans:{en:"A kernel function is defined as K(x,z)=φ(x)ᵀφ(z), which computes the inner product of two feature vectors in an expanded high-dimensional feature space. The kernel trick allows an SVM to classify nonlinearly separable data without computing the mapping φ explicitly.", zh:"合法核的判据＝Mercer（对称半正定）。→ §6.6"}},
+{sec:"I", zh:"ART1 的警戒参数是什么？如何影响聚类？", t:"What is the vigilance parameter in ART1 and how does it affect clustering?", rub:[["ρ∈(0,1)，用户选定的设计参数",1],["控制聚类的灵敏度/粒度（granularity、吸引域）",1],["低 ρ 容大 mismatch→少而大的簇；高 ρ→多而小、同质的簇（精度高）",1]],
+ ans:{en:"The vigilance parameter ρ∈(0,1) is a user-chosen design parameter that controls the sensitivity (granularity) of clustering: a low threshold accepts large mismatches and tends to form few large clusters, while a high threshold allows only small mismatches and forms many small, homogeneous clusters with higher precision.", zh:"→ §9.3＋英文答题句。"}},
+{sec:"I", zh:"什么是 MAXNET？", t:"What is MAXNET?", rub:[["循环（recurrent）的赢家通吃 WTA 子网络，用于选最大输入",1],["自兴奋连接权重 1；侧抑制 −w 且 w&lt;1/m（m=单元数）",1],["保最大、压低其余；常作其他网络（如 ART1）的输出层",1]],
+ ans:{en:"MAXNET is a recurrent winner-takes-all sub-network for selecting the input with the maximum value. It uses self-excitatory connections of weight 1 and lateral inhibitory connections of weight −w (w<1/m, m = number of units), keeps the maximal input and suppresses the rest. It is often used as the output layer of other networks such as ART1.", zh:"→ §8。"}},
+// ===== II 推导 =====
+{sec:"II", zh:"从 MSE 目标出发，推导 ADALINE 的批量 LMS 权重更新规则。", t:"Derive the batch LMS weight update rule of ADALINE starting from the MSE objective.（10 分）", rub:[["①目标函数 E(w)=½Σₚ(dₚ−wᵀxₚ)²，eₚ=dₚ−wᵀxₚ",2],["②链式求导 ∂E/∂wᵢ=−Σₚeₚxₚᵢ ⇒ ∇E(w)=−Σₚeₚxₚ",3],["③梯度下降 w(t+1)=w(t)−η∇E(w)",2],["④批量更新 w(t+1)=w(t)+ηΣₚeₚxₚ",2],["⑤说明：ADALINE 仅 batch 模式；η 为学习率（≠样本数 n）",1]],
+ ans:{en:"Objective: E(w)=½Σₚ(dₚ−wᵀxₚ)², with eₚ=dₚ−wᵀxₚ. Since ∂E/∂wᵢ = −Σₚ eₚ xₚᵢ, the gradient is ∇E(w)=−Σₚ eₚ xₚ. Gradient descent gives w(t+1)=w(t)−η∇E(w) = w(t)+ηΣₚ eₚ xₚ.", zh:"四步默写模板见参考纸 §3；得分核心：梯度符号（−Σeₚxₚ）与最终加号汇总。"}},
+{sec:"II", zh:"三层 sigmoid 前馈网络：推导输出层与隐层的 δ，并写出更新规则（BP）。", t:"For a three-layer sigmoid feedforward network, derive the output-layer and hidden-layer deltas and state the update rule.（12 分）", rub:[["①误差函数 E=½ΣₚΣₖ(dₚₖ−yₚₖ)²；通用更新 Δₚwⱼₖ=ηδₖzⱼ（δ×该权输入）",2],["②sigmoid 导数 σ′=y(1−y)",2],["③输出层（链式法则 ∂E/∂w=∂E/∂y·∂y/∂s·∂s/∂w）：δₖ=(dₖ−yₖ)yₖ(1−yₖ)",3],["④隐层（上层 δ 按权回传求和）：δⱼ=zⱼ(1−zⱼ)Σₖwⱼₖδₖ",3],["⑤动量项 Δw(t)=−η∇E+αΔw(t−1)（或四步骤说明）",2]],
+ ans:{en:"With zⱼ=σ(Σᵢvᵢⱼxᵢ), yₖ=σ(Σⱼwⱼₖzⱼ), E=½ΣₚΣₖ(dₚₖ−yₚₖ)², the update is Δₚwⱼₖ=ηδₖzⱼ. Since σ′=y(1−y): output layer δₖ=(dₖ−yₖ)·yₖ(1−yₖ); hidden layer δⱼ=zⱼ(1−zⱼ)·Σₖwⱼₖδₖ (the sum aggregates the error contributions of all output neurons it feeds).", zh:"隐层没有 d！双极 sigmoid 时导数换 1−y²。→ §4.3"}},
+{sec:"II", zh:"SVM：从点到超平面距离出发，推导最大间隔原始问题、拉格朗日对偶与 KKT 结论。", t:"Starting from the distance to a hyperplane, derive the maximal-margin primal problem, the Lagrangian dual, and the KKT consequences.（12 分）", rub:[["①g(x)=wᵀx+b；w 为法向量；dist(x₀)=|wᵀx₀+b|/‖w‖",2],["②w,b 同比缩放不改变平面 ⇒ 取最近点满足 |wᵀxᵢ+b|=1",2],["③margin=2/‖w‖ ⇒ min ½‖w‖² s.t. yᵢ(wᵀxᵢ+b)≥1（凸 QP）",3],["④拉格朗日 L=½‖w‖²−Σαᵢ[yᵢ(wᵀxᵢ+b)−1]；∂L/∂w=0、∂L/∂b=0",2],["⑤对偶 max Σαᵢ−½ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ；KKT ⇒ w=Σαᵢyᵢxᵢ、g(x)=Σαᵢyᵢxᵢᵀx+b 只依赖 SV",3]],
+ ans:{en:"Hyperplane g(x)=wᵀx+b=0 with normal w; distance |wᵀx₀+b|/‖w‖. Scale invariance lets the closest samples satisfy yᵢ(wᵀxᵢ+b)=1, so the margin is 2/‖w‖ and maximizing it ⇔ min ½‖w‖² s.t. yᵢ(wᵀxᵢ+b)≥1. The Lagrangian L=½‖w‖²−Σαᵢ[yᵢ(wᵀxᵢ+b)−1] with ∂L/∂w=0 ⇒ w=Σαᵢyᵢxᵢ and ∂L/∂b=0 ⇒ Σαᵢyᵢ=0 yields the dual: max Σαᵢ−½ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ s.t. Σαᵢyᵢ=0, αᵢ≥0. By complementarity αᵢ[yᵢ(wᵀxᵢ+b)−1]=0, only support vectors (αᵢ>0) enter g(x)=Σαᵢyᵢxᵢᵀx+b.", zh:"→ §6.1–6.4 四步默写模板；对偶/判别函数只含内积 ⇒ 核技巧入口。"}},
+{sec:"II", zh:"解释 RBF 网络如何解决 XOR（含公式与中心选取）。", t:"Explain how an RBF network solves the XOR problem.（8 分）", rub:[["①高斯 RBF：φⱼ(x)=exp(−‖x−cⱼ‖²/(2σⱼ²))",2],["②取两中心 c₁=[1,1]ᵀ、c₂=[0,0]ᵀ",2],["③输入映到 (φ₁,φ₂) 平面后变为线性可分",2],["④线性输出层分类即可；理论依据＝Cover 定理（高维更可能线性可分）",2]],
+ ans:{en:"With Gaussian units centered at c₁=[1,1]ᵀ and c₂=[0,0]ᵀ, φⱼ(x)=exp(−‖x−cⱼ‖²/2σ²), the four XOR inputs are mapped onto the (φ₁,φ₂) plane where they become linearly separable; the linear output layer (as in ADALINE) then separates them. By Cover's theorem, patterns nonlinearly mapped to a higher-dimensional space are more likely to be linearly separable.", zh:"→ §5.2–5.4。"}},
+{sec:"II", zh:"写出 ART1 聚类算法完整流程（含初始化、警戒测试与权重更新）。", t:"Write the complete ART1 clustering algorithm.（10 分）", rub:[["①初始化：top-down tᵢⱼ=1；bottom-up bᵢⱼ=1/(1+N)",2],["②海选：净输入 yⱼ=Σᵢbᵢⱼxᵢ",2],["③用 MAXNET 选最佳匹配单元 k",1],["④警戒测试 ‖x∧tₖ‖/‖x‖≥ρ：过→更新；不过→禁用 k 重选；全禁→新建类（模板=x）",3],["⑤更新：tₖ←tₖ∧x（交集）；bᵢₖ←(tᵢₖ∧xᵢ)/(0.5+‖tₖ∧x‖)",2]],
+ ans:{en:"1) Initialize top-down weights tᵢⱼ=1 and bottom-up weights bᵢⱼ=1/(1+N). 2) For input pattern xᵖ compute net inputs yⱼ=Σᵢbᵢⱼxᵢ. 3) Select the best match k with MAXNET. 4) Vigilance test: if ‖x∧tₖ‖/‖x‖≥ρ go to 5; otherwise disable neuron k and repeat from 3 (if all disabled, create a new category with template x). 5) Update: tₖ←tₖ∧x and bᵢₖ←(tᵢₖ∧xᵢ)/(0.5+‖tₖ∧x‖).", zh:"→ §9.2 五步；樱桃例：得分 0.6、相似度 3/3=1>0.7。"}},
+// ===== III 对比 =====
+{sec:"III", zh:"对比 Perceptron 与 ADALINE（激活、学习规则、训练模式、目标）。", t:"Compare Perceptron and ADALine in terms of architecture/activation, learning rule, training mode, and objective.（8 分）", rub:[["激活：bipolar/unipolar hard-limiter vs 线性激活（学习时）",2],["规则：误分类驱动、<b>非</b>梯度下降 vs LMS(Delta)、梯度下降",2],["模式：序贯或批量均可 vs 仅批量",2],["目标：正确分类即收敛 vs 最小化 MSE（完整句含 whereas 更佳）",2]],
+ ans:{en:"Architecture: the perceptron uses a bipolar or unipolar hardlimiter activation function, whereas Adaline uses a linear activation function (during learning). Learning rule: the perceptron learning algorithm is not gradient-descent and can operate in either sequential or batch training mode, whereas the Adaline learning (LMS) algorithm is gradient descent, but can only operate in batch mode, minimizing the mean squared error.", zh:"课件 s104 原句，直接背诵默写。→ T1"}},
+{sec:"III", zh:"对比 MLP（BP 训练）与 RBF 网络。", t:"Compare MLP trained by backpropagation with RBF networks.（8 分）", rub:[["隐层激活：sigmoid（全局响应）vs 高斯 RBF（局部响应，近中心才激活）",2],["输出层：两者均为线性",1],["训练：全网络迭代梯度 vs 两阶段（定中心/宽度＋输出层最小二乘一步解）",2],["局部极小：BP 可能有 vs RBF 输出层无（LS 解）",2],["表述：RBF 是<b>结构</b>、BP 是<b>算法</b>，二者非同类概念",1]],
+ ans:{en:"An MLP uses sigmoid hidden units with global response, trained by iterative gradient descent over all weights (subject to local minima); an RBF network uses locally-tuned Gaussian hidden units and a linear output layer, whose weights can be obtained in one least-squares step once centers/widths are fixed — faster and free of output-layer local minima. Note RBF is a network structure while backpropagation is a learning algorithm.", zh:"→ T3。"}},
+{sec:"III", zh:"对比 SVM、SVR 与 LS-SVM。", t:"Compare SVM, SVR, and LS-SVM.（8 分）", rub:[["任务：分类 vs 回归（SVR）",2],["损失/约束：hinge＋不等式（SVM）vs ε-不敏感（SVR）vs 等式约束＋平方误差（LS-SVM）",3],["求解：QP vs QP vs 线性方程组（快）",2],["稀疏性：SV 稀疏 vs LS-SVM 非稀疏（多数 α≠0）",1]],
+ ans:{en:"SVM: hinge loss with inequality constraints, solved by QP, sparse (only SVs). SVR: ε-insensitive loss — errors inside the ε-tube cost nothing — also QP and sparse. LS-SVM: equality constraints with squared errors, so the KKT conditions become a linear system — much faster, but loses sparsity since most αᵢ≠0.", zh:"→ T4；都可核化、同源结构风险最小化。"}},
+{sec:"III", zh:"辨析竞争学习、MAXNET、kWTA 与 ART1 的关系。", t:"Distinguish competitive learning, MAXNET, kWTA, and ART1.（8 分）", rub:[["竞争学习＝<b>学习范式</b>：赢家权重向输入移动，形成簇（能量函数下降）",2],["MAXNET＝实现 WTA 的<b>循环子网络</b>（自兴奋 1、侧抑制 −w&lt;1/m）",2],["kWTA＝选前 k 个赢家；Heaviside 版全局稳定、有限时间收敛",2],["ART1＝完整聚类网络＝海选（bottom-up 竞争＋MAXNET）＋警戒测试（top-down）＋模板更新",2]],
+ ans:{en:"Competitive learning is a learning paradigm: only the winning neuron's weights move toward the input, gradually forming clusters. MAXNET is a recurrent WTA sub-network (self-excitatory 1, lateral −w<1/m) implementing the winner selection, often used as an output layer. The kWTA model selects the top k winners (Heaviside version globally stable, finite-time convergent). ART1 is a complete clustering network combining bottom-up competitive selection with MAXNET, a top-down vigilance test, and template updating.", zh:"→ T5。"}},
+{sec:"III", zh:"前馈与循环网络如何区分？BP 意味着网络是循环的吗？", t:"Distinguish feedforward and recurrent networks. Does backpropagation imply the network is recurrent?（6 分）", rub:[["前馈＝信号由输入到输出单向流动（结构属性）",2],["循环＝存在反馈连接（例：MAXNET、ART1、Hopfield）",2],["BP 只是训练算法：误差梯度反向计算≠循环连接；BP≠recurrent",2]],
+ ans:{en:"Feedforward describes signal flow from input to output only; recurrent networks contain feedback connections (e.g., MAXNET, ART1, Hopfield networks). Backpropagation is a learning algorithm that propagates error gradients backward to update weights — it does not mean the network is recurrent.", zh:"→ T6；英文句可直接背。"}},
+];
+
+let revealed = new Set(); // 已对答案的题号
+const t0 = Date.now();
+setInterval(()=>{
+  const s = Math.floor((Date.now()-t0)/1000);
+  document.getElementById("timer").textContent =
+    String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+},1000);
+
+function totalPts(){ return QS.reduce((s,q)=>s+q.rub.reduce((a,[,p])=>a+p,0),0); }
+function build(){
+  const host = document.getElementById("quiz");
+  let html = "";
+  SECTIONS.forEach(([sid,title])=>{
+    html += `<div class="sec">${title}</div>`;
+    QS.forEach((q,i)=>{
+      if(q.sec!==sid) return;
+      const pts = q.rub.reduce((a,[,p])=>a+p,0);
+      html += `<div class="q" id="q${i}">
+        <h3>${i+1}. ${q.t}<span class="pts">${pts} 分</span></h3>
+        <div class="zh">${q.zh}</div>
+        <textarea placeholder="在此写下你的答案（建议英文；也可先在纸上写）" oninput="updateProg()"></textarea>
+        <div class="btnrow"><button class="rev" onclick="reveal(${i})">对答案 / 得分点</button></div>
+        <div class="ans" id="ans${i}">
+          <div class="en"><b>标准答案：</b>${q.ans.en}</div>
+          <div class="zhx">${q.ans.zh}</div>
+          <div class="rub"><b>得分点（没拿到的取消勾选）</b>
+          ${q.rub.map(([txt,p],k)=>`<label id="lb${i}_${k}" class=""><input type="checkbox" checked onchange="scoreQ(${i})"><span class="pv">${p} 分</span>${txt}</label>`).join("")}
+          </div>
+          <div class="qscore" id="sc${i}"></div>
+        </div>
+      </div>`;
+    });
+  });
+  host.innerHTML = html;
+  updateProg();
+}
+function reveal(i){
+  const el = document.getElementById(`ans${i}`);
+  el.style.display = el.style.display==="block" ? "none" : "block";
+  revealed.add(i);
+  scoreQ(i); updateProg();
+}
+function scoreQ(i){
+  let got=0, all=0;
+  QS[i].rub.forEach(([txt,p],k)=>{
+    const cb = document.querySelector(`#lb${i}_${k} input`);
+    all+=p;
+    const lb = document.getElementById(`lb${i}_${k}`);
+    if(cb.checked){ got+=p; lb.classList.remove("off"); } else lb.classList.add("off");
+  });
+  const sc = document.getElementById(`sc${i}`);
+  if(sc) sc.textContent = `本题自评：${got} / ${all} 分`;
+}
+function myScore(){ return QS.reduce((s,q,i)=>{ if(!revealed.has(i)) return s; let g=0; q.rub.forEach(([t,p],k)=>{ const cb=document.querySelector(`#lb${i}_${k} input`); if(cb&&cb.checked) g+=p; }); return s+g; },0); }
+function updateProg(){
+  const wrote = [...document.querySelectorAll(".q textarea")].filter(t=>t.value.trim()).length;
+  document.getElementById("prog").textContent = `已作答 ${wrote}/${QS.length} · 对答案 ${revealed.size}/${QS.length} · 自评 ${myScore()}/${totalPts()}`;
+}
+function makeGrade(){
+  const T = totalPts();
+  const secStat = {};
+  SECTIONS.forEach(([sid])=>secStat[sid]={got:0,all:0});
+  const missed = [];
+  QS.forEach((q,i)=>{
+    let got=0, all=0;
+    q.rub.forEach(([txt,p],k)=>{
+      all+=p;
+      const cb=document.querySelector(`#lb${i}_${k} input`);
+      if(revealed.has(i) && cb && cb.checked) got+=p;
+      if(revealed.has(i) && cb && !cb.checked) missed.push(`Q${i+1}: ${txt.replace(/<[^>]+>/g,"")}`);
+    });
+    secStat[q.sec].got+=got; secStat[q.sec].all+=all;
+  });
+  const score = myScore();
+  document.getElementById("scoreLine").textContent = `${score} / ${T}（${Math.round(score/T*100)} 分）${revealed.size<QS.length?` · 还有 ${QS.length-revealed.size} 题未对答案（按 0 分计）`:""}`;
+  document.getElementById("breakdown").textContent =
+    SECTIONS.map(([sid,title])=>`${title.replace(/（.*/,"")}：${secStat[sid].got}/${secStat[sid].all}`).join(" ｜ ") +
+    (missed.length? `\n丢分得分点（${missed.length} 项）：\n`+missed.map(m=>"· "+m).join("\n") : "\n全部得分点拿到，满分！");
+  const report = [
+    `CS5486 简答推导模拟卷 · 自评成绩单`,
+    `自评: ${score}/${T} (${Math.round(score/T*100)}%)  已对答案: ${revealed.size}/${QS.length}`,
+    `分区: `+SECTIONS.map(([sid,title])=>`${title.replace(/（.*/,"")}${secStat[sid].got}/${secStat[sid].all}`).join(" | "),
+    missed.length? `丢分点:\n`+missed.map(m=>"- "+m).join("\n") : `丢分点: 无`,
+    `(如需逐句批改英文表述，请把对应题号的作答原文一并发送)`,
+  ].join("\n");
+  document.getElementById("reportBox").value = report;
+  document.getElementById("result").style.display="block";
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+function copyReport(){
+  const box = document.getElementById("reportBox");
+  box.select();
+  try { document.execCommand("copy"); document.getElementById("copyHint").textContent="已复制，粘贴到对话里发给我即可"; }
+  catch(e){ document.getElementById("copyHint").textContent="请手动全选复制"; }
+}
+function resetAll(){
+  if(!confirm("清空全部答案与自评，重新开始？（计时器重置）")) return;
+  revealed = new Set();
+  build();
+  document.getElementById("result").style.display="none";
+  document.getElementById("copyHint").textContent="";
+  window.scrollTo({top:0});
+}
+build();
+</script>
+</body>
+</html>

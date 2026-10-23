@@ -1,0 +1,185 @@
+[00:00] 发言人1: 然后。嗯。
+
+[00:10] 发言人1: 最简单的套餐就可以要上。right，and also remember that。For the digital network，每一转子，我想要的linear container with one activation layer。
+
+[00:33] 发言人1: Also with common layer and reason layer right we can use it for like a deep your deep convolutional network or a deep CNN right. Also there has some qualification there like that you should remember that we have to insert the active nonlinear activation there between each linear layer okay. You still remember my name is nonlinear activation layer inside linear layer. 
+
+[01:23] 发言人1: Why do we need to insert some? Nonlinear activation between those linear layers. For for me，uh，did your network。
+
+[02:06] 发言人1: Here why do we need insert the activation layer activation activation layer between those linear convolutional layer or some linear layers why do we need the activation layer between those linear layers. 嗯。
+
+[02:44] 发言人1: to map the picture to new. 你没选。我有十五万。Map the data to new feature. 嗯，毛康才刷车，because。For example，if we represent the linear operation like this，y equals to w x，that is a very simple linear matrix。
+
+[03:22] 发言人1: So if without those activation there，for example，there is y one，y two is also equals to。W two y one plus b right if without activation there we can simply rewrite y two as a y hat x plus b hat right there is a merge of the w and w two b and b two right so without activation there we can use a single linear layer to multiply. To represent multiple linear data so that means without activation layer is no meaning to stacking those new layers. 
+
+[04:11] 发言人1: So here's the activation layer. Use the useful this of the activation layer you should also remember that the activation layer makes the deep neural network that can be deep that can take extract deep features right so if without activation layers no matter how many layers you stack the feature extracted is only a simple linear feature. ok. 
+
+[04:49] 发言人1: These are some basic units that we have learned in the last class for the activation usefulness and for activation. And what is a cross attention here and what the transformers definition of transformers okay these are some basic components. Today we will introduce the generator model.
+
+[05:21] 发言人1:  How can we generate new image from noise or from something else? So we will start from a basic conception of the neural network. Do you know anything about the neural network? 
+
+[05:48] 发言人1: You don't know anything about the livelihood. 
+
+[06:11] 发言人1: 我一开始的我是。
+
+[06:20] 发言人1: In the probability theory，what is this？The PMs。
+
+[06:32] 发言人1: If x is continuous what is px? And density right the probability density so what is likelihood likelihood you can think that likelihood is add theta to the density formula right this is a p theta so what does likelihood tell us. 
+
+[07:19] 发言人1: Actually，the density tells us the probability of something happening，right？If it has a large probability，density may be higher on that region，right？For example，if the x equals to0，and the probability of one，so it may be。
+
+[07:46] 发言人1: Tell us that there is very high probability to happen that s equals zero right. So the likelihood especially the model likelihood actually tell us. Under the condition of the theta theta is the new or network like this the under what condition under what theta private theta the output distribution of output it is right it's we know format tell us the distribution right. 
+
+[08:22] 发言人1: I guess the p x is some distribution i guess but the model likelihood tell also its next distribution but it focus on the parameter theta it indicated that on the what kind of theta. For example，under the uh under the signal one，the density is like this，and under the parameter of the signal two，the density is like that，so the promising density，right，is described by this。嗯，呃，condition on the model parameter theta，and this is called model likelihood，and likelihood is actually。The central of all the young people the matter the. 
+
+[09:19] 发言人1: Uh，For example，the champion，or the child，or even the signals，some image generation，we will generate model，all of those generation models are trained with the goal that is to maximize the model value，and today we will also invest what is value，and why do we need to。Maximums. so. 
+
+[09:50] 发言人1: 嗯，we can also think that the generation process，if we want to learn，probably say the teacher。Right the generation process is actually to fit a neuron net to fit a distribution for number if you want to generate image. You can see that the image may is a distribution of image maybe like this curve or that different kind of curves right if you want to correctly generate image that means you want your models to have a. Very similar，That is you want your model very good to approximate this data distribution right? It means for example you have the real world data is you. 
+
+[11:00] 发言人1: Should be very high under the real captured data or high quality image right if we have a very high quality image data size a very large high quality image data size and our real world data distribution should has a quite high value around those region where the。image had a large呃the high quality image。然后if we have if we have very large set of image datasets。Those are images and then we combine those images for example like a tuning space like this. 
+
+[11:47] 发言人1: Right and then the for this two d space actually the image generation is to呃 as the. 我一。The P X should be quite high around those. 
+
+[12:11] 发言人1: This is the PS. The PS looks quite high around those local region, around those high coordinate. And our aim is to face those, right? To face, to make our learning good, to face this PS like this curve. How to face this PS? It's actually to measure the. 
+
+[12:32] 发言人1: Real world data distribution and our model generated distribution and reduce the gap between or reduce the distance between the p data and the p data like this image we have the p data and we also have the p data and our aim to is to first measure the p the distance between the p data and the p data this first measure this. 医生。And then we have to minimize distance. 
+
+[13:06] 发言人1: And then you can it contest several steps that is a generation and we sample the x u from px and then we will do the density estimation and px should be high if x is like dog and should be low otherwise that means that px should be high around the real world or our target image resolution. 他的数据弄他之前他都他都开始。反正呃，as our discuss we should approach the p c塔，that is model like a good to the p c塔。 then has some question first is how can we represent the p c塔，and the second question that is how can we learn this. 第一时间打。
+
+[14:06] 发言人1: Right the goal of our learning is actually to get a model P C that can capture the distribution of the P data and sometimes we cannot utilize all the data from the real world because we can only capture a small amount of data so the goal is also very hard to achieve. 再一个就是人民的健康人民的response. So if we want to select to p theta to that likelihood to approach the p data so how can we measure the difference between those p theta and those p data. 在这个A塔就是用水磨的。嗯。
+
+[15:19] 发言人1: 来珍惜。Our aims is actually to minimize this p data and that is data distribution and more likely to as the same. We have the data distribution and we have the more running loop and then we have to minimize to this solution right. To minimize this distribution we have to first figure out how to measure the difference between those two distributions. So how can we measure the difference or distance between two distribution? 
+
+[16:07] 发言人1: In the previous task of level four two image. The representative of the matrix right. 
+
+[16:25] 发言人1: for two minutes how can we. Measure the difference between those these two image. 
+
+[16:59] 发言人1: How can we measure the difference between those two images? 
+
+[17:08] 发言人1: That you have, there is also some. 他们说那个名词，你还有名词，right，有复合式。How can we measure the difference in two English? 
+
+[17:51] 发言人1: 太。
+
+[17:57] 发言人1: 我男朋友海关。Everything or reconstruct image and roll also as a. 呃，他这个情况就是因为。In the previous class, measure the difference between the two images. 好，看呗，拍出来一张。
+
+[18:47] 发言人1: right we utilize for example there is x zero one x one utilize(sound square difference right or. Mean squared error，right，like x zero minus f one。
+
+[19:12] 发言人1: By this manner，we can easily calculate the difference between two image。But how can we calculate the diversity，the difference between two distribution？然后，inside of the image for two distribution，how can we calculate the difference？
+
+[20:04] 发言人1: So how can we calculate the difference between those two distributions? Here we introduce the KL divergence. KL divergence is a very important measurement or metric to measure the difference between two distributions.
+
+[20:27] 发言人1:  It's defined like this. For example, if we have one distribution PX and another distribution QX. 呃K L代表的是。
+
+[20:44] 发言人1: K L的diversity第一。P Q等于E乘以two。咱们审批老品就H。This is the T K L改革的事情。
+
+[21:16] 发言人1: Right, so if consider this summation p times log p divided q, if we consider this, we can revise it as expect x belonging to p log p. divide by q right it is right. If there is a summation of the p mental with this log function we can rewrite it as the as the extension of x holding the p distribution log p divide i divide q right. 
+
+[22:02] 发言人1: So consider this function we can see that um okay it's also can further we rise to the expectation x plus p balance. Now q times p right it is right it change the p q position and add further minus active signal right and then consider this graphic of this minus log function right it look like this. 
+
+[22:42] 发言人1: right this is sorry this is low. 
+
+[22:52] 发言人1: This function is look like this。Right, so we can find that the. Minus log the expectation of the minus log maybe some function and the expectation will provide here right under the expectation the minus log we can compare those minus log expects. 
+
+[23:25] 发言人1: Q divide by P right if we take the expectation inside this log function we will find that this it will appears like the. The point appear right so this is the minus log expectation and this point is expectation and no we then based on this we will find the top term is larger or equal. Than the bottom term right so we can find that this expected minus log q right by p is larger or equal than this formula right. 
+
+[24:23] 发言人1: 对。right. You can remember it using this the ground of the minus log function right? 来坚持。
+
+[24:44] 发言人1: Then we will rewrite this expectation as using the p x marginal with the q x divided by the p x right so this result is every rewrite. 啊，谁。rising expectation at the minimum. 
+
+[25:06] 发言人1: 皮衣。Q Y P Y. So then we can merge so two terms like the minus log summation q. 所以我那个咱们生成那个。Q Y. 
+
+[25:34] 发言人1: 我这个关于我们的咱们项目的K Y S. 
+
+[25:48] 发言人1: For a promising venture what is the value of the summation of the all probability of the integral of uh on the. 呃，房屋没人。
+
+[26:13] 发言人1: recommend that we can march this two p x s and the result is only summation of q x s. 所以咱们时候不听那谁是。哎，我忘了。
+
+[27:03] 发言人1: 哎一万关系。Everyone has a true promising venture，比如像Q，everyone sum all the probability together，result is one，哎，is one，so the result is minus log one，or this zero。Alexandria Alexandria we will get that the K L diversity is larger than milk guys. 
+
+[27:34] 发言人1: And we will easily find that on the region on the condition that QX equals PX this equals one and the result is zero. So the KL divergence is not lower than the zero. And if cos theta equals only if P equals Q。
+
+[28:12] 发言人1: This is the characteristics of the here emergency。And also the key of diversity is asymmetric that is E P Q not equals to the E Q P so this is the first. important for the T R technology. 
+
+[28:43] 发言人1: And rest the way you says then by introducing the care diversity which matter the difference or distance about the two big uh two distributions. And then we can substitute the P P端和P C端，再一个data distribution and model likelihood into the. 
+
+[29:13] 发言人1: Uh，came out emergency，and the results is like this，the summation，the p data multiple with the log p data，divide by the p data，right，this is。density啊sorry this is diversity p l diversity between the p a和p c的。So we can find that the if you like the K L. 
+
+[30:03] 发言人1: I feel this key out the urgency to measure the difference between the p beta and p beta will get the result that this is equal to. 一二幺零五P一。然后。P D P C right and then we can further divide the two term. 
+
+[30:41] 发言人1: 你要P C的。Right，so it contains those shorter，and the optimizeable power is actually the P theta，right？The model likelihood is one optimizable part and the data distribution P E right in space。
+
+[31:11] 发言人1: So the everyone to optimize the neural network or to optimize the data generated data distribution approach the. Data就是优势，加上这个image就是control，而control的data就是优势。The only changeable car is last。
+
+[31:35] 发言人1: 还有一个。一批银行贷款，毕竟啊，哎，OK，master。So do you remember what the aim of the model? Our generative model is we have we here introduce the key of diversity is to minimize. 
+
+[32:00] 发言人1: The distance or minimize the gap between the t data distribution and model that we move right our aims is to reduce this dp diversity pd and p theta. so every divide is it as those tutor. And the first term is fixed because it's the only content here and only true real term is the last term so if we want to reduce this distance and we actually we need to. how to change this this last term. 
+
+[33:03] 发言人1: Everyone to reduce。呃，贷款人的。好看的。就是。什么？
+
+[33:26] 发言人1: Right，and we want to reduce this，and we divide this into this term and this term，right？The term A minus term B，and term in the face，how can we change term B？to reduce. 大概就是。
+
+[33:52] 发言人1: May you increase or decrease. 
+
+[34:09] 发言人1: Like this our aims is to reduce this and this time is big and this time is changeable how can we change this term. Increase it right because it's a minus b right the a space and b it can be increase right if we increase this and the diversity will be decreased right so in the long minimize this term we need to maximize this term. So this is why our. 
+
+[34:54] 发言人1: The lecture is title with maximum likely rule。Right, by this analysis, we find that if we want to minimize the distance between the data and the model likelihood, we need to increase the model log likelihood, right? This is a log likelihood, the p theta is the likelihood, and the log p theta is the log likelihood, okay? 
+
+[35:31] 发言人1: Right, that is better. We can get the. Think that if we want to minimize this error we need to maximize this error. 啊连接使用。没什么来维护，this is actually this is all the target，真正的target of all general model。No matter the GT no matter the C dance no matter some image generation or language all the generation models is trained to maximum model likelihood ok. And you now should remember what is likelihood and how to measure the distance between two distribution and why do we need to maximize your model likelihood to improve generation quality right these are three basic conception. 
+
+[36:54] 发言人1: right here. Compare to this problem. However，sometimes we do not actually the p data is a real world data distribution for us，we cannot right，we cannot formulate this real world data distribution，so how can we do，how can we empirically。Approximates. 
+
+[37:29] 发言人1: 这次。System，那你说how can you this绕过来，那后面怎么？how can you how can you this？
+
+[37:47] 发言人1: Here we introduce a method that if sometimes you do not know what the distribution is but you can sample the room. Value from this distribution，and then if you want to calculate some function which variable is based on this distribution，then the GX the X is based on this distribution，so how can we get the expectation of this function value？So we introduce the moon card sample.
+
+[38:27] 发言人1:  The moon card sample is easy. It means that if I cannot get the exact distribution of the PS, I can sample multiple times and averaging all the results. And this is an empirical estimation of the. 
+
+[38:48] 发言人1: Expectation value right this is how the most color sample or most color method most color method is also very very useful. Technique to help you calculate some value that you cannot explicitly calculate. And there are some characteristics of the Monte Carlo estimation, for example, it's unbiased. That is the expectation of the model how estimation equals to expectation of the original function ds。So how can we derive this on this characteristic? 
+
+[40:01] 发言人1: For example the g hat that is the most common estimation equals to n times summation i to n. J X R S，this is a Monte Carlo estimation，and the how can we derive the expectation of this Monte Carlo estimation is equals to the expectation of the original function K X。If these two terms is equal, we can say that this estimation is unbiased, which means the estimation is same, expectation is same. This is called unbiased. 
+
+[40:53] 发言人1: 嗯。How can we drive the expectation of the GX is equal to the expectation of the GX hat? 危害性。
+
+[41:15] 发言人1: For example, we can start from the expectation of the G hat. It equals to the expectation of n. Summation i two i n g x i right and if we take this out of the expectation we can see that really expectation of the summation i one to n right. 
+
+[41:46] 发言人1: J X I. And then we can also move the submission outside expectation that is a. The submission i provide expectation. Because no matter which Xi their expectation is same so the result is n times one summation. 
+
+[42:15] 发言人1: Expectation tx，so the result this is n。N times expectation G S equals to the expectation of the G S right? So from this result we can see that the expectation of the our model color estimation is equals to the expectation of the original function gs.
+
+[42:46] 发言人1:  So we have first characteristic that the model color estimation is unbiased. Right，which means the expectation of power，multipoles estimation is same to the expectation of original function。And then we have all the others convergence, which means we can use the law of the large number.
+
+[43:16] 发言人1:  And when the number of sample approach infinity, our expectation, our Monte Carlo estimation will also approach the expectation. And the second is variance and the variance of the our Monte Carlo sampling is also reduced with the number of points or number of samples. here we can have a. Brief呃呃small example开始。
+
+[44:11] 发言人1: 那个coin sleep games like this to help us to get better invested of the. The more ready move and is optimization for. so if we have a. 
+
+[44:33] 发言人1: 呃，还有Ak。Independent force that means we we have we split the whole any times and each code follows the bern bernoulli distribution with the parameter theta. 谁？好咖啡所有的。
+
+[45:00] 发言人1: The distribution or how not here is not distribution here is likelihood so how can we formulate the likelihood. It is eight times eight times this eight times with for example the x times has and eighteen minus。X times two so health right so how can we formulate the result the model likelihood of this eighty times coin told the result. 
+
+[45:52] 发言人1: 原来是一个。The answer is called followed ordinarily. We will have that the total results will like this the L theta x is equals to theta. A K等于theta X and one minus theta. 
+
+[46:23] 发言人1: Eight minus x right if there if there is totally eighty times two right this is a specific this is a model likelihood on certain results for example with x test and. Uh，eighty minus times，so if it's something to the current author，if we have eighty times，uh，live and our current observation is we have fifty two heads and twenty eight cells，so current。Model likelihood we on the current of the vision we can substitute x equals to twenty two right into this equation and the result is theta. 
+
+[47:14] 发言人1: 三零九五那个我们C的。twenty eight right so this is current嗯model likelihood on this observation link or the observation link right. This is. 
+
+[47:33] 发言人1: Move the language code on the current observation. 送。You still remember what the title of today lecture or the aims of our teaching model? 这太多一个S。
+
+[48:02] 发言人1: right，the hell is this. Maximum likelihoodhood right the first step we have for this question we have established that likelihoodhood is this so the next step is to do the maximum class max to calculate the maximum of this value right we need to calculate the maximum of this model. 最后，at this how can we calculate the maximum of this. 
+
+[48:41] 发言人1: Sorry, this is a likelihood, but also we have to calculate further. This is a log likelihood. 要负责唠叨outside方程。
+
+[48:58] 发言人1: 你绕过来这个部位，like this。
+
+[49:09] 发言人1: This is a log like rule. So how can we calculate the. 我捞回来这个裤子。没什么矛盾闹的来来混。
+
+[50:06] 发言人1: 我看你开了那个maximum of this not very good. 
+
+[50:26] 发言人1: We can calculate and there's a derivative equals to zero right. And then we compare the exactly extreme value of the theta price. This is the calculation process of the maximum likelihood for a coin toss problem. For example, like here, we get the log likelihood. This is the log likelihood. 
+
+[51:00] 发言人1: And this is the likelihood right and then we can calculate this derivative and make it equal to zero right and we can then calculate back to the theta and this theta is the value that can make the likelihood and maximal right so this is a very simple example of the。买什么来维护的呢？虽然不是驾驶模型，但是一样。We have the observation, we have the. 
+
+[51:43] 发言人1: Model likelihood，and then we submit our observation into the model likelihood，to get the exactly likelihood value，and then we do the maximum of that model likelihood，to make our memory。More likely good to be as much or as larger as possible on this observation data and this is the model likelihood learning or maximum model likelihood learning process. Okay，we can have a good minutes break。
+
+[54:22] 发言人1: 是。这时候的转发量。为什么？
+
+[54:52] 发言人1: 我。

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5486 期末复习资料（初稿）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f2f2f2; color: #111; font-size: 15px; line-height: 1.6; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 14px 16px 90px; }
+  .topbar { position: sticky; top: 0; z-index: 9; background: #5c2a1a; color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .topbar b { font-size: 16px; }
+  .topbar .meta { font-size: 13px; color: #f0d9cf; }
+  h1 { font-size: 21px; margin: 14px 0 2px; }
+  .sub1 { color: #555; font-size: 14px; margin-bottom: 8px; }
+  .note { background: #fff8dc; border: 1px solid #d9c77a; padding: 8px 12px; border-radius: 4px; font-size: 13.5px; margin: 10px 0; }
+  .sec { background: #5c2a1a; color: #fff; padding: 6px 12px; border-radius: 3px; margin: 24px 0 8px; font-size: 15.5px; font-weight: 700; }
+  .sec .en { font-weight: 400; font-style: italic; font-size: 13px; color: #f0d9cf; }
+  .q { background: #fff; border: 1px solid #bbb; border-radius: 6px; padding: 12px 14px; margin: 10px 0; }
+  .q h3 { font-size: 15px; margin-bottom: 5px; }
+  ul, ol { margin: 4px 0 4px 22px; }
+  li { margin: 4px 0; }
+  .f { font-family: Georgia, "Times New Roman", serif; }
+  b.f, .f b { font-weight: 700; }
+  .src { font-size: 12.5px; color: #777; margin-top: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; margin: 8px 0; }
+  th, td { border: 1px solid #bbb; padding: 5px 9px; text-align: left; vertical-align: top; }
+  th { background: #f7ede8; color: #5c2a1a; }
+  td:first-child { background: #fafafa; font-weight: 700; white-space: nowrap; }
+  .tag { display: inline-block; border-radius: 3px; font-size: 11.5px; padding: 0 6px; margin-left: 5px; vertical-align: 2px; font-weight: 700; }
+  .tag.sl { background: #eef4fa; border: 1px solid #9db8d2; color: #1a3a5c; }   /* 课件确认 */
+  .tag.bu { background: #fdecea; border: 1px solid #d9a09a; color: #8a2a1a; }   /* 教材补写待核验 */
+  .stp { display: inline-block; background: #5c2a1a; color: #fff; border-radius: 3px; font-size: 12px; padding: 0 7px; margin-right: 4px; }
+  .box { background: #f7ede8; border: 1px solid #d9b8a8; border-radius: 5px; padding: 8px 12px; margin: 8px 0; }
+  @media print { .topbar { position: static; box-shadow: none; } body { background: #fff; } .q { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>CS5486 期末复习资料（初稿）</b>
+  <span class="meta">Final Exam · ART1 + Hopfield→PSO · 题型暂定 25% 对比＋75% 推导计算</span>
+</div>
+<div class="wrap">
+  <h1>CS5486 Intelligent Systems 智能系统 · 期末复习资料（初稿）</h1>
+  <div class="sub1">范围（暂定）：ART1 ＋ Hopfield 起后半学期全部 · s205–362</div>
+  <div class="note">
+    <b>考试情报</b>：期末 <b>2 小时</b>、占 <b>50%</b>，<b>卷面必须 ≥30% 才能及格</b>（官方硬性规定）；<b>题型暂定沿用期中结构＝约 25% 网络对比＋约 75% 推导计算</b>（待考纲确认）。是否累计期中前内容、能否带参考纸——待确认。<br>
+    <b>公式来源标记</b>：<span class="tag sl">课件</span>＝OCR 文字确认；<span class="tag bu">补·待核验</span>＝课件公式为图片，按标准教材（Haykin / Rojas / Lin&amp;Lee）补写，待对 AllSlides.pdf 图核验。初稿 2026-10-24。
+  </div>
+
+  <div class="sec">一、ART1 自适应共振理论Ⅰ <span class="en">Adaptive Resonance Theory（自期中资料移入）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>定位</b><span class="tag sl">课件</span>：Grossberg（Boston Univ.，1970s）；<b>二进制</b>数据聚类、<b>类数未知</b>；<b>两层循环</b>网；MAXNET 作输出层；bottom-up（归一化）/top-down 双向自适应连接；<b>增量学习克服灾难性遗忘</b>（稳定性—可塑性两难）；输入顺序影响中间状态。</li>
+      <li><b>五步算法【默写】</b><span class="tag sl">课件</span></li>
+    </ul>
+    <div class="box">
+      <p><span class="stp">①初始化</span>：top-down <span class="f"><b>tᵢⱼ=1</b></span>；bottom-up <span class="f"><b>bᵢⱼ=1/(1+N)</b></span>（N＝特征数）</p>
+      <p><span class="stp">②海选</span>：净输入 <span class="f"><b>yⱼ=Σᵢbᵢⱼxᵢ</b></span></p>
+      <p><span class="stp">③MAXNET</span> 选最佳匹配 k</p>
+      <p><span class="stp">④警戒测试</span>：<span class="f"><b>‖x∧tₖ‖/‖x‖ ≥ ρ</b></span>（∧＝按位与；分子＝共有特征数，分母＝输入特征数）→ 过则转⑤；不过→<b>禁用 k</b> 回③；全禁→<b>新建类</b>（模板=x）</p>
+      <p><span class="stp">⑤更新</span>：<span class="f"><b>tₖ←tₖ∧x</b></span>（交集）；<span class="f"><b>bᵢₖ←(tᵢₖ∧xᵢ)/(0.5+‖tₖ∧x‖)</b></span></p>
+    </div>
+    <ul>
+      <li><b>警戒参数 ρ∈(0,1)</b>：定<b>粒度</b>与各簇<b>吸引域</b>；<b>越大簇内越同质</b>。低ρ→少而大（粗）；高ρ→多而小同质、精度高（碎）；ad hoc 定。</li>
+      <li><b>演算例（樱桃）</b>：特征[圆,红,皮厚,甜]：x=1101；N=4 ⇒ b=0.2；得分 <span class="f">wᵀx</span>=0.2×3=<b>0.6</b>；全1模板相似度 3/3=1&gt;0.7 通过；新模板=1101。</li>
+      <li><b>细节补遗</b>：新类模板＝当前输入 x；t←t∧x 只减不增 ⇒ 粒度趋细；bottom-up 分母 0.5+‖t∧x‖ 归一防反复霸占；ρ 太低并类、太高每样本一类。</li>
+      <li><b>易错</b>：⑴初始化 t=1、b=1/(1+N)；⑵警戒是"共有/输入"不是"共有/模板"；⑶全禁才新建类；⑷更新分母是 <b>0.5+</b>‖t∧x‖ 不是 1+；⑸t←t∧x 只减不增。</li>
+    </ul>
+    <div class="src">出处：课件 ART1 区段（s190 前后）＋ Lippmann 教材口径；英文句见期中参考纸 §11 速查表。</div>
+  </div>
+
+  <div class="sec">二、离散 Hopfield 网络 <span class="en">Discrete Hopfield Network（s205–225）· 期末重中之重</span></div>
+  <div class="q">
+    <ul>
+      <li><b>定位</b><span class="tag sl">课件</span>：John Hopfield（Princeton，1982，PNAS vol.79）；<b>经典循环网络</b>；单层全互连、<b>对称权重、无自反馈</b>（wᵢᵢ=0）；双极阈值单元（sgn）；既做<b>联想记忆</b>又做<b>优化器</b>。</li>
+      <li><b>稳定性两条件</b><span class="tag sl">课件 s210–211 原文</span>：
+        <div class="box"><b>若 W 对称且对角元素为零，且激活异步进行（一次只更新一个神经元），则离散 Hopfield 网络稳定</b>（充分条件）；若<b>同步</b>更新，则网络<b>稳定或在两态极限环上振荡</b>。</div></li>
+      <li><b>能量函数</b><span class="tag bu">补·待核验</span>：<span class="f">E = −½ΣᵢΣⱼ wᵢⱼvᵢvⱼ − Σᵢ Iᵢvᵢ</span>；异步更新时 <span class="f">ΔE ≤ 0</span> ⟹ 网络收敛到能量局部极小（吸引子）。</li>
+      <li><b>联想记忆·存储＝外积规则</b><span class="tag sl">课件</span><span class="tag bu">具体式待核验</span>：<span class="f"><b>W = Σₚ sᵖ(sᵖ)ᵀ</b></span>（或取 wᵢᵢ=0：<span class="f">W=Σₚ(sᵖsᵖᵀ−I)</span>）</li>
+      <li><b>检索（recall）</b>：给探针 v(0)（噪声/残缺模式），迭代 <span class="f"><b>v(t+1)=sgn(Wv(t))</b></span> 至收敛。</li>
+      <li><b>正交条件</b><span class="tag sl">课件 s222</span>：若诸 sᵖ <b>正交归一</b>，则检索式中的交叉项（cross-talk / noise）为零，v(1)=sᑫ；非正交时，探针小扰动仍可召回正确模式。</li>
+      <li><b>作优化器</b><span class="tag sl">课件 s225</span>：把目标函数写成能量函数 → 构造 Hopfield 网 → 异步更新至收敛 ⟹ 平衡态＝能量局部极小＝优化问题的好解。</li>
+      <li><b>作业风向标</b>（Assignment 3）：9 神经元离散 Hopfield 存 3×3 图案，外积定权，单像素噪声探针检索——<b>考试大概率出类似演算题</b>。</li>
+    </ul>
+    <div class="src">出处：s205 定义｜s208–211 稳定性｜s221–224 联想记忆｜s225 优化模型</div>
+  </div>
+
+  <div class="sec">三、BAM 双向联想记忆 <span class="en">Bidirectional Associative Memory（s226–228）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>结构</b><span class="tag sl">课件</span>：两层（x 层 n 元、y 层 m 元）<b>双向</b>连接，权重 W（n×m），x↔y 交替激活；<b>异联想</b>（key x → recall y）。</li>
+      <li><b>存储</b><span class="tag bu">补</span>：<span class="f">W = Σₚ xᵖ(yᵖ)ᵀ</span>；<b>检索</b><span class="tag bu">补</span>：交替更新 <span class="f">x(t+1)=sgn(Wy(t))</span>、<span class="f">y(t+1)=sgn(Wᵀx(t))</span> 至双向稳定。</li>
+      <li><b>能量</b><span class="tag bu">补</span>：<span class="f">E = −xᵀWy</span>，双向更新单调不增 ⟹ 收敛到稳定联想对。</li>
+    </ul>
+  </div>
+
+  <div class="sec">四、连续 Hopfield 与 TSP <span class="en">Continuous Hopfield &amp; TSP（s229–249）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>模型</b><span class="tag sl">课件 s230（Hopfield PNAS vol.81, 1984）</span>：连续时间、sigmoid 激活；电路方程<span class="tag bu">补</span>：<span class="f">cᵢ duᵢ/dt = −uᵢ/Rᵢ + Σⱼwᵢⱼvⱼ + Iᵢ，vᵢ=gᵢ(uᵢ)</span>。</li>
+      <li><b>能量函数</b><span class="tag bu">补</span>：<span class="f">E = −½ΣΣwᵢⱼvᵢvⱼ + Σᵢ∫gᵢ⁻¹(v)dv − ΣᵢIᵢvᵢ</span>；<span class="f">ċᵢ ∝ −∂E/∂vᵢ</span> ⟹ E 单调下降，<b>平衡态＝局部极小</b>。</li>
+      <li><b>作优化器</b><span class="tag sl">课件 s234–236</span>：目标函数＋约束 → 能量函数 → 对照定权 → 网络收敛到好解。</li>
+      <li><b>TSP 例</b><span class="tag sl">课件 s236–247</span>：N 城市 N² 神经元排列（行=城市、列=位置）；<b>Tank &amp; Hopfield 取 A=B=D=250、C=1000、λ=50</b>；10 城随机图<b>约 50% 情形找到最优路径</b>（候选 181,440 条）。能量函数四项（一行一城、一列一城、总距离、偏置项）<span class="tag bu">补·结构待核验</span>。</li>
+    </ul>
+  </div>
+
+  <div class="sec">五、模拟退火 SA 与 Boltzmann 机 <span class="en">Simulated Annealing &amp; Boltzmann Machine（s250–260）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>SA 思想</b><span class="tag sl">课件</span>：模拟物理退火做<b>非凸目标函数全局优化</b>；高温容忍劣解、温度渐降。</li>
+      <li><b>接受准则</b><span class="tag bu">补（Metropolis）</span>：劣解 ΔE&gt;0 以概率 <span class="f"><b>P=exp(−ΔE/T)</b></span> 接受；<b>T→0 时 SA 退化为迭代改进法</b><span class="tag sl">课件 s256 原文</span>。</li>
+      <li><b>Boltzmann 机</b><span class="tag sl">课件 s257–258</span>：Hinton &amp; Sejnowski 1983；<b>随机循环网络</b>（概率二值输出）；＝<b>SA 的并行实现</b>；＝<b>Hopfield 网络的随机生成式对应物</b>；温度参数渐降如 SA。</li>
+    </ul>
+  </div>
+
+  <div class="sec">六、SOM 自组织映射 <span class="en">Self-Organizing Map（s261–268）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>定位</b><span class="tag sl">课件</span>：Kohonen（Helsinki UT，1970s）；通过<b>自组织</b>形成<b>拓扑映射</b>（topographic map）——保持输入空间的拓扑邻域关系；无监督。</li>
+      <li><b>算法</b><span class="tag sl">课件 s264 步骤</span><span class="tag bu">公式补</span>：①随机初始化各 wⱼ ②呈现输入 x ③<b>竞争</b>：胜者 <span class="f">w\*=argmin‖x−wⱼ‖</span> ④<b>合作更新</b>：胜者及其<b>邻域</b>内 <span class="f">wⱼ(t+1)=wⱼ(t)+η(t)(x−wⱼ(t))</span> ⑤重复；<b>学习率 η(t) 递减、邻域收缩</b>。</li>
+      <li><b>与竞争学习区别</b>：SOM 更新<b>邻域</b>（拓扑保持）而非仅赢家 ⇒ 输入流形映射成一/二维网格。</li>
+    </ul>
+  </div>
+
+  <div class="sec">七、ESN 回声状态网络 <span class="en">Echo State Network（s269–271）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>定位</b><span class="tag sl">课件</span>：又称<b>储备池计算</b>（reservoir computing）；随机稀连接隐层（储备池）＋只训输出层读出权重。</li>
+      <li><b>结构</b><span class="tag sl">课件 s270</span>：隐藏神经元稀疏连接、随机权重（回声状态性质：状态由输入历史衰减决定）。</li>
+    </ul>
+  </div>
+
+  <div class="sec">八、模糊逻辑 <span class="en">Fuzzy Logic（s272–310）· 概念大题密集区</span></div>
+  <div class="q">
+    <ul>
+      <li><b>定义</b><span class="tag sl">课件</span>：刻画<b>不精确性/歧义</b>（impreciseness / ambiguity）；<b>隶属函数 μ_A: X→[0,1]</b> 定义模糊集 A；<b>清晰集是模糊集特例</b>（μ 只取 0/1）。</li>
+      <li><b>集合表示</b><span class="tag sl">课件</span>：A = {(x, μ_A(x))}；离散模糊集枚举表示。</li>
+      <li><b>术语</b><span class="tag sl">课件 s281</span>：<b>支集 support</b>＝μ&gt;0 的点集；<b>单点 singleton</b>＝支集仅一点且 μ=1；<b>核 kernel</b>＝μ=1 的点集；<b>高度 height</b>＝sup μ；<b>归一化 normalized</b>＝height 为 1（否则 subnormal）；<b>α-截集 α-cut</b>＝μ≥α 的清晰集；<b>凸模糊集</b>。</li>
+      <li><b>运算</b><span class="tag sl">课件 s282</span>：<b>并</b> μ=max(μ_A,μ_B)；<b>交</b> μ=min(μ_A,μ_B)；<b>补</b> μ=1−μ_A。部分清晰集性质不再成立（如 A∩Ā≠∅）。</li>
+      <li><b>基数与熵</b><span class="tag sl">课件 s287–289</span>：基数 <span class="f">|A|=Σμ_A(x)</span>（离散）；熵度量模糊程度。</li>
+      <li><b>模糊关系</b><span class="tag sl">课件 s290</span>：尤以二元模糊关系常见。</li>
+      <li><b>模糊器/去模糊器</b><span class="tag sl">课件 s291</span>：Fuzzifier＝实值→模糊集；<b>Defuzzifier＝模糊集→实值</b>（常用<b>质心法 centroid</b><span class="tag bu">补</span>）。</li>
+      <li><b>语言变量</b><span class="tag sl">课件 s294</span>：linguistic variables 是模糊逻辑与近似推理核心（如 speed∈{slow, fast}）。</li>
+      <li><b>Mamdani 型模糊系统</b><span class="tag sl">课件 s295</span>：用<b>语言 IF-THEN 规则</b>映射输入→输出，模仿人类控制；<b>每条规则的输出是模糊集</b>，聚合后<b>去模糊化</b>得清晰输出。</li>
+      <li><b>推理流程</b><span class="tag sl">课件 s296</span>：不精确输入 → 隶属函数量化 → 模糊规则库 → 模糊推理机决策 → 去模糊化输出动作。</li>
+      <li><b>Takagi–Sugeno（TS）模糊系统</b><span class="tag sl">课件 s302</span>：规则<b>后件为线性函数</b>，逼近非线性系统；输出＝各规则加权和<span class="tag bu">补</span>。</li>
+      <li><b>Type-2 模糊逻辑</b><span class="tag sl">课件 s305–307</span>：<b>隶属函数本身模糊</b>（FOU 不确定足迹）以刻画隶属度的不确定性；Mendel 2007 综述。</li>
+    </ul>
+  </div>
+
+  <div class="sec">九、演化计算：GA 与 PSO <span class="en">Genetic Algorithms &amp; Particle Swarm Optimization（s311–343）</span></div>
+  <div class="q">
+    <ul>
+      <li><b>GA</b><span class="tag sl">课件 s311–313</span>：Holland（1970s）；<b>种群</b>并行搜索（一次一群种子，区别于传统单点法）；五要素：<b>染色体编码、种群规模、适应度函数、遗传算子（选择/交叉/变异）、终止准则</b>；流程：初始化→评价适应度→<b>选择</b>（轮盘赌等）→<b>交叉</b>→<b>变异</b>→迭代。</li>
+      <li><b>群智能</b><span class="tag sl">课件 s332</span>：PSO、蚁群等为代表——集体智慧完成搜索任务。</li>
+      <li><b>PSO</b><span class="tag sl">课件 s338</span><span class="tag bu">公式补·待核验</span>：<span class="f">vᵢ(t+1)=vᵢ(t)+c₁r₁(pᵢ−xᵢ(t))+c₂r₂(g−xᵢ(t))</span>，<span class="f">xᵢ(t+1)=xᵢ(t)+vᵢ(t+1)</span>；pᵢ＝个体最优、g＝全局最优、c₁c₂＝加速常数、r₁r₂∈(0,1) 随机数（惯性权重版首项乘 w）。</li>
+      <li><b>神经动力学优化</b>（s344–362，王钧本行）：NN 解凸优化/全局优化——期末如考应只考概念。</li>
+    </ul>
+  </div>
+
+  <div class="sec">期末对比题预告 <span class="en">Comparison Questions（暂定占 25%）</span></div>
+  <div class="q">
+    <table>
+      <tr><th>#</th><th>对比</th><th>要点骨架</th></tr>
+      <tr><td>C1</td><td><b>Hopfield vs BAM</b></td><td>单层自联想 vs 两层异联想；对称 W vs 长方 W；能量 −½vᵀWv vs −xᵀWy</td></tr>
+      <tr><td>C2</td><td>离散 vs 连续 Hopfield</td><td>阈值单元/异步迭代 vs sigmoid/微分方程；都靠能量下降收敛</td></tr>
+      <tr><td>C3</td><td><b>Hopfield vs Boltzmann 机</b></td><td>确定性 vs 随机二值单元；能量极小 vs 温度控制的分布；可逃局部极小</td></tr>
+      <tr><td>C4</td><td><b>Type-1 vs Type-2 模糊</b></td><td>隶属度清晰值 vs 隶属度本身模糊（FOU）；Type-2 更能刻画不确定性</td></tr>
+      <tr><td>C5</td><td>Mamdani vs TS</td><td>后件模糊集＋去模糊 vs 后件线性函数加权输出</td></tr>
+      <tr><td>C6</td><td><b>GA vs PSO vs SA</b></td><td>种群＋遗传算子 vs 群体速度更新 vs 单点 Metropolis 退火；并行 vs 并行 vs 串行；适用非凸全局优化</td></tr>
+      <tr><td>C7</td><td>ART1 vs SOM</td><td>二进制 vs 连续；警戒测试 vs 邻域更新；两种竞争聚类对照</td></tr>
+      <tr><td>C8</td><td>联想记忆类横向</td><td>Hopfield（自）/ BAM（异）/ Boltzmann（随机）——存储规则、检索方式、容量</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">十、推导计算题详细公式与过程 <span class="en">Worked Derivations &amp; Computations（暂定占 75%）</span></div>
+  <div class="q">
+    <p class="src" style="margin:0 0 6px">期中已考推导（LMS/BP/SVM 对偶/LS-SVM/RBF-XOR/sigmoid 斜率）详细过程在《期中参考资料 2 页》§2–6 与《期中还原_答案卷》——若期末累计出题直接复用。以下为期末新内容。</p>
+
+    <h3>D1 · Hopfield 能量函数单调下降证明（ΔE ≤ 0）【核心推导】</h3>
+    <p>设 <span class="f">E(v) = −½ΣᵢΣⱼwᵢⱼvᵢvⱼ</span>（W 对称、wᵢᵢ=0；含外输入 I 时 E 再加 −ΣIᵢvᵢ，证法相同）。</p>
+    <ul>
+      <li><b>第 1 步·能量按神经元分解</b>：因 wₖₖ=0，把含 vₖ 的项单独抽出：<span class="f"><b>E = C − vₖ·uₖ</b></span>，其中 <span class="f">uₖ = Σ_{j≠k} wₖⱼvⱼ</span>（净输入），C＝其余神经元之间的项（本轮不变）。</li>
+      <li><b>第 2 步·异步更新只动 vₖ</b>：规则 <span class="f">vₖ′ = sgn(uₖ)</span>，设 Δvₖ = vₖ′ − vₖ：<span class="f"><b>ΔE = −Δvₖ·uₖ</b></span></li>
+      <li><b>第 3 步·分三种情形</b>（双极 ⟹ Δvₖ ∈ {0, ±2}）：</li>
+    </ul>
+    <table>
+      <tr><th>情形 Case</th><th>条件 Condition</th><th>ΔE</th></tr>
+      <tr><td>vₖ 不变（Δvₖ=0）</td><td>vₖ 已与 sgn(uₖ) 一致</td><td class="f">0</td></tr>
+      <tr><td>−1 → +1（Δvₖ=+2）</td><td>仅当 uₖ ≥ 0</td><td class="f">−2uₖ ≤ 0</td></tr>
+      <tr><td>+1 → −1（Δvₖ=−2）</td><td>仅当 uₖ &lt; 0</td><td class="f">+2uₖ &lt; 0</td></tr>
+    </table>
+    <div class="box"><b>结论</b>：任何异步更新 ΔE ≤ 0；状态有限 ⟹ E 有下界 ⟹ 严格下降的更新只有有限次 ⟹ 网络有限步后到达稳定态（能量局部极小＝吸引子）。∎（同步更新无此保证：可出现二态极限环，s211。）</div>
+
+    <h3>D2 · 外积存储＋噪声探针检索演算（作业 3 变体·高概率）</h3>
+    <p><b>存储（外积规则）</b>：P 个双极模式：<span class="f"><b>W = Σₚ sᵖ(sᵖ)ᵀ − P·I</b></span>（减 P·I 置对角为 0）。</p>
+    <p><b>演算例（9 神经元 3×3，作业 3 同款）</b>：存储右列亮（+1）：<span class="f">s = (−1,−1,1, −1,−1,1, −1,−1,1)ᵀ</span>，P=1 ⟹ <span class="f">wᵢⱼ = sᵢsⱼ（i≠j）</span>。<b>探针</b>＝中间像素（第 5 位）翻转：<span class="f">v(0) = (−1,−1,1, −1,<b>+1</b>,1, −1,−1,1)ᵀ</span>。逐神经元算净输入 <span class="f">uᵢ = sᵢ·Σⱼ≠ᵢ sⱼvⱼ</span>：</p>
+    <div class="box">
+      <p>出错位 i=5：<span class="f">u₅ = s₅·Σ_{j≠5}sⱼ² = (−1)×8 = <b>−8 &lt; 0 ⟹ v₅ ← −1</b>（一步纠错 ✓）</span></p>
+      <p>正确位 i≠5：<span class="f">uᵢ = sᵢ[s₅v₅ + Σ_{j≠i,5}sⱼ²] = sᵢ[−1+7] = <b>6sᵢ ⟹ vᵢ 保持</b> ✓</span></p>
+    </div>
+    <p>一轮异步更新后 v = s，正确召回。∎（一般规律：单像素错时出错位净输入 = −(N−1)、正确位 = (N−3)sᵢ；N=9 ⟹ −8 与 6。）</p>
+
+    <h3>D3 · 正交性 ⟹ 无 cross-talk 证明<span class="tag sl">课件 s222</span></h3>
+    <p>检索公式 <span class="f">Wv⁰ = Σₚ sᵖ(sᵖᵀv⁰)</span>，取探针 v⁰ = sᑫ：</p>
+    <div class="box"><span class="f">Wsᑫ = Σₚ (sᵖᵀsᑫ)·sᵖ = (sᑫᵀsᑫ)sᑫ + Σ_{p≠q}(sᵖᵀsᑫ)sᵖ = <b>N·sᑫ + 0</b></span>（正交 ⟹ sᵖᵀsᑫ=0；双极 ⟹ sᑫᵀsᑫ=N）</div>
+    <p>⟹ <span class="f">sgn(Wsᑫ) = sᑫ</span>：<b>正交归一模式一步精确召回</b>，交叉项（cross-talk/noise）为零。∎ 非正交时交叉项非零，但探针小扰动仍常可召回正确模式。</p>
+
+    <h3>D4 · BAM 权矩阵与双向检索演算</h3>
+    <p><b>存储</b>：<span class="f">W = Σₚ xᵖ(yᵖ)ᵀ</span>（x∈{±1}ⁿ, y∈{±1}ᵐ）。<b>检索</b>：交替 <span class="f">y ← sgn(Wᵀx)</span>、<span class="f">x ← sgn(Wy)</span>。</p>
+    <p><b>演算例（单对，n=4, m=2）</b>：x=(1,1,−1,−1)ᵀ, y=(1,−1)ᵀ ⟹ W = xyᵀ（4×2）。噪声探针 <span class="f">x⁰ = (1,1,−1,<b>+1</b>)ᵀ</span>（末位错）：</p>
+    <div class="box">
+      <p><b>y 方检索</b>：<span class="f">Wᵀx⁰ = y(xᵀx⁰) = (1+1+1−1)·y = 2·(1,−1)</span> ⟹ sgn ⟹ y=(1,−1) ✓</p>
+      <p><b>x 方回代</b>：<span class="f">Wy = x(yᵀy) = 2·x = (2,2,−2,−2)</span> ⟹ sgn ⟹ <b>x 完整纠错召回</b> ✓</p>
+    </div>
+    <p><b>两对以上</b>：x 端正交（xᵠᵀxᑫ=0）⟹ <span class="f">Wᵀxᑫ = Σₚ(xᵖᵀxᑫ)yᵖ = N·yᑫ</span> 一步精确双向联想。（能量 <span class="f">E = −xᵀWy</span> 双向更新单调不增 ⟹ 收敛。）</p>
+
+    <h3>D5 · TSP 能量函数构造（Tank &amp; Hopfield）<span class="tag bu">结构·系数对照待对图核验</span></h3>
+    <p><b>排列表示</b>：N 城市 ⟹ N² 神经元 v_{x,i}（城市 x、巡回位置 i），v=1 表示城市 x 排第 i 位。能量函数四项（s241–247）：</p>
+    <div class="box f">
+      E = ½A ΣₓΣᵢΣ_{j≠i} v_{x,i}v_{x,j}（<b>行约束</b>：每城至多一位）<br>
+      ＋ ½B ΣᵢΣₓΣ_{y≠x} v_{x,i}v_{y,i}（<b>列约束</b>：每位至多一城）<br>
+      ＋ ½C (ΣₓΣᵢ v_{x,i} − N)²（<b>全局约束</b>：恰有 N 个激活）<br>
+      ＋ ½D ΣₓΣ_{y≠x}Σᵢ d_{xy}v_{x,i}(v_{y,i+1} + v_{y,i−1})（<b>路径长度</b>：相邻位置距离，下标循环）
+    </div>
+    <p><b>用法</b>：把 E 与连续 Hopfield 能量式逐项对照 ⟹ 读出权 w_{x i, y j}（含 −A、−B、−C、−D d_{xy} 诸项）与偏置 I_{x i}=CN ⟹ 网络收敛到低能量态＝合法短路径。<b>Tank &amp; Hopfield 取 A=B=D=250、C=1000、λ=50</b><span class="tag sl">课件 s247</span>；10 城约 50% 找到最优（181,440 条候选）<span class="tag sl">课件</span>。</p>
+
+    <h3>D6 · 模糊运算数值演算</h3>
+    <p>论域 X={a,b,c,d}：A = (1.0, 0.3, 0.6, 0.0)，B = (0.4, 0.9, 0.6, 0.2)（各位置隶属度）：</p>
+    <table>
+      <tr><th>运算</th><th>规则</th><th>结果</th></tr>
+      <tr><td>并 A∪B</td><td>max</td><td class="f">(1.0, 0.9, 0.6, 0.2)</td></tr>
+      <tr><td>交 A∩B</td><td>min</td><td class="f">(0.4, 0.3, 0.6, 0.0)</td></tr>
+      <tr><td>补 Ā</td><td>1−μ</td><td class="f">(0.0, 0.7, 0.4, 1.0)</td></tr>
+      <tr><td>支集 / 核 / 单点</td><td>μ&gt;0 / μ=1</td><td>supp(A)={a,b,c}；ker(A)={a}；支集多点 ⟹ 非单点</td></tr>
+      <tr><td>高度 / 归一化</td><td>sup μ</td><td>h(A)=1.0 归一化；h(B)=0.9 次归一化（subnormal）</td></tr>
+      <tr><td>α-截集（μ≥α）</td><td>—</td><td>A₀.₆={a,c}；A₀.₃={a,b,c}；B₀.₆={b,c}</td></tr>
+      <tr><td>基数</td><td class="f">Σμ</td><td class="f">|A|=1.9；|B|=2.1</td></tr>
+      <tr><td>熵<span class="tag bu">补·课件式待核验</span></td><td class="f">De Luca–Termini：E=−(1/n)Σ[μlnμ+(1−μ)ln(1−μ)]（μ=0/1 项记 0）</td><td>熵越大越模糊</td></tr>
+    </table>
+    <p><b>Mamdani 质心去模糊演算</b>：输出模糊集为梯形 μ(y)：y&lt;1 为 0；1→3 线性升至 1；3–5 保持 1；5→9 线性降至 0：</p>
+    <div class="box f">
+      面积 ∫μ dy = ½·2·1 + 2·1 + ½·4·1 = <b>5</b><br>
+      一阶矩 ∫yμ dy = 7/3 + 8 + 38/3 = <b>23</b>（升段 ∫₁³ y(y−1)/2 dy = 7/3；平段 ∫₃⁵ y dy = 8；降段 ∫₅⁹ y(9−y)/4 dy = 38/3）<br>
+      <b>质心 y\* = 23/5 = 4.6</b>
+    </div>
+
+    <h3>D7 · ART1 五步演算（第二例：含复位与新建类）</h3>
+    <p>N=4，ρ=0.75；初始化 tᵢⱼ=1、bᵢⱼ=1/(1+N)=0.2：</p>
+    <div class="box">
+      <p>① x¹=<b>1110</b>：y₁=0.2×3=0.6 ⟹ F₁ 胜；警戒 ‖1110∧1111‖/‖1110‖=3/3=1≥0.75 ✓；更新 t₁←1110，b₁←1110/(0.5+3)=(0.286,0.286,0.286,0)</p>
+      <p>② x²=<b>1100</b>：y₁=0.286×2≈0.571 ⟹ F₁ 胜；警戒 ‖1100∧1110‖/‖1100‖=2/2=1 ✓；更新 t₁←1100，b₁←1100/2.5=(0.4,0.4,0,0)</p>
+      <p>③ x³=<b>0011</b>：y₁=0.4×0=0，新类 F₂ 得 0.4 胜；警戒对 t₂=1111：2/2=1 ✓；新建 t₂←0011，b₂←0011/2.5=(0,0,0.4,0.4)</p>
+      <p>④ x⁴=<b>1111</b>：y₁=0.8、y₂=0.8（并列，MAXNET 任取 F₁）；<b>警戒 ‖1111∧1100‖/‖1111‖=2/4=0.5&lt;0.75 ✗ 复位 F₁</b>；试 F₂：‖1111∧0011‖/‖1111‖=0.5 ✗ <b>复位 F₂</b>；全禁 ⟹ <b>新建 F₃，t₃=1111</b></p>
+    </div>
+    <p>要点：④完整演示警戒失败→复位→遍历→新建分支；t←t∧x 只减不增（t₁ 由 1110 收缩为 1100）。</p>
+
+    <h3>D8 · SA 接受概率计算</h3>
+    <p>Metropolis 准则：劣解（ΔE&gt;0）以 <span class="f"><b>P = exp(−ΔE/T)</b></span> 接受；优解（ΔE≤0）必接受。例 ΔE=2：</p>
+    <div class="box f">T=4 ⟹ P=e^{−0.5}≈<b>0.607</b>；T=1 ⟹ P=e^{−2}≈<b>0.135</b>；T→0 ⟹ P→0（退化为迭代改进<span class="tag sl">课件 s256</span>）；T→∞ ⟹ P→1（随机游走）。降温日程<span class="tag bu">补·常用几何式</span>：T_k=T₀·αᵏ，α≈0.8–0.99。</div>
+
+    <h3>D9 · GA 轮盘选择计算</h3>
+    <p>适应度 f=(10,20,30,40)，总和 100：</p>
+    <div class="box f">
+      被选概率 pᵢ = fᵢ/Σf = (0.1, 0.2, 0.3, <b>0.4</b>)——轮盘扇区 10%/20%/30%/40%<br>
+      种群 4 的期望被选次数 = (0.4, 0.8, <b>1.2, 1.6</b>)<br>
+      单点交叉例（切点第 2 位后）：父代 10|110、11|001 → 子代 10|001、11|110；变异：每位以 pₘ≈0.01 取反
+    </div>
+
+    <h3>D10 · PSO 一步更新演算</h3>
+    <p>更新式：<span class="f"><b>v(t+1) = w·v(t) + c₁r₁(pᵢ−x(t)) + c₂r₂(g−x(t))，x(t+1) = x(t) + v(t+1)</b></span></p>
+    <div class="box f">
+      一维例：x=2, v=1, p=3, g=5, w=0.5, c₁=c₂=2, r₁=0.2, r₂=0.3：<br>
+      v′ = 0.5×1 + 2×0.2×(3−2) + 2×0.3×(5−2) = 0.5+0.4+1.8 = <b>2.7</b>；x′ = 2+2.7 = <b>4.7</b><br>
+      （无惯性版 w=1：v′=3.2，x′=5.2；实务常限速 |v|≤v_max。）
+    </div>
+  </div>
+
+  <div class="sec">待完善清单 <span class="en">TODO</span></div>
+  <div class="q">
+    <ul>
+      <li>☐ 对 AllSlides.pdf 图核验全部<span class="tag bu">补·待核验</span>公式（Hopfield 能量、外积、BAM、连续 Hopfield、SA、Kohonen、PSO、质心）——课件公式全是图片，需渲染 PDF 页读图</li>
+      <li>☐ 刷 Tutorial 08–13（2025 春，对应后半学期）</li>
+      <li>☐ 确认考试范围是否累计期中前内容、能否带参考纸</li>
+      <li>☐ ESN 与神经动力学优化：等老师讲完课再补细节</li>
+      <li>☐ 期末考前 2 页纸压缩版（范围确认后做，风格同期中参考纸）</li>
+    </ul>
+    <div class="src">来源：CS5486Slides_全部课件.md s205–362 OCR＋标准教材补写（【补】标记）；期中往年资料收集/CS5486情报汇总.md（期末 2h / ≥30% 及格线 / 50%；对比题预告；作业 3 风向标）。</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+[00:00] 发言人1: If we utilize stochastic gradient descent to learn a model you learn image calculation network with a cross network office actually optimized the kill energy between the model that they would and the ground truth label or the cross data. So we can also see that the task is really in such a. 
+
+[00:26] 发言人1: 然后肯定是包的。And here is also another issue that we need to remember that if our for example if our training data is limited thus we give it much more parameter and then it will call standard call call then. overseeing. 
+
+[00:52] 发言人1: 好的。go to reduce the output of foreign飞行。We have even measure by the Occasional reader which means that we will make our model as simple as possible. 
+
+[01:12] 发言人1: And. And we can also add further realization term to here for example the smooth and any other priar also revolution which can also help to avoid over. right. 
+
+[01:37] 发言人1: Why this member have finished the first part of the maximum like they do ok. No，that's the likelihood is actually the key point for the all the just models。So if you want to know what. 
+
+[02:00] 发言人1: Something more work you have always remember to do the model that make good optimization. That is the excellent model model activity and in this part we learn we have learned that. What is the transformation process? How to tell the difference between two distributions? 
+
+[02:47] 发言人1: 而且我我来这部分呢就是。
+
+[02:55] 发言人1: 员工他把C V. 
+
+[03:05] 发言人1: ok. I have finished the first part of the maximum model let me good，but the killed everything，the property of more color some estimation，and also some overseeing issues，you should remember。谁。原告这个三八二十。我在非常不而且我。
+
+[03:40] 发言人1: Our aim is to just easy to do the image generation okay that's because our class title is vision and image so we will follow from the image generation. 是我。I find the username is very very. 还因为手机。然后有几分钟哎谁。
+
+[04:14] 发言人1: Although one key press the one key image. Its length is one eight two zero right and its height is one zero eight zero right. So even within one unit it has nearly two million pixels，right？It's very very large，是不是？
+
+[04:43] 发言人1: If we directed galaxy，directed galaxy space，so if there is two billion or four billion，this will significantly。The number of pixels will be significantly large, right? 新。So instead of directly generating such kind of high dimensional data how can we model the generation process of the image is there any similar or is any effective method. 
+
+[05:25] 发言人1: Is any more effective method？
+
+[05:38] 发言人1: We know that the image is in a very high dimensional space. 而且。
+
+[05:52] 发言人1: But actually take an example of the facing it。
+
+[06:27] 发言人1: We can actually divide the image or describe the image using a number of different factors right for example it may be dividing to air. 还是海尔。今天。A more struggle，more smarter，the harder over ice right？Yeah, like this, we can use different factor to tell us what's the kind of information in it, and then this kind of information can help us to reconstruct.
+
+[07:17] 发言人1:  So instead of directly reconstruct such high dimensional vector. We can actually estimate. 内存 arrive thing you call the memory arrive and then using this thing to help us to estimate in the image right. 
+
+[07:47] 发言人1: This is called listening for rival. 
+
+[07:56] 发言人1: Like this we can for example formulate the C and turn out arrival. So what kind of world we think is very simple and easy to model. 我看到过来个微信配置。看到一类啊的一类是猫，看到看到黑猫，也是有人。找他踢。
+
+[09:01] 发言人1: 嗯，高三的时候有没有关系？高三的十六人那个应该。It is remote and very simple very simple distribution right so we can use the呃高山的trition to model the data arrive and then we construct the image based on those. 
+
+[09:33] 发言人1: 高深。我二。And here we can take a very simple example. But if we utilize the calibration calibration data，for example，one to K model the London arrival，it means our London arrival has the better of the。One two case characteristics is the has it or not this is a k different variety and then we can use the mixture of the ak different goals and to describe the data. We can for each pfc the model we can and we can use the pc example those goals and the result is a mixture of goals. 
+
+[10:39] 发言人1: Look like this. The original distribution that is right curve is quite complex quite complex curve how can we formulate this we can using the latent variable pz as a category. S three. 
+
+[11:03] 发言人1: And using the PMZ as an independent source，we can using this independent source to enable this independent source to control the. 因此啊，保证。right. 
+
+[11:33] 发言人1: 然后那个。Then we come back the problem to formulate the model let me go，right？You still remember no matter what kind of journey model our goal is always to. 
+
+[11:56] 发言人1: To how to to do how to do this more likelihood of our goal to maximize our the new values. 澳洲。And all this will find the maximize of this model language pool. 翻转X方没有，就是Motor完全度。
+
+[12:34] 发言人1: 所有。
+
+[12:47] 发言人1: By introducing an additional factor C we can rewrite the model language code. 
+
+[13:04] 发言人1: S播音。
+
+[13:20] 发言人1: right we can revise model likelihood and this division right we can some introduce an additional frequency and sum it up sum all the up. right. That's. 
+
+[13:41] 发言人1: there is two problem. first is how can we. 嗯，三口，这是店。我才发现，我最多少。
+
+[14:00] 发言人1: If we do not know for real world data，If we do not know what exactly distribution of the variable say。If we do not know whether exact value of this variable z or exact distribution of this variable z how can we. Formula how can we calculate this equation the sum low sum of the TX. 然后他开出了谁。
+
+[14:47] 发言人1: All her television sets. 
+
+[15:05] 发言人1: how can we calculate this. 
+
+[15:48] 发言人1: Remember what we have learned in the last class if a distribution is very complex how can we approximate it. 
+
+[16:23] 发言人1: A but distribution is very complex and we cannot know what the real distribution is。we can approximate using. 
+
+[16:45] 发言人1: Is this right? using this more color estimation right. Always remember that if you have no if you have no method to solve. Distribution problem you can use the no cover estimation right for example in your research or in anything you meet in the future for to solve a problem probabilistic method if you do not or if you cannot find an explicit solution. 
+
+[17:22] 发言人1: Always remember to use the moon cover estimation s。我们看到什么意思，call is try is michael hands and everything all results。这是一个我卡S H. 
+
+[17:46] 发言人1: So similarly for our problem if we do not know what exactly is the solution of the parameter T of parameter solution. Using the more color sample expansion right. 我谈了什么意见？We can sample here here need to calculate the submission of the expectation expectation of the day everyone do not know what exactly value we can. May calculate or sample some data from the z set and substitute this z into this formation like this formation right as this we can。
+
+[18:47] 发言人1: 犯罪好，empirically approximate。The P E Sigma X。啊来第一组当时。This works in theory but not in practice right because we do not know what exactly distribution of z but we uniformly sample z right for the Monte Carlo estimation we need to uniformly uniformly sample z however if z is not。用户们去。For example，A E N A has a very large region in a very large value in a very small region，right？It's not，it's not uniformly distributed。so if it's not uniformly distributed is the model cover sample the effectiveness or efficiency of the model cover sample is quite low because much value the sample. 
+
+[20:00] 发言人1: Had the probability as zero, right? 那R T C呢，我们就到第三步，and most。我公司的自己的P C M自己Developer。So how can you get this. 
+
+[20:58] 发言人1: how can solve this problem? 
+
+[21:48] 发言人1: 嗯，要改一下。
+
+[22:03] 发言人1: We have a second time that is important. The important summary instead of uniformly sampled parallel z we can introduce a prior distribution q z where for example we know that q a the z is centered around for example like a gaussian around. The value zero then we can use a prior distribution zero to sample the q z but we need to also divide the p c的type c with q z. 
+
+[23:00] 发言人1: 来这边。我。
+
+[23:11] 发言人1: F A。Uh, they can and uh. 啊，没事，老铁。对。
+
+[23:32] 发言人1: 哎，对，是为啥？不知道。
+
+[23:49] 发言人1: 就是P C的X。to the. Q Z三个Q Z. P theta x z right they same because we right call the q z and also derive a q z right and then we can have the some a of z q z the p theta x z. S Q这些东西关系。Then this equals to the expectation x follows a uniform. 
+
+[24:32] 发言人1: P E C的有外的，有Q A。So by this manner we can introduce a prior distribution q here we do not need to uniformly sample we can sample a thing by a prior distribution for example cosine or something else we can sample the distribution using this kind of prior. Music and then they have recalculated. 
+
+[25:06] 发言人1: Likelihood using the expectation of C all the Q Z and P X C divide by Q S. This is important summary。This important summary is an advanced version of the motor cover naive motor cover method。
+
+[25:37] 发言人1: right. and also the. For the likelihood right the log likelihood here is the likelihood and for the log likelihood we can simply add a log function outside this expectation of the t theta divide by the q t right. 那个老的房子。I love this function right. 
+
+[26:13] 发言人1: 浪费方针。
+
+[26:24] 发言人1: 啊。
+
+[26:31] 发言人1: And right, the loading of this function. For example we have back to the graphic of this clock function with a complete function right. You should say that the expectation of the arrival. 
+
+[26:57] 发言人1: And the triangular function is like here. And the expectation of the corresponding log function value is like here. This is the log expectation and this is expectation log p theta q theta.
+
+[27:15] 发言人1:  So it means that this log expectation or log likelihood is larger than the expectation log p theta. 第二个就这个关系。Like this. 
+
+[27:28] 发言人1: 方式。The log expectation of the function is larger or equal than the expectation of the log function. 哎。So here we introduce the first construction which is called evidence lower bound that's called evidence lower bound because this value. That that's value this expectation of the log function this value is lower than the likelihood this is the likelihood is our target and this is the evidence lower bound the evidence lower bound is below to the um. 
+
+[28:18] 发言人1: Long like you could，but if we left up the evidence lower bound，because it's always lower than the long like you could，it can also help us to left us the long like you could，right？So we can optimize the long like you could by optimizing the. 还有这个死狗吧。
+
+[28:46] 发言人1: Right this function right here. 
+
+[28:56] 发言人1: 这个方程可以是吧？smaller than this part. 这这面的law expectation is larger than the expectation of this law function。This part is rather of sex，以后这一部分，right？
+
+[29:32] 发言人1: And then we can further device. 哦，第二个是这是。I was world bound into two times. 
+
+[29:47] 发言人1: 就发的是一个Q C. Micro is a lot of P C and minus QC locking and second is actually the entropy of. Is Q and the first is the optimal curve. And also we have find that this evidence lower bound is high and it's equals to log likelihood only if the QZ is equal to the PC FC right. Every substitute Q Z equals to the P Z and C we will find that those evidence low wrong will be exactly same with the love and good so what does this equation tell us. 我感觉你。
+
+[31:27] 发言人1: This equation tell us if you can correctly encode the pzx theta means that you can use the ground data encode the latent variable if you can correctly encode the latent variable you can finally get the exactly law that you. 
+
+[31:59] 发言人1: but also very. 
+
+[32:09] 发言人1: And here this industry what is the the exact difference between our similarity between the evidence lower bound actually the evidence lower bound is equals to the. 嗯，that嗯，the not that good minus of so this lack know that this endless floor on is more than the。嗯，love and good and it's and we can achieve optimize呃，and this love and good by optimizing the elements or not。
+
+[32:56] 发言人1: OK. 
+
+[33:02] 发言人1: 百分之三呢。In this class we have greatly learned what is the likelihood right. AND. What is the model very good and what is the lightning variable for the lightning variable model the important consumption is. 
+
+[33:30] 发言人1: 嗯，every slow round，right？you need to know how to get the every slow round，and what the correlation between every slow round and the model that they do。These are basic to possession. 
+
+[33:57] 发言人1: 有问题吗？If not we can have a ten minutes break okay. 嗯。
+
+[34:18] 发言人1: 好的。
+
+[34:32] 发言人1: 嗯。对。
+
+[35:06] 发言人1: 嗯。

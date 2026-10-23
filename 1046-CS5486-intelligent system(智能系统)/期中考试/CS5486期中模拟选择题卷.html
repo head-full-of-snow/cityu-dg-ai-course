@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5486 期中模拟选择题卷（53 题）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f2f2f2; color: #111; font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 14px 16px 80px; }
+  .topbar { position: sticky; top: 0; z-index: 9; background: #222; color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .topbar b { font-size: 16px; }
+  .topbar .meta { font-size: 13px; color: #ccc; }
+  .topbar button { border: 0; border-radius: 4px; padding: 7px 18px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  #submitBtn { background: #ffd54a; color: #111; }
+  #resetBtn { background: #555; color: #fff; }
+  #wrongOnlyBtn { background: #888; color: #fff; display: none; }
+  h1 { font-size: 20px; margin: 14px 0 4px; }
+  .note { background: #fff8dc; border: 1px solid #d9c77a; padding: 8px 12px; border-radius: 4px; font-size: 13.5px; margin: 10px 0; }
+  .sec { background: #222; color: #fff; padding: 5px 12px; border-radius: 3px; margin: 22px 0 8px; font-size: 15px; font-weight: 700; }
+  .q { background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 10px 14px; margin: 10px 0; }
+  .q.wrong { border: 1.6px solid #c62828; }
+  .q.right { border: 1.6px solid #2e7d32; }
+  .q h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .q h3 .no { color: #555; }
+  .opt { display: block; border: 1px solid #bbb; border-radius: 5px; padding: 6px 10px; margin: 5px 0; cursor: pointer; transition: background .12s; }
+  .opt:hover { background: #f0f4ff; }
+  .opt input { margin-right: 8px; }
+  .opt.sel { background: #e3ecff; border-color: #3355cc; }
+  .opt.good { background: #e2f2e3; border-color: #2e7d32; }
+  .opt.badpick { background: #fdecea; border-color: #c62828; }
+  .exp { display: none; margin-top: 7px; border-top: 1px dashed #999; padding-top: 6px; font-size: 13.5px; color: #333; }
+  .exp b { color: #111; }
+  #result { display: none; background: #fff; border: 2px solid #222; border-radius: 8px; padding: 14px 18px; margin: 16px 0; }
+  #result h2 { font-size: 18px; margin-bottom: 6px; }
+  #scoreLine { font-size: 22px; font-weight: 800; margin: 6px 0; }
+  #breakdown { font-size: 14px; margin: 8px 0; white-space: pre-wrap; }
+  #reportBox { width: 100%; height: 120px; font-family: Consolas, monospace; font-size: 12.5px; margin-top: 8px; }
+  .copyrow { display: flex; gap: 10px; margin-top: 8px; }
+  .copyrow button { border: 0; border-radius: 4px; padding: 6px 14px; font-weight: 700; cursor: pointer; background: #3355cc; color: #fff; }
+  .tag { display: inline-block; background: #eee; border-radius: 3px; padding: 0 6px; font-size: 12px; font-weight: 700; margin-left: 6px; }
+  .tag.weak { background: #fdecea; color: #b71c1c; border: 1px solid #c62828; }
+  em { font-family: Georgia, serif; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>CS5486 期中模拟卷</b>
+  <span class="meta" id="prog">已答 0/53</span>
+  <button id="submitBtn" onclick="submitAll()">交卷</button>
+  <button id="wrongOnlyBtn" onclick="showWrongOnly()">只看错题</button>
+  <button id="resetBtn" onclick="resetAll()">重做</button>
+</div>
+<div class="wrap">
+  <h1>期中模拟 · 选择题（53 题）</h1>
+  <div class="note">题源：CS5486期中参考资料_2页（考点版）＋ 复习笔记 ＋ 简答练习 ＋ 课件原文。范围＝开课→ART1。带 <span class="tag weak">弱项</span> 的题对应你历史丢分点。交卷后出分＋逐题解析；<b>点"复制成绩单"后粘贴到对话发给我，我来做错题诊断并更新参考纸急救卡</b>。</div>
+  <div id="result">
+    <h2>成绩</h2>
+    <div id="scoreLine"></div>
+    <div id="breakdown"></div>
+    <div class="copyrow"><button onclick="copyReport()">复制成绩单（发给我打分诊断）</button><span id="copyHint" style="font-size:13px;color:#555;align-self:center"></span></div>
+    <textarea id="reportBox" readonly></textarea>
+  </div>
+  <div id="quiz"></div>
+</div>
+
+<script>
+const SECTIONS = [
+  ["A", "基础与 McCulloch-Pitts（7 题）"],
+  ["B", "Perceptron 与 ADALINE（12 题）"],
+  ["C", "多层网络 · BP 与 RBF（12 题）"],
+  ["D", "SVM（11 题）"],
+  ["E", "无监督 · MAXNET/kWTA · ART1（11 题）"],
+];
+// 答案分布 A13/B15/C13/D12
+const QS = [
+{sec:"A", t:"神经网络形式化 RULE=(E,F,G,H,L) 中，E 指的是：", o:["激活规则（激活函数）","评价规则（误差函数或能量函数）","聚合规则（加权求和）","学习规则（迭代调权）"], a:1, e:"E＝Evaluation rule，映射到实线（误差/能量函数）；F 激活、G 聚合、H 输出、L 学习。→ 参考纸 §1"},
+{sec:"A", t:"McCulloch-Pitts 神经元中，若某抑制性（权重 −1）输入取值为 1，则输出：", o:["取决于加权和是否 ≥ 阈值","必为 1","等于该输入的加权值","必为 0"], a:3, e:"M-P 规则：抑制输入为 1 ⇒ 输出必为 0（否决权）；否则看加权和与阈值。→ §1"},
+{sec:"A", t:"关于阈值逻辑单元的表达能力，课件给出的命题是：", o:["任意逻辑函数可用两层 McCulloch-Pitts 网络实现","单个 M-P 单元可实现任意逻辑函数","无抑制连接的 M-P 网可实现非单调逻辑函数","M-P 网无法实现 XOR 之外的任何复合函数"], a:0, e:"两命题：任意逻辑函数需两层 M-P；无抑制连接只能实现<b>单调</b>逻辑函数。XOR 非单调，需要抑制或两层。→ §1"},
+{sec:"A", t:"2024 年诺贝尔物理学奖因“使机器学习成为可能的人工神经网络基础性发现”授予：", o:["Vapnik 与 Cortes","Rosenblatt 与 Widrow","Hopfield 与 Hinton","LeCun、Bengio 与 Hinton"], a:2, e:"2024 物理奖＝J. Hopfield &amp; G. Hinton（注意不是 2018 图灵奖的三人组）。→ §1 里程碑"},
+{sec:"A", t:"一般增量学习规则（general incremental learning rule）的离散时间形式为：", o:["w(t+1)=w(t)+η·d(t)","w(t+1)=w(t)+η·r(x,y,d,w)","w(t+1)=η·r(x,y,d,w)","ẇ=η·r(x,y,d,w)"], a:1, e:"离散式 w(t+1)=w(t)+η·r(...)；带导数的 ẇ=η·r 是<b>连续时间</b>形式；一切具体规则都是 r 的特例。→ §1"},
+{sec:"A", t:"神经网络两个时间尺度中，“长期记忆”对应：", o:["外部输入 x","神经元状态 u, v","连接权重 w","输出 y"], a:2, e:"u,v 快动态＝短期记忆；w 慢动态＝长期记忆。→ §1"},
+{sec:"A", t:"关于有限自动机与神经网络，课件的命题是：", o:["有限自动机无法用神经网络模拟","只有 sigmoid 单元才能模拟有限自动机","有限自动机可用单层前馈网络模拟","任意有限自动机都可用 M-P 单元的循环网络模拟"], a:3, e:"s63-64：Any finite automaton can be simulated with a recurrent network of McCulloch-Pitts units。→ §1"},
+{sec:"B", t:"感知机收敛定理的正确陈述是：", o:["感知机学习算法总能在有限步内收敛","感知机对任意数据都收敛，但步数可能无穷","收敛所需步数不超过样本数的 2ⁿ 倍","若训练数据线性可分，算法经有限次更新收敛到能正确分类的权重与阈值"], a:3, e:"三要素缺一不可：前提 linearly separable＋finite number of steps＋weights <b>and</b> threshold。漏前提即错——你 Round 1 的丢分点。→ 急救卡①", weak:true},
+{sec:"B", t:"单层感知机不能解决 XOR 的根本原因是：", o:["XOR 问题的正类两点位于对角，不是线性可分的","输入特征维度只有 2，太低","权重数量不足以表达四个样本","学习率 η 必须为 1 才能收敛"], a:0, e:"原因＝not linearly separable（单层只能形成线性决策边界），绝不是权重/神经元数量不足——Round 1 丢分点。标准句见急救卡②。→ 急救卡②", weak:true},
+{sec:"B", t:"AND 门手推（η=1，W(0)=[0,0]，b=0，逐样本错才更新）最终得到的决策边界是：", o:["x₁+x₂−1.5=0","x₁+2x₂−2=0","2x₁+x₂−3=0","2x₁+2x₂−4=0"], a:2, e:"6 轮收敛 w=[2,1], b=−3 ⇒ 2x₁+x₂−3=0；陷阱：(0,0) 首轮触发更新但 x=0，仅 b 变。→ §2.4"},
+{sec:"B", t:"感知机学习中，权重更新发生在：", o:["每个样本呈现后都更新","仅当输出与目标不一致（y≠d）时","仅当 y=1 时","每个 epoch 结束必须统一更新"], a:1, e:"错才更新、对则跳过（进入零误差区即停）。→ §2.2"},
+{sec:"B", t:"课件关于“绝对线性可分”的命题是：", o:["若两有限集线性可分，则它们也绝对线性可分","任何两个集合都绝对线性可分","绝对线性可分要求间隔无穷大","绝对线性可分要求权重为整数"], a:0, e:"s70：If two finite sets of data are linearly separable, they are also absolutely linearly separable。→ §2.1"},
+{sec:"B", t:"ADALINE 在学习阶段使用的激活函数与误差来源是：", o:["hard-limit，用二值输出与目标的差","线性 y=wᵀx，用线性输出与期望的连续误差","sigmoid，用概率误差","符号函数 sgn，用间隔违反量"], a:1, e:"ADALINE 学习时激活为线性，误差 e=d−wᵀx 连续；这是与感知机（hard-limit＋分类错误）的核心区别。→ 急救卡③、§3", weak:true},
+{sec:"B", t:"LMS（Delta 规则）的优化目标是：", o:["最小化分类错误样本数","最小化最大绝对误差","最大化间隔 2/‖w‖","最小化均方误差 MSE：½Σ(dₚ−wᵀxₚ)²"], a:3, e:"必答 minimize the mean squared error——Round 2 丢分点。梯度 ∇E=−Σeₚxₚ（别把 E 本身当梯度）。→ 急救卡③", weak:true},
+{sec:"B", t:"批量（batch）LMS 权重更新公式为：", o:["w(t+1)=w(t)+ηΣₚeₚxₚ","w(t+1)=w(t)+ηE(w)","w(t+1)=w(t)−ηΣₚeₚxₚ","w(t+1)=w(t)+ηeₚxₚ"], a:0, e:"∇E=−Σₚeₚxₚ，沿负梯度 ⇒ 加号汇总。“ηE(w)”把误差函数当梯度（易错）；负号方向反；不带 Σ 的是序贯（单样本）式。→ §3 四步推导", weak:true},
+{sec:"B", t:"课件口径：关于训练模式，正确的是：", o:["Perceptron 只能序贯，ADALINE 只能批量","两者均可任意选择模式","Perceptron 序贯或批量均可，ADALINE 仅批量","两者都只能批量训练"], a:2, e:"课件原句：perceptron … either sequential or batch；Adaline (LMS) … only in batch mode。→ §3、T1 表"},
+{sec:"B", t:"双极（bipolar {−1,+1}）编码优于单极（unipolar {0,1}）的原因是：", o:["计算量更小","所需权重减半","代数结构更好、权重空间可行区域占比更大","可以不需要阈值"], a:2, e:"s98 原话：better in terms of algebraic structure, region proportion in weight space。→ §2.5"},
+{sec:"B", t:"4 个样本确定的超平面在 2 维权重空间中最多划分出的区域数是：", o:["8","11","14","16"], a:2, e:"1面→2、2面→4、3面→8、4面→最多 14（不是 2⁴=16）；一般地是 m 的 n−1 次多项式。→ §2.5"},
+{sec:"B", t:"“Learnability 问题”指的是：", o:["学习率 η 无法选取","n 较大时阈值函数数量远小于逻辑函数数量，权重空间区域不足以表示所有逻辑函数","网络训练不收敛","样本过多导致内存不足"], a:1, e:"阈值函数 ~O(2^{n(n−1)}) ≪ 逻辑函数 2^{2ⁿ}；两问：解是否存在＋存在如何求（两层网络可分但缺学习算法——BP 出现前的困境）。→ §2.5"},
+{sec:"C", t:"关于反向传播（BP），正确的说法是：", o:["BP 是一种网络结构，误差反传说明网络是循环的","BP 是多层前馈 sigmoid 网络的递归梯度下降学习算法（广义 delta 规则）","BP 只能用于两层的神经网络","BP 保证找到全局最优权重"], a:1, e:"BP 是算法不是结构，≠recurrent；且不保证全局最优（可能局部极小）。→ §4.1、T6"},
+{sec:"C", t:"单极 sigmoid 函数 σ(s)=1/(1+e⁻ˢ) 的导数为：", o:["y²","1−y²","σ(s)","y(1−y)"], a:3, e:"单极 σ′=y(1−y)；1−y² 是双极 sigmoid（tanh）的导数。→ §4.2 必背"},
+{sec:"C", t:"三层 BP 网络中，隐层神经元 j 的误差项 δⱼ 为：", o:["δⱼ=(dⱼ−zⱼ)zⱼ(1−zⱼ)","δⱼ=zⱼ(1−zⱼ)·Σₖwⱼₖδₖ","δⱼ=Σₖwⱼₖδₖ","δⱼ=zⱼ(1−zⱼ)(dⱼ−yⱼ)"], a:1, e:"隐层没有期望输出 d（排除带 d 的两项），须先按上层权重汇总 Σₖwⱼₖδₖ 再乘自身导数 zⱼ(1−zⱼ)；只写 Σₖwⱼₖδₖ 漏了导数。带 d 的形式只对输出层成立。→ §4.3 ③", weak:true},
+{sec:"C", t:"动量项 Δw(t)=−η∇E(t)+αΔw(t−1) 的主要作用是：", o:["加大学习率以加速收敛","引入惯性以减少震荡、冲过局部震荡区","保证收敛到全局极小","防止过拟合"], a:1, e:"0&lt;α&lt;1，惯性平滑震荡；不保证全局最优、与过拟合无直接关系。→ §4.3"},
+{sec:"C", t:"关于多层前馈网络的逼近能力，课件结论是：", o:["BP 一定能找到使误差任意小的权重","只有 RBF 网络是通用逼近器","存在权重使逼近误差任意小，但 BP 不保证找到这组权重","神经网络只能逼近线性函数"], a:2, e:"Kolmogorov 定理 ⇒ MLP 是通用逼近器（存在性），但 BP 可能陷局部极小；一般学习问题还是 NP-complete。→ §4.4"},
+{sec:"C", t:"BP 算法最小化的误差函数是：", o:["误差绝对值之和 Σ|d−y|","分类错误样本数","交叉熵 −Σ[d ln y+(1−d)ln(1−y)]","E=½ΣₚΣₖ(dₚₖ−yₚₖ)²"], a:3, e:"BP 最小化均方误差（对全部样本、全部输出求和）；交叉熵不是本课口径。→ §4.3"},
+{sec:"C", t:"双极 sigmoid σ(s)=tanh(s) 的导数为：", o:["1−y²","y(1−y)","y²","1−y"], a:0, e:"双极 σ′=1−y²；y(1−y) 是单极的。注意题干问的是 tanh。→ §4.2"},
+{sec:"C", t:"RBF 网络的隐层与输出层分别使用：", o:["sigmoid；线性","高斯（径向基）；线性","线性；sigmoid","高斯；hard-limit"], a:1, e:"隐层 RBF（局部响应）＋输出层线性（同 ADALINE）；对比 MLP 的 sigmoid 隐层（全局响应）是高频对比题。→ §5、T3"},
+{sec:"C", t:"Cover 定理（1965）说明的是：", o:["将模式非线性映射到高维空间后更可能线性可分","任何数据经高斯映射后必线性可分","间隔最大的超平面泛化能力最好","核函数必须满足对称半正定"], a:0, e:"more likely to be linearly separable——“更可能”而非“必然”；“最大间隔泛化好”是 maximal margin classifier 的动机；“对称半正定”是 Mercer 条件。→ §5.3、§6.6"},
+{sec:"C", t:"用两个高斯 RBF 解 XOR（输入取 {0,1}² 编码）时，课件选取的两个中心是：", o:["c₁=[1,0]ᵀ，c₂=[0,1]ᵀ","c₁=[0,1]ᵀ，c₂=[1,1]ᵀ","c₁=[0,0]ᵀ，c₂=[1,0]ᵀ","c₁=[1,1]ᵀ，c₂=[0,0]ᵀ"], a:3, e:"两中心放在 (1,1) 与对角 (0,0)，四点映射到 (φ₁,φ₂) 平面后线性可分，线性输出层即可分类。→ §5.4"},
+{sec:"C", t:"ELM（极端学习机）的关键特征是：", o:["全网络用梯度下降迭代","输入层到隐层权重随机固定，仅用最小二乘解输出层权重","只有输入直接连输出（无隐层）","必须使用核函数"], a:1, e:"随机隐藏权重＋输出层 LS 一步解 ⇒ 极快、局部极小消除（黄广斌, NTU）。→ §5.5"},
+{sec:"C", t:"Functional Link Network（Pao, CWRU）的关键特征是：", o:["循环双向连接","高斯隐层","单层前馈结构＋高阶聚合规则（输入扩展出 xᵢxⱼ 等高阶项）","以支持向量作输出"], a:2, e:"higher-order aggregation ⇒ 快学习、局部极小可消除。→ §5.5"},
+{sec:"D", t:"点 x₀ 到超平面 wᵀx+b=0 的距离为：", o:["|wᵀx₀+b|/‖w‖","(wᵀx₀+b)/‖w‖","|wᵀx₀+b|/‖w‖²","‖x₀‖/‖w‖"], a:0, e:"投影推导（week5 纪要）：绝对值只在分子（分母恒正），分母是一次范数。→ §6.1"},
+{sec:"D", t:"支持向量机中间隔（margin）的宽度为：", o:["1/‖w‖","2/‖w‖","2/‖w‖²","‖w‖/2"], a:1, e:"边界 wᵀx+b=±1 之间距离＝2/‖w‖；max 2/‖w‖ ⇔ min ½‖w‖²。注意分母是范数不是平方。→ §6.2 ③"},
+{sec:"D", t:"硬间隔 SVM 的原始优化问题是：", o:["max 2/‖w‖ s.t. yᵢ(wᵀxᵢ+b)≥0","min ‖w‖ s.t. yᵢ(wᵀxᵢ+b)≥1","min ½‖w‖²+CΣξᵢ s.t. yᵢ(wᵀxᵢ+b)≥1−ξᵢ","min ½‖w‖² s.t. yᵢ(wᵀxᵢ+b)≥1, ∀i"], a:3, e:"缩放归一使最近点满足 ＝1，约束是 ≥1（≥0 太弱）；带 CΣξᵢ 的是软间隔；原问题是凸 QP（min 而非 max）。→ §6.2 ④、§6.5"},
+{sec:"D", t:"由 KKT 条件 αᵢ[yᵢ(wᵀxᵢ+b)−1]=0 可知：", o:["所有训练样本的 αᵢ 都大于 0","间隔边界上的点 αᵢ&gt;0（支持向量），间隔外的点 αᵢ=0","αᵢ=0 的样本决定超平面","b 必须为 0"], a:1, e:"互补松弛：面外点对解无贡献（可删）；g(x)=Σαᵢyᵢxᵢᵀx+b 只依赖 SV——这也是核技巧的前提。→ §6.4"},
+{sec:"D", t:"软间隔 SVM 中参数 C 变大时：", o:["更重视惩罚违反约束（误分类），间隔可能变窄","更重视大间隔，允许更多违反","等价于换了一个核函数","优化问题不再 convex"], a:0, e:"C 权衡 margin 最大化与 misclassification：大 C→重罚易过拟合，小 C→重间隔更平滑。→ §6.5"},
+{sec:"D", t:"Mercer 定理给出核函数的合法性判据：", o:["函数连续且可微","任意点积形式 K=xᵢᵀz 都是核且只有这类","对称且半正定（Gram 矩阵半正定）的函数是合法核","满足 K(x,x)=1 的函数是核"], a:2, e:"Every semi-positive definite symmetric function is a kernel。→ §6.6"},
+{sec:"D", t:"LS-SVM 相对标准软间隔 SVM 的区别与代价是：", o:["用等式约束＋平方误差，KKT 变线性方程组，求解快但失去稀疏性","用 ε-不敏感损失，更稀疏","不需要核函数","只能用于回归不能分类"], a:0, e:"Suykens 1999（KU Leuven）：equality constraints → 线性方程组；多数 αᵢ≠0（非稀疏）。ε-不敏感损失是 SVR 的。→ §6.10、T4"},
+{sec:"D", t:"SVM 学习流程（课件四步）的正确顺序是：", o:["选 C → 选核 → 构造 g(x) → 解 QP","解 QP → 选核 → 选 C → 构造 g(x)","构造 g(x) → 解 QP → 选核 → 选 C","选核 → 选 C → 解 QP → 由支持向量构造 g(x)"], a:3, e:"s175：①choose kernel ②choose C ③solve QP ④construct discriminant function from SVs。→ §6.8"},
+{sec:"D", t:"课件建议高斯核宽度 σ 的取值量级为：", o:["训练样本数的平方根","不同类别最近点之间的距离","特征维数","支持向量个数"], a:1, e:"s176：σ is the distance between closest points with different classifications；无可靠准则时用验证集/交叉验证。→ §6.8"},
+{sec:"D", t:"SVR 中参数 ε 的作用是：", o:["惩罚系数（同 SVM 的 C）","核宽度","ε-不敏感管道半宽：|y−f(x)|≤ε 内不计误差","收敛判定阈值"], a:2, e:"ε-管道内损失为 0；惩罚系数是 C（目标里 CΣ(ξ+ξ*)）。→ §6.9"},
+{sec:"D", t:"解出对偶变量 α 后，SVM 的判别函数为：", o:["g(x)=wᵀx+b，w 在输入空间直接训练","g(x)=ΣᵢαᵢK(xᵢ,x)+b（不含标签）","g(x)=ΣᵢαᵢyᵢK(xᵢ,x)+b，只依赖支持向量与核","g(x)=ΣᵢyᵢK(xᵢ,x)"], a:2, e:"w=Σαᵢyᵢxᵢ 代入得 g(x)=ΣαᵢyᵢK(xᵢ,x)+b，αᵢ=0 的项消失；这也是核技巧入口。→ §6.4/6.6"},
+{sec:"E", t:"竞争学习每一轮更新的对象是：", o:["全部神经元的权重","只有获胜神经元的权重（向当前输入方向移动）","权重与阈值都更新所有单元","失败者权重被置零"], a:1, e:"winner：w(t+1)=w(t)+η(xⱼ−w(t))，其余不动。→ §7"},
+{sec:"E", t:"MAXNET 的连接权重设置（m 为输出单元数）为：", o:["自兴奋 1，侧抑制 −w 且 w&lt;1/m","自兴奋 1，侧抑制 −1","自兴奋 w，侧抑制 −w，w&lt;1","全部为 1，靠阈值竞争"], a:0, e:"课件：self-excitatory=1；lateral inhibitory=−w，w&lt;1/m；循环网络、WTA，常作其他网络的输出层。→ §8"},
+{sec:"E", t:"关于 kWTA 模型，课件指出的性质是：", o:["只有 k=1 时才稳定","收敛时间与输入无关","采用 Heaviside 激活时全局稳定，并在有限时间内收敛到 kWTA 解","需要侧抑制权重随 k 改变"], a:2, e:"Heaviside 版 kWTA：globally stable + finite-time convergence（且给出了收敛时间的上下界）。→ §8"},
+{sec:"E", t:"ART1 网络的定位是：", o:["有监督二分类器，类别数固定","回归预测网络","单层前馈特征提取器","对二进制数据聚类、类别数事先未知"], a:3, e:"Grossberg 1970s：cluster binary data w/ unknown cluster number；两层循环＋MAXNET 输出层＋双向 bottom-up/top-down 连接。→ §9.1"},
+{sec:"E", t:"ART1 警戒测试（vigilance test）通过的条件是：", o:["海选得分 yₖ 最大即可","bᵢⱼ ≥ ρ","‖x∧tₖ‖/‖x‖ ≥ ρ（共有特征数占输入特征数之比不低于 ρ）","‖tₖ‖ ≤ ρ"], a:2, e:"相似度＝|x∩tₖ|/|x| 与阈值 ρ 比较；不通过则禁用该候选回 MAXNET 重选，全部被禁则新建类别。得分最大只赢海选，还需过精细匹配。→ §9.2 ④", weak:true},
+{sec:"E", t:"警戒参数 ρ 调高时的效应是：", o:["簇数变少、簇变大","不再新建类别","对聚类结果无影响","簇数变多、簇更小更同质（精度高）"], a:3, e:"vigilance 定粒度：低 ρ 容大 mismatch→few large clusters；高 ρ→many small homogeneous clusters（higher precision）。→ §9.3＋配套英文句", weak:true},
+{sec:"E", t:"ART1 初始化（N 为输入特征数）时 top-down 与 bottom-up 权重分别为：", o:["tᵢⱼ=1；bᵢⱼ=1/(1+N)","tᵢⱼ=0；bᵢⱼ=0","tᵢⱼ=1/(1+N)；bᵢⱼ=1","tᵢⱼ=1；bᵢⱼ=1/N"], a:0, e:"模板全 1、海选权重各分量 1/(1+N)（N=4 时 0.2）；匹配后模板取交集 t←t∧x，bottom-up 分母 0.5+‖t∧x‖。→ §9.2 ①⑤"},
+{sec:"E", t:"课件给出的学习范式与代表配对正确的是：", o:["强化学习—Hebbian；竞争学习—Kohonen","强化学习—Kohonen；竞争学习—Hebbian","有监督学习—Hebbian；无监督—LMS","竞争学习—LMS；强化学习—Delta 规则"], a:0, e:"s188：Reinforcement learning e.g. Hebbian；Competitive learning e.g. Kohonen。→ §7"},
+{sec:"E", t:"ART1 樱桃例（x=1101，N=4，b 初值各分量 0.2）：海选得分与对全 1 模板的警戒相似度分别为：", o:["0.6 与 3/4","0.6 与 3/3=1","0.8 与 1","0.2 与 0.7"], a:1, e:"得分＝Σbᵢxᵢ＝0.2×3＝0.6；相似度＝共有特征 3 / 输入特征 3 ＝ 1 ≥ 0.7 通过。→ §9.4"},
+{sec:"E", t:"ART1 中当所有候选类别都未通过警戒测试时，网络将：", o:["放弃该样本不学习","自动降低 ρ 重试","更新所有模板","新建类别（模板取当前输入）"], a:3, e:"全禁→用当前输入新建模板，下一轮起参与海选。→ §9.2 ④"},
+{sec:"E", t:"竞争学习能量函数 E=Σₚ‖xₚ−w(xₚ)‖² 的含义是：", o:["各样本到其获胜神经元权重的距离平方和（聚类误差），学习使之下降","网络输出误差的均方值","间隔的倒数","权重总量的度量"], a:0, e:"以赢家权重代表簇，E 即聚类误差；竞争学习逐轮降低 E。→ §7"},
+];
+
+const LETTERS = ["A","B","C","D"];
+const state = {};
+let submitted = false;
+
+function build(){
+  const host = document.getElementById("quiz");
+  let html = "";
+  SECTIONS.forEach(([sid, title])=>{
+    html += `<div class="sec">${title}</div>`;
+    QS.forEach((q,i)=>{
+      if(q.sec!==sid) return;
+      const weak = q.weak ? `<span class="tag weak">弱项</span>` : "";
+      html += `<div class="q" id="q${i}">
+        <h3><span class="no">${i+1}.</span>${q.t}${weak}</h3>
+        ${q.o.map((op,j)=>`<label class="opt" id="opt${i}_${j}" onclick="pick(${i},${j})"><input type="radio" name="q${i}">${LETTERS[j]}. ${op}</label>`).join("")}
+        <div class="exp" id="exp${i}"></div>
+      </div>`;
+    });
+  });
+  host.innerHTML = html;
+  updateProg();
+}
+function pick(i,j){
+  if(submitted) return;
+  state[i]=j;
+  QS[i].o.forEach((_,k)=>{
+    document.getElementById(`opt${i}_${k}`).classList.toggle("sel", k===j);
+  });
+  updateProg();
+}
+function updateProg(){
+  document.getElementById("prog").textContent = `已答 ${Object.keys(state).length}/${QS.length}`;
+}
+function submitAll(){
+  const unanswered = QS.length - Object.keys(state).length;
+  if(unanswered>0 && !confirm(`还有 ${unanswered} 题未作答，按答错计。确定交卷？`)) return;
+  submitted = true;
+  let score=0; const secStat={}; const wrongList=[];
+  SECTIONS.forEach(([sid])=>secStat[sid]={ok:0,n:0});
+  QS.forEach((q,i)=>{
+    secStat[q.sec].n++;
+    const picked = (i in state)? state[i] : -1;
+    const ok = picked===q.a;
+    if(ok){ score++; secStat[q.sec].ok++; } else wrongList.push({i,picked,a:q.a});
+    const qEl = document.getElementById(`q${i}`);
+    qEl.classList.add(ok?"right":"wrong");
+    qEl.querySelectorAll(".opt").forEach(el=>el.classList.remove("sel"));
+    document.getElementById(`opt${i}_${q.a}`).classList.add("good");
+    if(!ok && picked>=0) document.getElementById(`opt${i}_${picked}`).classList.add("badpick");
+    const exp = document.getElementById(`exp${i}`);
+    exp.style.display="block";
+    exp.innerHTML = (ok?`<b>✓ 正确。</b>`:`<b>✗ 错误。</b>正确答案 ${LETTERS[q.a]}。${picked<0?"（未作答）":""}`)+`<br>${q.e}`;
+  });
+  document.getElementById("scoreLine").textContent = `${score} / ${QS.length}（${Math.round(score/QS.length*100)} 分）`;
+  document.getElementById("breakdown").textContent =
+    SECTIONS.map(([sid,title])=>`${title.replace(/（.*/,"")}：${secStat[sid].ok}/${secStat[sid].n}`).join(" ｜ ") +
+    (wrongList.length? `\n错题：${wrongList.map(w=>`Q${w.i+1}(答${w.picked>=0?LETTERS[w.picked]:"—"}‣正${LETTERS[w.a]})`).join("  ")}`:"\n全对，漂亮！");
+  document.getElementById("reportBox").value = makeReport(score, secStat, wrongList);
+  document.getElementById("result").style.display="block";
+  document.getElementById("wrongOnlyBtn").style.display="inline-block";
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+function makeReport(score, secStat, wrongList){
+  return [
+    `CS5486 期中模拟选择题卷(53题) · 成绩单`,
+    `得分: ${score}/${QS.length} (${Math.round(score/QS.length*100)}%)`,
+    `分区: ` + SECTIONS.map(([sid,title])=>`${title.replace(/（.*/,"")}${secStat[sid].ok}/${secStat[sid].n}`).join(" | "),
+    wrongList.length? `错题: ${wrongList.map(w=>`Q${w.i+1}(答${w.picked>=0?LETTERS[w.picked]:"未答"}→正确${LETTERS[w.a]})`).join(", ")}` : `错题: 无`,
+    `弱项题表现: ` + QS.map((q,i)=>({q,i})).filter(x=>x.q.weak).map(x=>`Q${x.i+1}${(x.i in state)&&state[x.i]===x.q.a?"✓":"✗"}`).join(" "),
+  ].join("\n");
+}
+function copyReport(){
+  const box = document.getElementById("reportBox");
+  box.select();
+  try { document.execCommand("copy"); document.getElementById("copyHint").textContent="已复制，粘贴到对话里发给我即可"; }
+  catch(e){ document.getElementById("copyHint").textContent="请手动全选文本框内容复制"; }
+}
+function showWrongOnly(){
+  const qs = [...document.querySelectorAll(".q")];
+  qs.forEach(el=>{ el.style.display = el.classList.contains("wrong") ? "" : "none"; });
+  document.querySelectorAll(".sec").forEach(el=>{
+    const sid = el.textContent[0];
+    const any = qs.some((q,idx)=>q.classList.contains("wrong") && QS[idx].sec===sid);
+    el.style.display = any ? "" : "none";
+  });
+  window.scrollTo({top:0});
+}
+function resetAll(){
+  if(!confirm("清空全部答案重做？")) return;
+  submitted=false; Object.keys(state).forEach(k=>delete state[k]);
+  build();
+  document.getElementById("result").style.display="none";
+  document.getElementById("wrongOnlyBtn").style.display="none";
+  document.getElementById("copyHint").textContent="";
+  window.scrollTo({top:0});
+}
+build();
+</script>
+</body>
+</html>

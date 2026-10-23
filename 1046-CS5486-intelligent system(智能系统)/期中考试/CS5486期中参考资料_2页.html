@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>CS5486 期中参考资料（2页·考点版）</title>
+<style>
+  @page { size: A4 portrait; margin: 5mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", "Segoe UI Symbol", "PingFang SC", sans-serif; font-size: 6.4pt; line-height: 1.27; color: #000; font-synthesis: none; }
+  .page { width: 200mm; height: 287mm; column-count: 3; column-gap: 2.6mm; column-fill: auto; overflow: hidden; }
+  .page2 { break-before: page; }
+  h2 { background: #222; color: #fff; font-size: 7pt; padding: 0.5pt 3pt; margin: 2.5pt 0 2pt; break-after: avoid; border-radius: 1pt; }
+  h3 { font-size: 6.6pt; margin: 2pt 0 1pt; break-after: avoid; border-bottom: 0.6pt solid #666; }
+  p { margin: 0.8pt 0; }
+  ul { margin: 0.5pt 0 1pt 7pt; }
+  li { margin: 0 0 0.4pt 0; }
+  .f { font-family: Georgia, "Times New Roman", "Segoe UI Symbol", "Microsoft YaHei", serif; font-style: italic; }
+  b, strong { font-weight: 700; }
+  table { border-collapse: collapse; width: 100%; margin: 1pt 0 2pt; font-size: 5.9pt; }
+  th, td { border: 0.5pt solid #555; padding: 0.6pt 2pt; vertical-align: top; text-align: left; }
+  th { background: #ddd; font-weight: 700; }
+  .en { color: #111; }
+  .box { border: 0.7pt solid #333; padding: 1.5pt 3pt; margin: 1.5pt 0 2.5pt; break-inside: avoid; }
+  .warn { border: 0.9pt solid #000; background: #f0f0f0; padding: 2pt 3pt; margin: 0 0 3pt; break-inside: avoid; }
+  .tg { display: inline-block; padding: 0 2.5pt; border-radius: 1.5pt; font-size: 5.7pt; font-weight: 700; color: #fff; }
+  .tgD { background: #000; } .tgC { background: #555; } .tgK { background: #777; }
+  .stp { font-weight: 700; }
+  .sm { font-size: 5.8pt; color: #333; }
+  .gl { font-size: 5.35pt; line-height: 1.16; }
+  .gl td, .gl th { padding: 0.35pt 1.6pt; }
+  sub, sup { font-size: 4.4pt; }
+</style>
+</head>
+<body>
+
+<!-- ===== 第 1 页（正面） ===== -->
+<div class="page">
+
+<div class="warn"><b>CS5486 期中情报</b>（2026-10 考后更新）：实际范围＝开课→kWTA（<b>ART1 未考，ART 内容移至期末资料</b>）；半开卷<b>一张 A4 双面</b>；<b>实际题型＝约 25% 网络对比＋约 75% 推导计算</b>（期末暂定同比例）；一般无需计算器；期中占 30%。<br>
+<span class="sm">符号：<span class="f">u=Σwᵢxᵢ</span>；<span class="f">d</span> 期望 / <span class="f">y</span> 实际 / <span class="f">e=d−y</span>；<span class="f">η</span> 学习率；<span class="f">θ</span> 阈值 ⇔ 偏置 <span class="f">b=−θ, x₀=1</span>。标记：<span class="tg tgD">推导</span>大题默写模板 <span class="tg tgC">对比</span>对比题 <span class="tg tgK">概念</span>填空/辨析。</span></div>
+
+<h2><span class="tg tgD">弱项</span>⚠ 易错急救卡（我的丢分点，先看这个）</h2>
+<div class="box">
+<p><span class="stp">①收敛定理必须答全三件事</span>：<b>前提</b> linearly separable ＋ <b>in a finite number of steps</b>（有限次更新）＋ 结果得正确分类的 weights <b>and</b> threshold——漏前提或漏"有限"＝丢分。拼写：<span class="en">boundary</span>（非 boundry）、<span class="en">in <b>a</b> finite number of <b>steps</b></span>。</p>
+<p><span class="stp">②XOR 原因＝not linearly separable</span>（正类两点对角，无直线可分）——<b>绝不是"权重数量/神经元数量不足"</b>！标准句：<span class="en">A single-layer perceptron can only form a linear decision boundary, but the XOR problem is not linearly separable.</span></p>
+<p><span class="stp">③ADALINE 题必说 minimize the MSE</span>：误差基于<b>线性输出</b> <span class="f">y=wᵀx</span>（非二值输出）；<b>梯度 ≠ 误差函数本身</b>：<span class="f">∇E=−Σₚeₚxₚ</span>，更新用梯度。</p>
+<p><span class="stp">④对比题用完整句</span>（主语＋双方＋whereas）：<span class="en">The perceptron updates weights based on <b>classification errors</b>, whereas ADALINE uses <b>gradient descent</b> to minimize the mean squared error.</span></p>
+<p><span class="stp">⑤细节分</span>：η＝learning rate，controls <b>the size of weight updates</b>（别写成 n，n 常是样本数）；batch 更新 <span class="f">Σₚ</span> 别丢。</p>
+</div>
+
+<h2><span class="tg tgK">概念</span>1 · 基础速答</h2>
+<p><b>ANN=(ARCH, RULE)</b>；ARCH=(u,v,w,x,y)；RULE=(E,F,G,H,L)：E 评价（误差/能量函数）、F 激活、G 聚合（加权和）、H 输出、L 学习（迭代调 w）。</p>
+<p><b>分类四维度</b>：确定性/随机（F）｜前馈/循环（G,H）｜半线性/高阶（G）｜有监督/无监督（L）。<b>短期记忆</b>＝u,v 快动态；<b>长期记忆</b>＝w 慢动态。</p>
+<p><b>一般增量学习规则</b>：<span class="f">w(t+1)=w(t)+η·r(x,y,d,w)</span>（连续 <span class="f">ẇ=η·r</span>）；一切规则皆为 r 的特例。</p>
+<p><b>M-P 神经元</b>（1943）：{0,1} 二值；权重 ±1；<b>抑制输入=1 ⇒ 输出必 0</b>；否则加权和 ≥θ ⇒ 1。三命题：①任意逻辑函数可由<b>两层</b> M-P 网实现；②无抑制连接只能实现<b>单调</b>逻辑函数；③任意有限自动机可由 M-P 循环网络模拟。</p>
+<p><b>里程碑</b>：43 M-P｜50s末 Rosenblatt 感知机｜60s Widrow ADALINE｜70s Zadeh 模糊·<b>Grossberg ART</b>·Kohonen SOM｜74 Werbos BP｜82 Hopfield｜86 PDP 推广 BP｜88 Broomhead&amp;Lowe RBF｜90s Vapnik SVM｜06– Hinton DL；<b>2024 诺贝尔物理奖＝Hopfield &amp; Hinton</b>。</p>
+
+<h2><span class="tg tgD">推导</span>2 · Perceptron</h2>
+<h3>2.1 输出规则＋线性可分定义</h3>
+<p>单层自适应阈值逻辑单元前馈网（Rosenblatt，Cornell，1950s 末，首个硬件实现）。<span class="f">y=1 ⟺ u=Σwᵢxᵢ≥θ</span>，否则 0（hard-limit）。</p>
+<p><b>线性可分（课件定义）</b>：存在 n+1 个实权重（含阈值）使一组加权和恒 ≥（&gt;）θ、另一组恒 &lt;θ。有限集线性可分 ⇒ 绝对线性可分。</p>
+<h3>2.2 学习规则【默写】</h3>
+<div class="box"><p>仅当 y≠d 才更新：<br>
+<span class="f">wᵢ(t+1)=wᵢ(t)+η(d−y)xᵢ</span>；<span class="f">θ(t+1)=θ(t)−η(d−y)</span><br>
+迭代学习（Lippmann）：d=1,y=0 → <span class="f">w←w+ηx, θ←θ−η</span>；d=0,y=1 → <span class="f">w←w−ηx, θ←θ+η</span>；正确不动。</p></div>
+<h3>2.3 收敛定理【英文必背】</h3>
+<div class="box"><p class="en">If two sets of data are linearly separable, the perceptron learning algorithm converges to a set of weights and a threshold in a finite number of steps.</p><p>⚠ 三要素答全：<b>前提</b>线性可分＋<b>有限步</b>＋结果含 threshold（急救卡①）。不可分则不收敛（震荡）。</p></div>
+<h3>2.4 手推例：AND（η=1, W(0)=0, b=0）</h3>
+<p>逐样本错才更：6 轮收敛 <span class="f">w=[2,1], b=−3</span>，边界 <span class="f">2x₁+x₂−3=0</span>（四点全对＝零误差区）。<span class="sm">陷阱：(0,0) 首轮 y=1≠0 触发更新，但 x=0 ⇒ 权重不变、仅 b 动。</span></p>
+<h3>2.5 XOR＋权重空间几何</h3>
+<p>XOR 非线性可分 ⇒ 单层感知机/ADALINE ✗（<b>⚠ 原因＝非线性可分，不是权重/单元数量不足</b>，急救卡②）；<b>两层感知机、RBF、核SVM ✓</b>。局限：仅线性可分；高维/大样本收敛慢。</p>
+<p>m 个样本面切 n 维权空间：区域数＝m 的 n−1 次多项式；1面→2，2→4，3→8，<b>4→最多14</b>。阈值函数 ~O(2<sup>n(n−1)</sup>) ≪ 逻辑函数 2<sup>2ⁿ</sup> ⇒ <b>learnability 问题</b>（s114 两问：解在权空间是否存在？存在时如何求？——两层可分但缺学习算法）。</p>
+<p><b>bipolar {−1,+1} 优于 unipolar {0,1}</b>：代数结构更好＋权空间可行区域占比更大。</p>
+
+<h2><span class="tg tgD">推导</span>3 · ADALINE / LMS</h2>
+<p><b>定义</b>：Adaptive Linear Elements（Widrow &amp; Hoff，Stanford，60s 初）：单层<b>线性</b>单元，学习时 <span class="f">y=wᵀx</span>。</p>
+<h3>LMS 四步推导【默写】</h3>
+<div class="box">
+<p><span class="stp">①目标</span>：<span class="f">E(w)=½Σₚ(dₚ−wᵀxₚ)²</span>，<span class="f">eₚ=dₚ−wᵀxₚ</span></p>
+<p><span class="stp">②求导</span>：<span class="f">∇E(w)=−Σₚeₚxₚ</span>（∂E/∂wᵢ=−Σₚeₚxₚᵢ）</p>
+<p><span class="stp">③下降</span> <span class="f">w(t+1)=w(t)−η∇E</span> ⇒ <span class="stp">④批量更新</span></p>
+<p><span class="f">w(t+1)=w(t)+ηΣₚeₚxₚ</span>；序贯 Delta：<span class="f">Δw=ηex</span></p></div>
+<p><b>训练模式（课件）</b>：Perceptron 序贯或 batch 均可；<b>ADALINE 仅 batch</b>。η 过大→震荡，过小→极慢。<b>⚠ 答题必带 minimize the MSE；误差基于线性输出</b>（急救卡③）。</p>
+<p><b>一步数值例</b>：x=[2,1]ᵀ, d=1, w=[0,0], η=0.1 ⇒ y=wᵀx=0, e=d−y=1, Δw=ηex=[0.2,0.1]ᵀ ⇒ w=[0.2,0.1]ᵀ（批量＝Σₚeₚxₚ 累加）。<b>感知机对照</b>：同输入 d=1,y=0 ⇒ w←w+ηx, θ←θ−η（误分类驱动，非梯度）。</p>
+
+<h2><span class="tg tgD">推导</span>4 · 多层前馈与 BP</h2>
+<h3>4.1 一句话定义【英文】</h3>
+<p class="en">Backpropagation (generalized delta rule, PDP 1986; Werbos 1974) is a recursive gradient-descent learning algorithm for multilayer feedforward networks of sigmoid activation functions; it computes error gradients backward from output to input layer to minimize the mean squared error. <b>BP 是算法非结构，≠ recurrent.</b></p>
+<h3>4.2 Sigmoid 导数【必背】</h3>
+<div class="box">单极 <span class="f">σ(s)=1/(1+e⁻ˢ)</span>，<span class="f">σ′=y(1−y)</span>｜双极 <span class="f">σ(s)=tanh s</span>，<span class="f">σ′=1−y²</span></div>
+<h3>4.3 三层 delta 链【默写】</h3>
+<div class="box">
+<p>记号：隐层 <span class="f">zⱼ=σ(Σᵢvᵢⱼxᵢ)</span>，输出 <span class="f">yₖ=σ(Σⱼwⱼₖzⱼ)</span>，<span class="f">E=½ΣₚΣₖ(dₚₖ−yₚₖ)²</span></p>
+<p><span class="stp">①通用更新</span> <span class="f">Δₚwⱼₖ=ηδₖzⱼ</span>（δ×该权输入信号）</p>
+<p><span class="stp">②输出层</span>（链式 ∂E/∂w=∂E/∂y·∂y/∂s·∂s/∂w）：<br><span class="f">δₖ=(dₖ−yₖ)·yₖ(1−yₖ)</span></p>
+<p><span class="stp">③隐层</span>（上层 δ 按权回传求和）：<br><span class="f">δⱼ=zⱼ(1−zⱼ)·Σₖwⱼₖδₖ</span></p>
+<p class="sm">双极 sigmoid 时导数换 1−y²。</p></div>
+<p><b>四步</b>：随机初始化→前向→反向逐层 δ→更新；循环至收敛。<b>动量</b>：<span class="f">Δw(t)=−η∂E/∂w+αΔw(t−1)</span>（0&lt;α&lt;1）防震荡。</p>
+<h3>4.4 理论三句话【概念】</h3>
+<p><b>Kolmogorov</b>：<span class="f">f(x)=Σ_{j=1}^{2n+1}gⱼ(Σᵢwᵢhᵢ(xᵢ))</span> ⇒ MLP 是<b>通用逼近器</b>（存在权重使误差任意小）<b>但 BP 不保证找到</b>（局部极小）；<b>过拟合</b>＝训练好测试差；<b>一般学习问题是 NP-complete</b>（s187）。</p>
+
+<h2><span class="tg tgD">推导</span>5 · RBF 网络</h2>
+<p><b>RBF</b>：取值只依赖<b>到中心距离 r</b>；Gaussian 最常用；另有 MQ <span class="f">√(r²+c²)</span>、逆MQ <span class="f">1/√(r²+c²)</span>、薄板 <span class="f">r²ln r</span>。</p>
+<div class="box"><p><b>结构</b>（Broomhead &amp; Lowe 1988）：两层＝<b>隐层 RBF＋输出层线性</b>（同 ADALINE）<br>
+<span class="f">φⱼ(x)=exp(−‖x−cⱼ‖²/(2σⱼ²))</span>；<span class="f">y=Σⱼwⱼφⱼ(x)+w₀</span></p></div>
+<p><b>Cover 定理【英文】</b>：<span class="en">a complex pattern-classification problem, cast nonlinearity in a high-dimensional space, is more likely to be linearly separable than in a low-dimensional space</span>（φ-separable：<span class="f">wᵀφ(x)&gt;0 / &lt;0</span>）。</p>
+<p><b>RBF 解 XOR【例题】</b>：<span class="f">c₁=[1,1]ᵀ, c₂=[0,0]ᵀ</span> 两高斯元 → 四点映到 (φ₁,φ₂) 面<b>线性可分</b>，线性输出层分类。</p>
+<p><span class="tg tgK">概念</span><b>FLN</b>（Pao, CWRU, 80s末）：单层＋高阶聚合（xᵢxⱼ 项），快、局部极小可消除。<b>ELM</b>（黄广斌, NTU, 2000s中）：输入→隐层权重<b>随机固定</b>，只解输出层最小二乘：极快、无局部极小。</p>
+
+<h3>5.5 常用激活函数速查【概念】</h3>
+<table>
+<tr><th>函数</th><th>式</th><th>导数</th><th>用于</th></tr>
+<tr><td>hard-limit</td><td class="f">f(s)=1(s≥θ)</td><td>—（不可微）</td><td>感知机/MAXNET</td></tr>
+<tr><td>线性</td><td class="f">f(s)=s</td><td class="f">1</td><td>ADALINE/RBF输出</td></tr>
+<tr><td>单极 sigmoid</td><td class="f">1/(1+e⁻ˢ)</td><td class="f">y(1−y)</td><td>BP（可微）</td></tr>
+<tr><td>双极 sigmoid</td><td class="f">tanh(s)</td><td class="f">1−y²</td><td>BP（对称）</td></tr>
+<tr><td>高斯 RBF</td><td class="f">e^{−‖x−c‖²/2σ²}</td><td class="f">−(x−c)/σ²·φ</td><td>RBF 隐层</td></tr>
+</table>
+<p><b>为何 BP 要可微</b>：梯度下降需 ∂E/∂w＝∂E/∂y·σ′(s)·输入；hard-limit 在跳变点无导数 ⇒ 无法直接梯度训练（感知机只能用误分类规则）。</p>
+
+<h3>5.6 RBF 中心选择与训练实务【概念】</h3>
+<p>中心 c 选取：随机抽训练样本｜k-means 聚类｜正交最小二乘(OLS)逐个加入｜全监督梯度同训（慢）。σ：按最近邻中心间距设定或交叉验证。<b>两阶段优势</b>：输出层线性 ⇒ 最小二乘<b>闭式解</b>（解线性方程组/伪逆），无局部极小、极快；缺点＝维数灾难（高斯基随维数指数需更多中心）。</p>
+
+<h3>5.7 MLP+BP 训练实务【概念】</h3>
+<p><b>过拟合对策</b>：early stopping（验证集误差回升即停）｜正则化（加 λ‖w‖²）｜减隐元｜增数据。<b>权重初始化</b>：小随机数（全 0 会因对称性卡死）；隐元数按经验/试凑。<b>批 vs 序贯</b>：批稳定、序贯（online）可逃离浅坑。<b>η 自适应</b>：震荡减半、下降缓慢则增大。</p>
+
+<h3>5.8 误差曲面与收敛性【概念】</h3>
+<p>单层线性网（LMS）：误差曲面是 w 的<b>二次碗形（凸）</b>⇒ 唯一全局极小，梯度下降必收敛（η 小）；多层 sigmoid：误差曲面<b>非凸</b> ⇒ 局部极小/平台/鞍点，BP 收敛到<b>某个</b>局部极小，且<b>不保证</b>全局最优——对比题必写这一条。</p>
+
+<h2><span class="tg tgD">推导</span>6 · SVM（最重点）</h2>
+<h3>6.1 判别函数与距离【推导第一步】</h3>
+<div class="box"><p><span class="f">g(x)=wᵀx+b=0</span>；w＝法向量（面上任两点差 v 满足 <span class="f">wᵀv=0</span>；b 只平移不改方向）。<br>点距（投影推导）：<span class="f">dist(x₀)=|wᵀx₀+b|/‖w‖</span></p></div>
+<h3>6.2 最大间隔四步【默写】</h3>
+<div class="box">
+<p><span class="stp">①</span>线性分类器有<b>无穷多个</b>→选泛化最好的＝最大 margin（对 outlier 鲁棒）；标签 <span class="f">yᵢ∈{−1,+1}</span>，正确 ⇔ <span class="f">yᵢ(wᵀxᵢ+b)≥0</span></p>
+<p><span class="stp">②</span>w,b 同比缩放不改变平面 ⇒ 取缩放使<b>最近样本</b> <span class="f">|wᵀxᵢ+b|=1</span></p>
+<p><span class="stp">③</span>边界 <span class="f">wᵀx+b=±1</span> ⇒ <span class="f">margin=2/‖w‖</span></p>
+<p><span class="stp">④</span>max 2/‖w‖ ⇔ <b>凸 QP</b>：<span class="f">min ½‖w‖² s.t. yᵢ(wᵀxᵢ+b)≥1, ∀i</span></p></div>
+<h3>6.3 拉格朗日→对偶【默写】</h3>
+<div class="box"><p><span class="f">L=½‖w‖²−Σᵢαᵢ[yᵢ(wᵀxᵢ+b)−1]</span>，αᵢ≥0；<br>
+∂L/∂w=0 ⇒ <span class="f">w=Σᵢαᵢyᵢxᵢ</span>；∂L/∂b=0 ⇒ <span class="f">Σᵢαᵢyᵢ=0</span>；代入 ⇒</p>
+<p class="f">max<sub>α</sub> Σᵢαᵢ−½ΣᵢΣⱼαᵢαⱼyᵢyⱼxᵢᵀxⱼ&ensp;s.t.&ensp;Σαᵢyᵢ=0, αᵢ≥0</p></div>
+<h3>6.4 KKT 与支持向量【概念＋推导】</h3>
+<div class="box"><p><span class="f">αᵢ[yᵢ(wᵀxᵢ+b)−1]=0</span>：margin 上点 αᵢ&gt;0＝<b>SV</b>（唯一决定平面）；面外 αᵢ=0（删之无影响）。<br>
+<span class="f">g(x)=Σᵢαᵢyᵢ(xᵢᵀx)+b</span> —— 训练/判别<b>只用内积</b> ⇒ 核技巧前提。</p></div>
+<h3>6.5 软间隔【默写】</h3>
+<div class="box"><p>不可分/噪声：松弛 ξᵢ≥0：<br><span class="f">min ½‖w‖²+CΣξᵢ s.t. yᵢ(wᵀxᵢ+b)≥1−ξᵢ, ξᵢ≥0</span><br>对偶仅加箱 <span class="f">0≤αᵢ≤C</span>。<b>C 大→重罚误分类（易过拟合）；C 小→重间隔</b>。0&lt;α&lt;C 在面上；α=C 在带内/越界。</p></div>
+<h3>6.6 核技巧＋Mercer【默写】</h3>
+<div class="box"><p>Φ:x→φ(x) 高维可分；只需内积 ⇒ <span class="f">K(xᵢ,xⱼ)=φ(xᵢ)ᵀφ(xⱼ)</span>，<span class="f">g(x)=ΣαᵢyᵢK(xᵢ,x)+b</span>，无需显式 φ。<br><b>Mercer</b>：对称半正定（Gram 阵 PSD）⇔ 合法核。</p></div>
+<h3>6.7 常用核【必背】</h3>
+<table>
+<tr><th>核</th><th>公式</th></tr>
+<tr><td>线性</td><td class="f">K=xᵢᵀx</td></tr>
+<tr><td>多项式</td><td class="f">K=(1+xᵢᵀx)<sup>p</sup>（一般式 (γxᵢᵀx+r)<sup>d</sup>）</td></tr>
+<tr><td>高斯 RBF</td><td class="f">K=exp(−‖xᵢ−xⱼ‖²/(2σ²))</td></tr>
+<tr><td>Sigmoid</td><td class="f">K=tanh(β·xᵢᵀx−b)</td></tr>
+</table>
+<p><b>核验证例题</b>：<span class="f">(1+xᵢᵀxⱼ)²=φᵢᵀφⱼ</span>，<span class="f">φ(x)=[1, x₁², √2x₁x₂, x₂², √2x₁, √2x₂]ᵀ</span>（逐项展开对照）。</p>
+<h3>6.8 流程与设计【概念】</h3>
+<p>①选核 ②选 C ③解 QP ④由 SV 构 g(x)。σ 取不同类最近点距离量级；无准则→验证集/交叉验证；hard/soft 靠实验。SVM＝<b>结构风险最小化</b>（Vapnik，90s初），仅依赖 SV ⇒ <b>小样本优于深度学习</b>、抗过拟合泛化强。</p>
+<h3>6.9 SVR【推导】</h3>
+<div class="box"><p>ε-不敏感管道（|y−f|≤ε 不计损失）：<br><span class="f">min ½‖w‖²+CΣ(ξᵢ+ξᵢ*)</span> s.t. <span class="f">yᵢ−wᵀφ(xᵢ)−b≤ε+ξᵢ</span>；<span class="f">wᵀφ(xᵢ)+b−yᵢ≤ε+ξᵢ*</span>；ξ,ξ*≥0<br>解 <span class="f">f(x)=Σ(αᵢ−αᵢ*)K(xᵢ,x)+b</span></p></div>
+<h3>6.10 LS-SVM【推导＋对比】</h3>
+<div class="box"><p>Suykens &amp; Vandewalle（KU Leuven, 1999）：不等式→<b>等式约束</b>＋平方误差：<br><span class="f">min ½‖w‖²+(γ/2)Σeᵢ² s.t. yᵢ=wᵀφ(xᵢ)+b+eᵢ</span><br>KKT ⇒ <b>线性方程组</b>：快；代价＝α 多非零，<b>失稀疏性</b>。应用：双螺旋分类、电力负荷预测。</p></div>
+<h3>6.11 软间隔对偶与求 b【推导细节】</h3>
+<div class="box"><p>软间隔对偶：<span class="f">max Σαᵢ−½ΣᵢΣⱼαᵢαⱼyᵢyⱼxᵢᵀxⱼ</span> s.t. <span class="f">Σαᵢyᵢ=0, <b>0≤αᵢ≤C</b></span>（比硬间隔仅多箱约束）。<br>
+<b>求 b</b>：任取 SV（0&lt;αᵢ&lt;C）代入 <span class="f">yᵢ(wᵀxᵢ+b)=1</span> ⇒ <span class="f">b=yᵢ−Σⱼαⱼyⱼxⱼᵀxᵢ</span>；多 SV 取平均更稳。</p></div>
+<h3>6.12 SVM 解题自查【得分点】</h3>
+<p>①dist=|wᵀx+b|/‖w‖ ②margin=2/‖w‖ ③缩放使最近点=±1 ④<span class="f">min ½‖w‖² s.t. yᵢ(wᵀxᵢ+b)≥1</span> ⑤写 L、∂L/∂w=0、∂L/∂b=0 ⑥对偶式含全约束 ⑦KKT 点明 SV ⑧核替换 <span class="f">K=φᵢᵀφⱼ</span> ⑨结论句（最大间隔/稀疏/泛化）。漏步＝漏分。</p>
+<h3>6.13 学习规则横向【对比】</h3>
+<table>
+<tr><th>规则</th><th>Δw</th><th>监督</th><th>目标/备注</th></tr>
+<tr><td>感知机</td><td class="f">η(d−y)x</td><td>有</td><td>误分类驱动，<b>非梯度</b></td></tr>
+<tr><td>LMS/Delta</td><td class="f">η(d−wᵀx)x</td><td>有</td><td>min MSE，梯度下降</td></tr>
+<tr><td>BP 广义Delta</td><td class="f">ηδₖzⱼ</td><td>有</td><td>δ 含 σ′，逐层回传</td></tr>
+<tr><td>Hebbian</td><td class="f">η·y·x</td><td>无</td><td>同兴奋，须归一化防爆</td></tr>
+<tr><td>竞争学习</td><td class="f">η(x−w*)</td><td>无</td><td>仅赢家权重向输入移动</td></tr>
+</table>
+<h3>6.14 人物—贡献速查【概念】</h3>
+<table>
+<tr><th>人物</th><th>机构/年份</th><th>贡献</th></tr>
+<tr><td>McCulloch &amp; Pitts</td><td>1943</td><td>M-P 阈值神经元</td></tr>
+<tr><td>Hebb</td><td>1949</td><td>Hebb 规则（同兴奋）</td></tr>
+<tr><td>Rosenblatt</td><td>Cornell, 50s末</td><td>感知机＋收敛定理</td></tr>
+<tr><td>Widrow &amp; Hoff</td><td>Stanford, 60s初</td><td>ADALINE / LMS</td></tr>
+<tr><td>Cover</td><td>1965</td><td>高维更可分定理</td></tr>
+<tr><td>Grossberg</td><td>Boston U., 70s</td><td>ART1、竞争学习、两难</td></tr>
+<tr><td>Kohonen</td><td>70s</td><td>SOM／竞争学习代表</td></tr>
+<tr><td>Werbos</td><td>1974</td><td>BP 首提</td></tr>
+<tr><td>PDP 小组</td><td>1986</td><td>推广 BP（广义 delta）</td></tr>
+<tr><td>Broomhead &amp; Lowe</td><td>1988</td><td>RBF 网络</td></tr>
+<tr><td>Pao</td><td>CWRU, 80s末</td><td>FLN 高阶聚合</td></tr>
+<tr><td>Vapnik 等</td><td>90s初</td><td>SVM／结构风险最小化</td></tr>
+<tr><td>Suykens &amp; Vandewalle</td><td>KU Leuven, 1999</td><td>LS-SVM</td></tr>
+<tr><td>黄广斌 Huang</td><td>NTU, 00s中</td><td>ELM 极端学习机</td></tr>
+<tr><td>Hopfield &amp; Hinton</td><td>2024</td><td>诺贝尔物理学奖</td></tr>
+</table>
+<p><b>零散考点【概念】</b>：ADALINE 全称 Adaptive Linear <b>Elements</b>；LMS 又称 Delta/Widrow-Hoff 规则；BP 又称广义 delta 规则；MLP＝全局逼近、RBF＝局部逼近；SVM 判别只依赖 SV（删 α=0 样本结果不变）；核矩阵＝Gram 矩阵 <span class="f">Kᵢⱼ=K(xᵢ,xⱼ)</span>；MAXNET 常作 WTA 输出层。</p>
+</div>
+
+<!-- ===== 第 2 页（反面） ===== -->
+<div class="page page2">
+
+<h2><span class="tg tgK">概念</span>7 · 无监督与竞争学习</h2>
+<p><b>无监督</b>：无标签学结构（聚类：按相似度分组，<b>主观无唯一解</b>）。<b>强化学习（课件口径）</b>：输入刺激强化权重/阈值以增强期望输出再现，例 <b>Hebbian</b>。<b>竞争学习</b>：单元竞争产出权（例 <b>Kohonen</b>）。</p>
+<div class="box"><p><b>算法</b>：X={x¹..xᴾ} 归 K 簇：①随机初始化 ②随机取 xⱼ 算 <span class="f">wᵢᵀxⱼ</span> ③选 <span class="f">w*=argmax</span> ④只更新赢家 <span class="f">w(t+1)=w(t)+η(xⱼ−w(t))</span>（可再归一化）⑤重复至收敛。<br><b>能量函数</b>：<span class="f">E=Σₚ‖xₚ−w(xₚ)‖²</span>（样本到赢家权重距离平方和），学习使之下降。</p></div>
+
+<h2><span class="tg tgK">概念</span>8 · MAXNET 与 kWTA</h2>
+<div class="box"><p><b>MAXNET</b>：选最大输入的子网络（WTA），靠<b>相互抑制</b>保最大压其余；<b>循环</b>网络；<b>自兴奋权重=1，侧抑制权重=−w，w&lt;1/m</b>（m＝单元数）；动力学 <span class="f">xⱼ(t+1)=f(xⱼ(t)−wΣᵢ≠ⱼxᵢ(t))</span>；常作输出层。<br><b>kWTA</b>：选前 <b>k</b> 大响应、抑制其余；Heaviside 激活（σ(s)=1 if s&gt;0 else 0）版<b>全局稳定、有限时间收敛</b>到 kWTA 解（有收敛时间上下界）。</p></div>
+
+<h2><span class="tg tgC">对比</span>9 · 网络对比大题（期中占 25%）</h2>
+<h3>T1 Perceptron vs ADALINE【课件原句必背】</h3>
+<table>
+<tr><th></th><th>Perceptron</th><th>ADALINE</th></tr>
+<tr><td>激活</td><td>hard-limit（双/单极）</td><td>线性（学习时）</td></tr>
+<tr><td>规则</td><td>误分类驱动，<b>非梯度</b></td><td>LMS/Delta，<b>梯度下降</b></td></tr>
+<tr><td>模式</td><td>序贯或 batch</td><td><b>仅 batch</b></td></tr>
+<tr><td>目标</td><td>分类正确即停</td><td>min MSE</td></tr>
+<tr><td>XOR</td><td>✗</td><td>✗</td></tr>
+</table>
+<p class="en sm">Architecture: Perceptron uses a bipolar or unipolar hardlimiter activation function, Adaline uses a linear activation function. Learning rule: the perceptron learning algorithm is not gradient-descent and can operate in either sequential or batch training mode, whereas the Adaline learning (LMS) algorithm is gradient descent, but can only operate in batch mode.</p>
+<h3>T2 五模型横向</h3>
+<table>
+<tr><th></th><th>单层感知机</th><th>MLP+BP</th><th>RBF</th><th>SVM</th></tr>
+<tr><td>结构</td><td>单层前馈</td><td>多层前馈</td><td>两层前馈</td><td>前馈+核</td></tr>
+<tr><td>学习</td><td>有监督·误差驱动</td><td>有监督·梯度递归</td><td>两阶段(中心/线性读出)</td><td>有监督·QP对偶</td></tr>
+<tr><td>激活</td><td>hard-limit</td><td>sigmoid×2</td><td>高斯+线性</td><td>核内积</td></tr>
+<tr><td>XOR</td><td>✗</td><td>✓</td><td>✓</td><td>✓(核)</td></tr>
+<tr><td>局部极小</td><td>—</td><td>可能有</td><td>无(LS解)</td><td>无(凸QP)</td></tr>
+<tr><td>弱点</td><td>仅线性可分</td><td>慢/极小/过拟合</td><td>维度灾难/选中心</td><td>选核与C/大规模慢</td></tr>
+</table>
+<h3>T3 MLP vs RBF</h3>
+<p>隐层：sigmoid<b>全局</b> vs 高斯<b>局部</b>（近中心才激活）｜输出层：均线性｜训练：全网络迭代梯度 vs 两阶段（中心+输出<b>最小二乘一步解</b>）｜局部极小：可有 vs 输出层无｜速度：RBF 通常快｜表述：<b>RBF 是结构，BP 是算法</b>。</p>
+<h3>T4 SVM vs SVR vs LS-SVM</h3>
+<p>SVR：ε-不敏感损失、不等式约束、QP、<b>稀疏</b>｜LS-SVM：等式约束＋平方误差→<b>线性方程组</b>、快、<b>非稀疏</b>｜同：结构风险最小化、可核化。</p>
+<h3>T5 竞争学习 vs MAXNET vs kWTA</h3>
+<p>竞争学习＝<b>学习范式</b>（赢家权重向输入移动成簇）；MAXNET＝实现 WTA 的<b>循环子网络</b>（1/−w&lt;1/m），常作输出层；kWTA＝前 k 赢家（Heaviside 版全局稳定、有限时间收敛）。</p>
+<h3>T6 结构与范式辨析</h3>
+<p><b>前馈 vs 循环</b>＝信号流向（循环例：MAXNET；ART1、Hopfield 属期末）；<b>BP 是算法非结构</b>，误差反传≠循环连接；<b>有监督</b>（P/ADALINE/BP/SVM）vs <b>无监督</b>（竞争学习/聚类）；短/长期记忆＝u,v / w。</p>
+<h3>T7 Hebbian vs 竞争学习 vs Delta【范式】</h3>
+<p><b>Hebbian</b>：Δw=η·d·x 或 ηyx（同兴奋，无教师信号方向校正，权重无界增长需归一化）｜<b>竞争学习</b>：仅赢家 w←w+η(x−w)（无监督、聚类、权重向输入移动）｜<b>Delta/LMS</b>：Δw=η(d−y)x（有监督、误差驱动、降 MSE）。共同点＝都是增量规则 w(t+1)=w(t)+η·r 的特例。</p>
+
+<h3>公式补遗【推导速查】</h3>
+<div class="box">
+<p><b>范数/距离</b>：‖w‖=√(Σwᵢ²)；margin=2/‖w‖；点距 |wᵀx+b|/‖w‖；高斯基 exp(−‖x−c‖²/(2σ²))。</p>
+<p><b>梯度对照</b>：LMS ∇E=−Σₚeₚxₚ ⇒ w+=ηΣₚeₚxₚ｜BP 输出 δₖ=(dₖ−yₖ)yₖ(1−yₖ)｜隐层 δⱼ=zⱼ(1−zⱼ)Σₖwⱼₖδₖ｜SVM 对偶 max Σα−½ΣΣαᵢαⱼyᵢyⱼKᵢⱼ。</p>
+<p><b>约束形式对照</b>：硬间隔 yᵢ(wᵀxᵢ+b)≥1｜软间隔 ≥1−ξᵢ, ξᵢ≥0｜SVR 双不等式 ≤ε+ξ｜LS-SVM 等式 y=wᵀφ+b+e。</p>
+<p><b>目标函数对照</b>：LMS/BP ½Σ(d−y)²｜SVM ½‖w‖²(+CΣξ)｜LS-SVM ½‖w‖²+(γ/2)Σe²｜竞争 Σ‖x−w(x)‖²。</p>
+</div>
+
+<h3>易错公式急救【弱项】</h3>
+<p>①margin 分母是 ‖w‖<b>一次方</b>，距离公式分母也是 ‖w‖；②软间隔约束右边是 <b>1−ξ</b> 不是 1+ξ；③对偶目标是 <b>max</b> Σα−½…（别写成 min）；④SVM 判别式含 <b>yᵢ</b>：g=ΣαᵢyᵢK(xᵢ,x)+b；⑤隐层 δ 无 d、须乘 <b>自身导数</b>；⑥MAXNET 侧抑制 w<1/m 且自兴奋=<b>1</b>；⑦σ′(单极)=y(1−y)、σ′(双极)=<b>1−y²</b> 别混。</p>
+
+<h3><span class="tg tgK">英语</span>10 · 生僻学术英语速查表（按首字母）</h3>
+<table class="gl">
+<tr><th>Term</th><th>中文对照</th><th>Term</th><th>中文对照</th></tr>
+<tr><td><b>A</b> absolute linearly separable</td><td>绝对线性可分</td><td>activation / aggregation rule</td><td>激活 / 聚合规则</td></tr>
+<tr><td>adaptive resonance</td><td>自适应共振</td><td>arbitrary (any) logic function</td><td>任意逻辑函数</td></tr>
+<tr><td><b>B</b> backpropagation</td><td>反向传播（误差回传）</td><td>batch / sequential mode</td><td>批量 / 序贯（逐样本）模式</td></tr>
+<tr><td>bias (threshold θ)</td><td>偏置（阈值）</td><td>bipolar / unipolar</td><td>双极 {−1,+1} / 单极 {0,1}</td></tr>
+<tr><td>bottom-up / top-down</td><td>自下而上 / 自上而下</td><td>boundary (decision ~)</td><td>（决策）边界 ⚠拼 boundary</td></tr>
+<tr><td><b>C</b> catastrophic forgetting</td><td>灾难性遗忘</td><td>competitive learning</td><td>竞争学习</td></tr>
+<tr><td>complementary slackness</td><td>互补松弛（KKT）</td><td>convergence (in finite steps)</td><td>收敛（有限步内）</td></tr>
+<tr><td>convex QP / concave</td><td>凸二次规划 / 凹</td><td>Cover's theorem</td><td>Cover 定理（高维更可分）</td></tr>
+<tr><td><b>D</b> delta rule (generalized)</td><td>（广义）Delta 规则</td><td>discriminant function</td><td>判别函数</td></tr>
+<tr><td>dual / primal problem</td><td>对偶 / 原始问题</td><td>dimensionality curse</td><td>维数灾难</td></tr>
+<tr><td><b>E</b> energy function</td><td>能量函数</td><td>epoch / iteration</td><td>轮 / 迭代</td></tr>
+<tr><td>evaluation rule (E)</td><td>评价规则（误差/能量）</td><td>explicit mapping</td><td>显式映射 φ</td></tr>
+<tr><td><b>F</b> feature space / φ-separable</td><td>特征空间 / 特征可分</td><td>feedforward / recurrent</td><td>前馈 / 循环</td></tr>
+<tr><td>finite automaton</td><td>有限自动机</td><td>flexibility (plasticity)</td><td>可塑性</td></tr>
+<tr><td><b>G</b> Gaussian (RBF)</td><td>高斯（径向基）</td><td>generalization</td><td>泛化</td></tr>
+<tr><td>gradient descent</td><td>梯度下降</td><td>Gram matrix</td><td>格拉姆矩阵（核矩阵）</td></tr>
+<tr><td><b>H</b> hard limiter</td><td>硬限幅器（阶跃）</td><td>Hebbian rule</td><td>赫布规则</td></tr>
+<tr><td>hidden layer</td><td>隐层</td><td>higher-order aggregation</td><td>高阶聚合</td></tr>
+<tr><td>hyperplane</td><td>超平面</td><td>hypothesis (class)</td><td>假设（类）</td></tr>
+<tr><td><b>I</b> incremental learning</td><td>增量学习</td><td>inner product</td><td>内积</td></tr>
+<tr><td>interconnection weight</td><td>互连权重</td><td>invariant (to scaling)</td><td>（对缩放）不变</td></tr>
+<tr><td><b>K</b> kernel trick / function</td><td>核技巧 / 核函数</td><td>kernel width σ</td><td>核宽度</td></tr>
+<tr><td>k-winners-take-all</td><td>k-胜者全得</td><td>Kolmogorov theorem</td><td>柯尔莫哥洛夫定理</td></tr>
+<tr><td><b>L</b> Lagrangian multiplier α</td><td>拉格朗日乘子</td><td>learnability</td><td>可学习性</td></tr>
+<tr><td>learning rate η</td><td>学习率（步长）</td><td>linearly separable</td><td>线性可分</td></tr>
+<tr><td>local minimum</td><td>局部极小</td><td>long/short-term memory</td><td>长/短期记忆（w / u,v）</td></tr>
+<tr><td><b>M</b> margin (maximal ~)</td><td>间隔（最大间隔）</td><td>mean squared error</td><td>均方误差 MSE</td></tr>
+<tr><td>Mercer's theorem</td><td>Mercer 定理（半正定）</td><td>misclassification</td><td>误分类</td></tr>
+<tr><td>momentum (term)</td><td>动量（项）</td><td>monotonic</td><td>单调（函数/逻辑）</td></tr>
+<tr><td><b>N</b> neuron / unit</td><td>神经元 / 单元</td><td>nonlinearly separable</td><td>非线性可分</td></tr>
+<tr><td>normal vector</td><td>法向量</td><td>normalization</td><td>归一化</td></tr>
+<tr><td><b>O</b> objective function</td><td>目标函数</td><td>outlier</td><td>离群点/异常样本</td></tr>
+<tr><td>output layer</td><td>输出层</td><td>overfitting</td><td>过拟合</td></tr>
+<tr><td><b>P</b> perceptron</td><td>感知机</td><td>pattern / sample</td><td>模式 / 样本</td></tr>
+<tr><td>penalty factor C</td><td>惩罚因子</td><td>plateau</td><td>平台（平坦区）</td></tr>
+<tr><td>projection</td><td>投影</td><td>quadratic programming</td><td>二次规划 QP</td></tr>
+<tr><td><b>R</b> radial basis function</td><td>径向基函数 RBF</td><td>reinforcement learning</td><td>强化学习（课件口径）</td></tr>
+<tr><td>resonance</td><td>共振（匹配成功）</td><td>robustness</td><td>鲁棒性</td></tr>
+<tr><td><b>S</b> semi-positive definite</td><td>半正定</td><td>slack variable ξ</td><td>松弛变量</td></tr>
+<tr><td>sparsity / sparse</td><td>稀疏性 / 稀疏的</td><td>stability-plasticity dilemma</td><td>稳定性—可塑性两难</td></tr>
+<tr><td>structural risk</td><td>结构风险</td><td>supervised / unsupervised</td><td>有监督 / 无监督</td></tr>
+<tr><td>support vector (SV)</td><td>支持向量</td><td>symmetric breaking</td><td>对称破缺（初始化）</td></tr>
+<tr><td><b>T</b> template (top-down t)</td><td>模板（自上而下权）</td><td>threshold θ</td><td>阈值</td></tr>
+<tr><td>tolerance</td><td>容差（警戒相似度）</td><td>training mode</td><td>训练模式</td></tr>
+<tr><td><b>U</b> universal approximator</td><td>通用逼近器</td><td>update rule</td><td>更新规则</td></tr>
+<tr><td><b>V</b> vigilance (parameter ρ)</td><td>警戒（参数）</td><td>violation (constraint)</td><td>（约束）违反</td></tr>
+<tr><td><b>W</b> weight space</td><td>权重空间</td><td>winner-take-all</td><td>胜者全得 WTA</td></tr>
+<tr><td><b>X</b> XOR (exclusive-or)</td><td>异或（非线性可分）</td><td>zero-error region</td><td>零误差区</td></tr>
+</table>
+
+<h3>英文答题句【背诵】</h3>
+<ul>
+<li class="en">A dataset is linearly separable if a linear decision boundary can classify all samples correctly.</li>
+<li class="en">The hidden-layer delta sums the error contributions of all output neurons it feeds, weighted by the connecting weights.</li>
+<li class="en">An RBF network has a Gaussian hidden layer and a linear output layer; inputs become linearly separable in the feature space (Cover's theorem).</li>
+<li class="en">Support vectors are the samples on the margin (αᵢ&gt;0); they alone determine the optimal hyperplane.</li>
+<li class="en">The kernel trick computes inner products in a high-dimensional feature space without the explicit mapping: K(x,z)=φ(x)ᵀφ(z).</li>
+<li class="en">C trades off margin maximization versus violation penalty: large C → fewer violations, small C → wider margin.</li>
+<li class="en">MLPs are universal approximators, but BP is not guaranteed to find the optimal weights (local minima).</li>
+</ul>
+
+<h3><span class="tg tgC">对比</span>11 · 对比题答题骨架＋加分句</h3>
+<div class="box">
+<p><b>骨架（五要素）</b>：①<b>结构</b>（层/前馈·循环/激活）→②<b>学习规则</b>（谁更新、公式、监督否）→③<b>优化目标</b>（min MSE / max margin / 聚类误差）→④<b>性质</b>（收敛条件/局部极小/稀疏性/XOR）→⑤<b>适用与弱点</b>。每对比至少写 4 要素，用完整句＋whereas。</p>
+<p><b>加分句</b>：<span class="en">The key difference lies in the objective: ADALINE minimizes the MSE of the linear output, whereas the perceptron only corrects misclassifications.</span>｜<span class="en">SVM maximizes the margin subject to constraints, which yields a convex problem without local minima.</span>｜<span class="en">RBF networks transform the input into a higher-dimensional feature space where linear separation is more likely (Cover).</span></p>
+</div>
+
+<h3><span class="tg tgK">概念</span>12 · 选择/填空陷阱清单【弱项】</h3>
+<p>①M-P：抑制输入为 1 ⇒ 输出<b>必 0</b>（不是看加权和）；②两层 M-P＝任意逻辑函数；无抑制＝<b>单调</b>函数；③收敛定理前提线性可分、有限步、得 w<b>和</b>θ；④XOR 原因非线性可分（不是权不够）；⑤ADALINE 仅 batch、误差来自线性输出；⑥∇E=−Σeₚxₚ（符号别反）；⑦σ′(单极)=y(1−y)，σ′(双极)=1−y²；⑧隐层 δ 无 d；⑨MLP 逼近存在但 BP 不保证；⑩Cover 是“更可能”非“必然”；⑪KKT：α&gt;0⇔在 margin 上；⑫C 大重罚误分类；⑬Mercer＝对称半正定；⑭LS-SVM 失稀疏；⑮MAXNET：自兴奋 1、侧抑制 −w&lt;1/m；⑯kWTA Heaviside 版全局稳定有限时间；⑰样本 4 面→最多 <b>14</b> 区（非 16）；⑱Hopfield、ART1 属期末范围，别写进期中对比。</p>
+
+<h3><span class="tg tgK">概念</span>13 · 参数效应速查【推导追问常考】</h3>
+<table>
+<tr><th>参数</th><th>增大时</th><th>减小时</th></tr>
+<tr><td>η 学习率</td><td>快但震荡/发散</td><td>稳但极慢</td></tr>
+<tr><td>α 动量</td><td>惯性大、易冲过头</td><td>接近无动量</td></tr>
+<tr><td>C 惩罚</td><td>重罚违反、间隔窄、易过拟合</td><td>重间隔、容违反、平滑</td></tr>
+<tr><td>σ 高斯核宽</td><td>核平滑、欠拟合（过远都相似）</td><td>核尖锐、过拟合（只认近邻）</td></tr>
+<tr><td>γ LS-SVM</td><td>重拟合误差 e</td><td>重 ‖w‖² 正则</td></tr>
+</table>
+<p><b>SVM 细节补遗</b>：αᵢ=0 样本可删；0&lt;αᵢ&lt;C 恰在 margin 上；αᵢ=C 在 margin 内或误分类（ξ&gt;0）；b 由 SV 的 <span class="f">yᵢ(wᵀxᵢ+b)=1</span> 解出；核化后判别只用 K 与 SV，无需显式 φ。</p>
+
+<h3><span class="tg tgK">概念</span>14 · 常见设问英译→答题指向</h3>
+<table class="gl">
+<tr><th>设问（英文常见措辞）</th><th>答什么（指向）</th></tr>
+<tr><td>State the perceptron convergence theorem</td><td>§2.3 三要素全写</td></tr>
+<tr><td>Why can a single-layer perceptron not solve XOR</td><td>急救卡②：not linearly separable</td></tr>
+<tr><td>Derive the LMS / delta rule</td><td>§3 四步①E ②∇E ③下降 ④更新</td></tr>
+<tr><td>Derive the update rule for hidden units in BP</td><td>§4.3 ③δⱼ=zⱼ(1−zⱼ)Σₖwⱼₖδₖ</td></tr>
+<tr><td>Show that the margin equals 2/‖w‖</td><td>§6.2 ②③缩放＋两边界距离</td></tr>
+<tr><td>Formulate the dual of the SVM</td><td>§6.3 L→偏导→代入→对偶式</td></tr>
+<tr><td>What are support vectors / their role</td><td>§6.4 KKT：α&gt;0 在 margin，唯一定平面</td></tr>
+<tr><td>Explain the kernel trick / Mercer's condition</td><td>§6.6 内积替代＋对称半正定</td></tr>
+<tr><td>Compare A and B (differences)</td><td>§11 五要素骨架＋whereas 完整句</td></tr>
+<tr><td>Is BP a network architecture?</td><td>否＝学习算法；recurrent 与否是结构问题</td></tr>
+</table>
+</div>
+
+</body>
+</html>

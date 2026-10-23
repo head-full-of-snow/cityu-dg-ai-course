@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5486 期中还原卷 · 答案卷（中英双语）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f2f2f2; color: #111; font-size: 15px; line-height: 1.65; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 14px 16px 90px; }
+  .topbar { position: sticky; top: 0; z-index: 9; background: #1a3a5c; color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .topbar b { font-size: 16px; }
+  .topbar .meta { font-size: 13px; color: #cfe0f0; }
+  .topbar a { color: #ffd54a; font-size: 13.5px; font-weight: 700; }
+  h1 { font-size: 21px; margin: 14px 0 2px; }
+  .sub1 { color: #555; font-size: 14px; margin-bottom: 8px; }
+  .note { background: #fff8dc; border: 1px solid #d9c77a; padding: 8px 12px; border-radius: 4px; font-size: 13.5px; margin: 10px 0; }
+  .qhead { background: #1a3a5c; color: #fff; padding: 6px 12px; border-radius: 3px; margin: 24px 0 8px; font-size: 15.5px; font-weight: 700; }
+  .qhead .en { font-weight: 400; font-style: italic; font-size: 13.5px; color: #cfe0f0; }
+  .sub { background: #fff; border: 1px solid #bbb; border-radius: 6px; padding: 12px 14px; margin: 12px 0; }
+  .sub h3 { font-size: 15.5px; margin-bottom: 6px; }
+  .lang { font-size: 12px; font-weight: 700; border-radius: 3px; padding: 0 7px; margin-right: 6px; vertical-align: 1.5px; }
+  .lang.en { background: #1a3a5c; color: #fff; }
+  .lang.zh { background: #2c6a2c; color: #fff; }
+  .box-en { font-family: Georgia, serif; font-size: 14.5px; background: #eef4fa; border: 1px solid #9db8d2; border-radius: 4px; padding: 8px 12px; margin: 8px 0; }
+  .box-zh { font-size: 14px; background: #eef7ee; border: 1px solid #9c9; border-radius: 4px; padding: 8px 12px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; margin: 8px 0; }
+  th, td { border: 1px solid #bbb; padding: 5px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef4fa; color: #1a3a5c; }
+  td:first-child { background: #fafafa; font-weight: 700; white-space: nowrap; }
+  .formula { font-family: Georgia, "Times New Roman", serif; }
+  .fctr { text-align: center; font-size: 15.5px; margin: 6px 0; }
+  .src { font-size: 12.5px; color: #777; margin-top: 6px; }
+  .skeleton { background: #fff; border: 1px dashed #1a3a5c; border-radius: 6px; padding: 8px 12px; font-size: 13.5px; margin: 10px 0; color: #1a3a5c; }
+  .end { text-align: center; color: #1a3a5c; font-weight: 700; margin: 26px 0 8px; font-size: 15px; letter-spacing: 1px; }
+  @media print { .topbar { position: static; box-shadow: none; } body { background: #fff; } .sub { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>CS5486 期中还原卷 · 答案卷（中英双语）</b>
+  <span class="meta">Model Answers · Bilingual · Q1–Q4</span>
+  <a href="CS5486期中还原_题目卷.html">→ 题目卷 Question Paper</a>
+</div>
+<div class="wrap">
+  <h1>CS5486 Intelligent Systems 智能系统 · Mid-term Examination 期中考试</h1>
+  <div class="sub1">Recreated Paper · Model Answers 还原卷 · 答案卷（中英双语 Bilingual）</div>
+  <div class="note">
+    <b>EN</b>: Model answers recreated from the official slides (page numbers cited as sXX) and the 2-page reference sheet.｜<b>中文</b>：参考答案依据官方课件（页码记作 sXX）与《期中参考资料 2 页》还原；题面为回忆版。
+  </div>
+
+  <div class="qhead">Question 1 · 网络对比 <span class="en">Network Comparison</span></div>
+  <div class="skeleton">对比骨架 Skeleton（五要素，每题至少 4 项）：①结构 Architecture（层数、前馈/循环、激活）②学习规则 Learning rule ③优化目标 Objective（min MSE / max margin / clustering）④性质 Properties（收敛、局部极小、稀疏性、XOR）⑤功能与弱点 Functionality & weaknesses。</div>
+
+  <div class="sub">
+    <h3>1(a) M-P 阈值逻辑网 vs. 感知机 · Threshold Logic Network (M-P) vs. Perceptron</h3>
+    <div class="box-en"><span class="lang en">EN</span>Both networks are built of <b>threshold logic (hard-limit) units</b>: the output is 1 iff the weighted sum of the inputs is not less than the threshold θ. The <b>M-P neuron</b> (1943) uses binary inputs/outputs {0,1} with <b>fixed unity weights +1/−1 and no learning algorithm</b> — an inhibitory input of 1 forces the output to 0; its networks perform <b>logic computation</b>: two layers realize any logical function, uninhibited units only monotonic logical functions, and recurrent M-P networks simulate any finite automaton. The <b>perceptron</b> (Rosenblatt, late 1950s) is a <b>single adaptive layer of a feedforward network of pure threshold logic units</b>: it receives n <b>real</b> inputs through <b>adjustable</b> real-valued weights, learned from examples by w←w+η(d−y)x, θ←θ−η(d−y) (update only on misclassification); if the data are linearly separable, it converges in a finite number of steps. In short: the M-P network is a fixed, hand-designed logic device, whereas the perceptron is an <b>adaptive pattern classifier</b> limited to linearly separable data.</div>
+    <div class="box-zh"><span class="lang zh">中文</span>两者都由<b>阈值逻辑（硬限幅）单元</b>构成（加权和 ≥ θ 输出 1）。<b>M-P 神经元</b>（1943）二值输入输出，权重<b>固定 ±1、无学习算法</b>（抑制输入=1 ⇒ 输出 0）；其网络做<b>逻辑运算</b>：两层实现任意逻辑函数、无抑制只能单调逻辑函数、循环 M-P 网模拟任意有限自动机。<b>感知机</b>（Rosenblatt，1950s 末）是<b>单层自适应阈值逻辑单元前馈网</b>：n 个<b>实数</b>输入、<b>可调</b>实数权重，由样本学习（仅误分类时更新）；线性可分时有限步收敛。一句话：M-P＝固定手工设计的逻辑器件；感知机＝<b>限线性可分数据的自适应分类器</b>。</div>
+    <table>
+      <tr><th>维度 Dimension</th><th>M-P 阈值逻辑网（1943）</th><th>感知机 Perceptron（1950s 末）</th></tr>
+      <tr><td>结构 Structure</td><td>阈值逻辑单元，可多层/循环 multi-layer / recurrent</td><td>单层自适应阈值逻辑单元<b>前馈</b>网 single adaptive layer, feedforward</td></tr>
+      <tr><td>权重 Weights</td><td><b>固定 ±1</b>，人工设计 fixed, hand-designed</td><td><b>实数、可调</b> real-valued, adjustable</td></tr>
+      <tr><td>学习 Learning</td><td>无学习算法 none</td><td>感知机规则＋收敛定理 perceptron rule + convergence theorem</td></tr>
+      <tr><td>输入 Inputs</td><td>二值 {0,1}（抑制=1 ⇒ 输出 0）</td><td>n 个实数 n real inputs</td></tr>
+      <tr><td>功能 Function</td><td>逻辑运算（任意逻辑函数/有限自动机） logic computation</td><td>线性可分二分类 linearly separable classification（XOR ✗）</td></tr>
+    </table>
+    <div class="src">出处：s51–52（M-P）· s63–64（有限自动机）· s65 / s68（感知机定义）</div>
+  </div>
+
+  <div class="sub">
+    <h3>1(b) Perceptron vs. ADALINE</h3>
+    <div class="box-en"><span class="lang en">EN</span>(slide s104, quotable verbatim) <b>Architecture:</b> Perceptron uses a bipolar or unipolar hardlimiter activation function, whereas ADALINE (Adaptive Linear Elements, Widrow &amp; Hoff, 1960s) uses a <b>linear</b> activation function. <b>Learning rule:</b> the perceptron learning algorithm is <b>not gradient-descent</b> and can operate in either <b>sequential or batch</b> training mode, whereas the ADALINE learning (<b>LMS / Delta / Widrow–Hoff</b>) algorithm <b>is gradient descent</b>, minimizing the <b>mean squared error</b> of the linear output, but can only operate in <b>batch</b> mode. Both are single adaptive layers of feedforward networks; both fail on XOR (not linearly separable).</div>
+    <div class="box-zh"><span class="lang zh">中文</span>（s104 课件原句，可直接默写）<b>结构</b>：感知机用双极/单极硬限幅激活函数，而 ADALINE 用<b>线性</b>激活函数。<b>学习规则</b>：感知机学习算法<b>不是梯度下降</b>，可工作于<b>序贯或批量</b>模式；ADALINE 学习算法（<b>LMS／Delta／Widrow–Hoff</b>）<b>是梯度下降</b>，最小化线性输出的<b>均方误差</b>，但<b>仅能批量</b>模式。两者同为单层自适应前馈网；XOR 均不可解（非线性可分）。</div>
+    <table>
+      <tr><th>维度 Dimension</th><th>Perceptron</th><th>ADALINE</th></tr>
+      <tr><td>激活 Activation</td><td>hard-limiter（bipolar / unipolar）</td><td>线性 linear（误差基于线性输出 y=wᵀx）</td></tr>
+      <tr><td>更新 Update</td><td class="formula">w←w+η(d−y)x（误分类驱动 non-gradient）</td><td class="formula">w(t+1)=w(t)+ηΣₚeₚxₚ（梯度下降 gradient descent）</td></tr>
+      <tr><td>训练模式 Mode</td><td>序贯或批量 sequential or batch</td><td>仅批量 batch only</td></tr>
+      <tr><td>目标 Objective</td><td>分类正确即收敛 correct classification</td><td>minimize MSE</td></tr>
+      <tr><td>XOR</td><td colspan="2" style="text-align:center">均 ✗（非线性可分 not linearly separable）</td></tr>
+    </table>
+    <div class="src">出处：s104（对比页）· s100–104（ADALINE/LMS）</div>
+  </div>
+
+  <div class="sub">
+    <h3>1(c) MLP vs. RBF Network</h3>
+    <div class="box-en"><span class="lang en">EN</span>Both are multilayer feedforward networks with a linear output layer. The <b>MLP</b> uses <b>global sigmoid</b> hidden units (monotone, nonzero almost everywhere) and trains all weights iteratively by <b>backpropagation</b> — a recursive gradient-descent algorithm: slow, possibly stuck in local minima. The <b>RBF network</b> (Broomhead &amp; Lowe, 1988) uses <b>local Gaussian</b> hidden units φⱼ(x)=exp(−‖x−cⱼ‖²/2σⱼ²) that respond only near their centers, and trains in <b>two stages</b>: unsupervised center selection (random / k-means / OLS) followed by a <b>linear least-squares (pseudoinverse)</b> solution for the output weights — closed-form, fast, no local minima. The MLP is a global approximator, the RBF a local approximator (both universal). Both solve XOR (RBF via Cover's theorem). Weaknesses: MLP — slow, local minima, overfitting; RBF — curse of dimensionality, center selection.</div>
+    <div class="box-zh"><span class="lang zh">中文</span>两者都是带线性输出层的多层前馈网络。<b>MLP</b> 隐层用<b>全局 sigmoid</b>（单调、几乎处处非零），全部权重由 <b>BP</b> 迭代训练（递归梯度下降）：慢、可能局部极小。<b>RBF 网络</b>（1988）隐层用<b>局部高斯</b> φⱼ(x)=exp(−‖x−cⱼ‖²/2σⱼ²)（仅中心附近响应），<b>两阶段</b>训练：无监督选中心（随机/k-means/OLS）＋输出层<b>线性最小二乘（伪逆）</b>闭式解：快、无局部极小。MLP 全局逼近、RBF 局部逼近（均通用）；都能解 XOR（RBF 依 Cover 定理）。弱点：MLP 慢/局部极小/过拟合；RBF 维数灾难/选中心。</div>
+    <table>
+      <tr><th>维度 Dimension</th><th>MLP（+BP）</th><th>RBF（1988）</th></tr>
+      <tr><td>隐层激活 Hidden</td><td>sigmoid，全局 global</td><td>高斯 Gaussian，局部 local</td></tr>
+      <tr><td>输出层 Output</td><td>线性 linear</td><td>线性 linear（同 ADALINE as ADALINE）</td></tr>
+      <tr><td>训练 Training</td><td>BP 全权重迭代 all weights iteratively</td><td>两阶段 two-stage：中心＋最小二乘 LS</td></tr>
+      <tr><td>优化性质 Optimization</td><td>非凸、可能局部极小 nonconvex, local minima</td><td>闭式解、无局部极小 closed-form, none</td></tr>
+      <tr><td>逼近 Approximation</td><td>全局 global</td><td>局部 local</td></tr>
+      <tr><td>XOR</td><td>✓</td><td>✓（Cover 定理）</td></tr>
+      <tr><td>弱点 Weakness</td><td>慢、过拟合 slow, overfitting</td><td>维数灾难 curse of dimensionality</td></tr>
+    </table>
+    <div class="src">出处：s124–126（激活函数）· s136–140 区段（RBF／通用逼近器）·《期中参考资料 2 页》T3</div>
+  </div>
+
+  <div class="sub">
+    <h3>1(d) SVM vs. LS-SVM</h3>
+    <div class="box-en"><span class="lang en">EN</span>The <b>SVM</b> (Vapnik, early 1990s) solves min ½‖w‖²+CΣξᵢ subject to <b>inequality constraints</b> yᵢ(wᵀφ(xᵢ)+b) ≥ 1−ξᵢ (hinge loss): a convex <b>QP</b> whose solution is <b>sparse</b> — only support vectors (αᵢ&gt;0) determine the hyperplane. The <b>LS-SVM</b> (Suykens &amp; Vandewalle, KU Leuven, 1999) uses <b>equality constraints with squared errors</b>: min ½‖w‖²+(γ/2)Σeᵢ² s.t. yᵢ=wᵀφ(xᵢ)+b+eᵢ; the KKT conditions reduce to a <b>linear system of equations</b> — much faster — at the cost of <b>losing sparsity</b> (most αᵢ≠0). Both follow structural risk minimization and are kernelizable.</div>
+    <div class="box-zh"><span class="lang zh">中文</span><b>SVM</b>（Vapnik，1990s 初）：min ½‖w‖²+CΣξᵢ，<b>不等式约束</b>（hinge 损失），凸<b>二次规划</b>，解<b>稀疏</b>（仅支持向量 αᵢ&gt;0 决定超平面）。<b>LS-SVM</b>（Suykens &amp; Vandewalle，1999）：<b>等式约束＋平方误差</b> min ½‖w‖²+(γ/2)Σeᵢ² s.t. yᵢ=wᵀφ(xᵢ)+b+eᵢ；KKT 化为<b>线性方程组</b>——快得多，但<b>失去稀疏性</b>（多数 αᵢ≠0）。两者同属结构风险最小化、均可核化。</div>
+    <table>
+      <tr><th>维度 Dimension</th><th>SVM</th><th>LS-SVM</th></tr>
+      <tr><td>目标 Objective</td><td class="formula">½‖w‖²+CΣξᵢ</td><td class="formula">½‖w‖²+(γ/2)Σeᵢ²</td></tr>
+      <tr><td>约束 Constraints</td><td>不等式 inequalities（hinge）</td><td>等式 equalities（平方误差 squared error）</td></tr>
+      <tr><td>求解 Solver</td><td>凸 QP（对偶 dual，0≤α≤C）</td><td>线性方程组 linear system（快 fast）</td></tr>
+      <tr><td>稀疏性 Sparsity</td><td>稀疏：仅 SV sparse, SVs only</td><td>失稀疏：多数 α≠0 most α≠0</td></tr>
+      <tr><td>共同 Common</td><td colspan="2" style="text-align:center">结构风险最小化 SRM · 核技巧 kernel trick</td></tr>
+    </table>
+    <div class="src">出处：s182–184（LS-SVM）· s185（双螺旋应用）·《期中参考资料 2 页》§6.10 / T4</div>
+  </div>
+
+  <div class="sub">
+    <h3>1(e) Feedforward vs. Recurrent</h3>
+    <div class="box-en"><span class="lang en">EN</span>(classification dimension s47: "Feedforward vs. recurrent, in terms of G and H") A <b>feedforward</b> network propagates signals strictly from input to output, layer by layer, <b>without feedback</b> — in terms of the aggregation rule G and the output rule H, no neuron's output H ever feeds back into the aggregation input G of a neuron in the same or an earlier layer. It implements a <b>static mapping</b> x→y with no internal state (perceptron, ADALINE, MLP, RBF, SVM). A <b>recurrent</b> network contains <b>feedback connections</b>: outputs feed back (via H) into the aggregation inputs G of themselves or earlier layers, forming loops; it is a <b>dynamical system</b> with internal state whose feedback provides <b>short-term memory</b> (fast dynamics of u, v; weights w = long-term memory), enabling sequence/time-dependent processing (MAXNET, ART1, Hopfield, Boltzmann machine); recurrent M-P networks can simulate any finite automaton. Dynamical stability (e.g., MAXNET requires w&lt;1/m) is a concern unique to recurrent networks.</div>
+    <div class="box-zh"><span class="lang zh">中文</span>（s47：就 G、H 区分）<b>前馈</b>网络信号自输入向输出<b>单向逐层</b>传播，<b>无反馈</b>——任何神经元的输出 H 都不回馈到同层或前层的聚合输入 G；实现<b>静态映射</b> x→y、无内部状态（感知机、ADALINE、MLP、RBF、SVM）。<b>循环</b>网络含<b>反馈连接</b>：输出经 H 回馈到自身或前层的聚合输入 G 形成回路，是具有内部状态的<b>动态系统</b>；反馈提供<b>短期记忆</b>（u、v 快动态；权重 w＝长期记忆），可处理序列/时变信号（MAXNET、ART1、Hopfield、Boltzmann 机）；循环 M-P 网可模拟任意有限自动机。动力学稳定性（如 MAXNET 要求 w&lt;1/m）是循环网络特有问题。</div>
+    <table>
+      <tr><th>维度 Dimension</th><th>前馈 Feedforward</th><th>循环 Recurrent</th></tr>
+      <tr><td>信号流 Signal flow</td><td>单向、无反馈 unidirectional, no feedback</td><td>有反馈回路 feedback loops</td></tr>
+      <tr><td>（G, H 视角）</td><td>H 不回接 G H never feeds G</td><td>H 回接 G H feeds back to G</td></tr>
+      <tr><td>动力学 Dynamics</td><td>静态映射 static mapping</td><td>动态系统＋内部状态 dynamical, internal state</td></tr>
+      <tr><td>记忆 Memory</td><td>无 none</td><td>短期＝u,v；长期＝w short-term u,v; long-term w</td></tr>
+      <tr><td>例子 Examples</td><td>P / ADALINE / MLP / RBF / SVM</td><td>MAXNET、ART1、Hopfield、Boltzmann</td></tr>
+    </table>
+    <div class="src">出处：s47（四维度）· s62 / s64（循环网与有限自动机）</div>
+  </div>
+
+  <div class="qhead">Question 2 · 双极 Sigmoid 最大斜率 <span class="en">Maximum Slope of the Bipolar Sigmoid</span></div>
+  <div class="sub">
+    <h3>Solution 解答</h3>
+    <div class="box-en"><span class="lang en">EN</span>
+      <b>Step 1 — Direct differentiation.</b> Let q ≜ e<sup>−λu</sup>, so q′ = −λq:
+      <div class="formula fctr">dv/du = [λq(1+q) + λq(1−q)] / (1+q)² = 2λe<sup>−λu</sup> / (1+e<sup>−λu</sup>)²</div>
+      <b>Step 2 — Derivative in terms of v.</b> From v=(1−q)/(1+q): 1−v = 2q/(1+q), 1+v = 2/(1+q), hence 1−v² = 4q/(1+q)². Substituting:
+      <div class="formula fctr"><b>dv/du = (λ/2)(1 − v²)</b></div>
+      <b>Step 3 — Maximization.</b> For every finite u, −1 &lt; v &lt; 1 ⟹ 0 &lt; 1−v² ≤ 1, equality iff <b>v = 0</b>. Therefore dv/du ≤ λ/2, with the maximum attained exactly when v=0, i.e. e<sup>−λu</sup>=1 ⟺ u=0:
+      <div class="formula fctr"><b>(dv/du)<sub>max</sub> = λ/2, attained at u = 0 (v = 0).</b> ∎</div>
+      <i>Alternatives</i>: (i) g′(u)=2λ²q(q−1)/(1+q)³ is &gt;0 for u&lt;0, &lt;0 for u&gt;0 ⟹ global max at u=0, g(0)=λ/2. (ii) AM–GM: (1+q)² ≥ 4q ⟹ dv/du ≤ λ/2, equality iff q=1.
+    </div>
+    <div class="box-zh"><span class="lang zh">中文</span>
+      <b>第 1 步·直接求导</b>：记 q ≜ e<sup>−λu</sup>（q′=−λq），商规则得 dv/du = 2λe<sup>−λu</sup>/(1+e<sup>−λu</sup>)²。
+      <b>第 2 步·用 v 表示</b>：由 v=(1−q)/(1+q) 得 1−v=2q/(1+q)、1+v=2/(1+q)，故 1−v²=4q/(1+q)²，代回得 <b>dv/du=(λ/2)(1−v²)</b>。
+      <b>第 3 步·求最大</b>：−1&lt;v&lt;1 ⟹ 0&lt;1−v²≤1，等号当且仅当 <b>v=0</b>（⟺ u=0）。故 dv/du ≤ λ/2，<b>最大值 λ/2 在 u=0 处取得</b>。∎
+      备选：①g′(u)=2λ²q(q−1)/(1+q)³，u&lt;0 增、u&gt;0 减；②AM-GM：(1+q)²≥4q。
+    </div>
+    <div class="box-zh" style="background:#f7f7ee;border-color:#ccc"><b>备注 Remarks</b>：f(u)=tanh(λu/2) 为双极 sigmoid（s125）；"导数用输出表示"正是 BP 双极 δ 规则 σ′=1−y² 的来源；单极对照 σ(u)=1/(1+e<sup>−λu</sup>)：dσ/du=λσ(1−σ)，最大斜率 λ/4 在 σ=1/2 处；λ 为增益参数，λ→∞ 退化为 hard-limiter。</div>
+    <div class="src">出处：s124–125（Sigmoid Activation Functions）</div>
+  </div>
+
+  <div class="qhead">Question 3 · RBF 解 XOR <span class="en">RBF Network Solves XOR</span></div>
+  <div class="sub">
+    <h3>Solution 解答</h3>
+    <div class="box-en"><span class="lang en">EN</span>The grouping {(0,0),(1,1)} vs. {(1,0),(0,1)} is the XOR grouping — <b>not linearly separable</b> in the input space. The RBF network = Gaussian hidden layer + linear output layer y=Σwⱼφⱼ(x)+w₀.
+      <b>Step 1 — Hidden mapping</b> (x₂ and x₄ collapse onto the same hidden point — same class, harmless):
+      <table>
+        <tr><th>input 输入</th><th>class 类</th><th>hidden point 隐层点 (φ₁, φ₂)</th></tr>
+        <tr><td>x₁=(0,0)</td><td>1</td><td class="formula">(1, e⁻²)</td></tr>
+        <tr><td>x₃=(1,1)</td><td>1</td><td class="formula">(e⁻², 1)</td></tr>
+        <tr><td>x₂=(1,0)</td><td>0</td><td class="formula">(e⁻¹, e⁻¹)</td></tr>
+        <tr><td>x₄=(0,1)</td><td>0</td><td class="formula">(e⁻¹, e⁻¹)</td></tr>
+      </table>
+      <b>Step 2 — Linear separability in the hidden space.</b> Along u=φ₁+φ₂: class 1 gives 1+e⁻² ≈ 1.135, class 0 gives 2e⁻¹ ≈ 0.736, and
+      <div class="formula fctr"><b>1 + e⁻² − 2e⁻¹ = (1 − e⁻¹)² &gt; 0</b></div>
+      so the classes are <b>strictly linearly separable</b> in the hidden space. (General σ, t=e<sup>−1/(2σ²)</sup>: (1+t²)−2t=(1−t)²&gt;0.)
+      <b>Step 3 — Construct output weights and verify.</b> Take w₁=w₂=1, w₀=−1 (θ=1; any θ ∈ (2e⁻¹, 1+e⁻²) works), y=f(φ₁+φ₂−1): x₁,x₃ ⟹ e⁻²&gt;0 ⟹ y=1 ✓; x₂,x₄ ⟹ 2e⁻¹−1&lt;0 (since 2&lt;e) ⟹ y=0 ✓. All four points are classified correctly. ∎ This is an instance of <b>Cover's theorem</b>: the nonlinear Gaussian mapping casts the problem into a higher-dimensional hidden space where the classes become linearly separable, and the linear output layer (as in ADALINE) suffices.
+    </div>
+    <div class="box-zh"><span class="lang zh">中文</span>该分组即 XOR 分组，输入空间<b>非线性可分</b>。RBF 网络＝高斯隐层＋线性输出层。
+      <b>第 1 步·隐层映射</b>：x₁→(1, e⁻²)、x₃→(e⁻², 1)（类 1）；x₂、x₄→<b>同一点</b> (e⁻¹, e⁻¹)（类 0；同类坍缩无碍）。
+      <b>第 2 步·隐空间线性可分</b>：沿 u=φ₁+φ₂，类 1 之和 1+e⁻²≈1.135，类 0 之和 2e⁻¹≈0.736，<b>1+e⁻²−2e⁻¹=(1−e⁻¹)²&gt;0</b> ⟹ 严格线性可分（一般 σ：(1+t²)−2t=(1−t)²&gt;0）。
+      <b>第 3 步·构造输出层并验证</b>：取 w₁=w₂=1、w₀=−1（θ=1）：x₁,x₃ 输出 1（e⁻²&gt;0）✓；x₂,x₄ 输出 0（2e⁻¹−1&lt;0，因 2&lt;e）✓。四点全部分类正确。∎
+      <b>课程意义</b>：<b>Cover 定理</b>实例——非线性映射到高维隐空间后线性可分，线性输出层即可完成分类；隐空间边界为直线 φ₁+φ₂=1（2e⁻¹&lt;1&lt;1+e⁻² 恰好夹住两类）。
+    </div>
+    <div class="src">出处：s136–140 区段（RBF）·《期中参考资料 2 页》§5</div>
+  </div>
+
+  <div class="qhead">Question 4 · LS-SVM 计算题 <span class="en">LS-SVM Computation</span></div>
+  <div class="sub">
+    <h3>预备 · LS-SVM 对偶线性系统 Preliminaries (s182–184)</h3>
+    <div class="box-en"><span class="lang en">EN</span>Primal: min ½‖w‖²+(γ/2)Σeᵢ² s.t. yᵢ[wᵀφ(xᵢ)+b]=1−eᵢ. Lagrangian conditions: ∂L/∂w=0 ⟹ w=Σαᵢyᵢφ(xᵢ); ∂L/∂b=0 ⟹ <b>Σαᵢyᵢ=0</b>; ∂L/∂eᵢ=0 ⟹ αᵢ=γeᵢ; ∂L/∂αᵢ=0 ⟹ yᵢ[ΣⱼαⱼyⱼK(xᵢ,xⱼ)+b]+αᵢ/γ=1. Final model:
+      <div class="formula fctr">[0&nbsp;yᵀ; y&nbsp;Ω+γ⁻¹I]·[b; α] = [0; <b>1</b>],　Ωᵢⱼ = yᵢyⱼK(xᵢ,xⱼ)</div></div>
+    <div class="box-zh"><span class="lang zh">中文</span>Primal：min ½‖w‖²+(γ/2)Σeᵢ² s.t. yᵢ[wᵀφ(xᵢ)+b]=1−eᵢ。四个偏导条件（见英文框），最终得 3×3 线性系统（上式），Ωᵢⱼ=yᵢyⱼK(xᵢ,xⱼ)。</div>
+  </div>
+  <div class="sub">
+    <h3>(1)–(5) 各问解答 Answers</h3>
+    <div class="box-en"><span class="lang en">EN</span>
+      <b>(1)</b> K₁₁=(0·0+1)²=1, K₂₂=(1·1+1)²=4, K₁₂=K₂₁=(0·1+1)²=1 ⟹ <b>K=[[1,1],[1,4]]</b> (symmetric PSD ✓).
+      <b>(2)</b> With y=[1,−1]ᵀ: Ω=[[1,−1],[−1,4]], γ=1 ⟹ Ω+γ⁻¹I=[[2,0],[0,5]]:
+      <div class="formula fctr">[[0, 1, −1],[1, 2, 0],[−1, 0, 5]]·[b, α₁, α₂]ᵀ = [0, 1, 1]ᵀ</div>
+      (Row 1 = Σαᵢyᵢ=0 ⟹ α₁−α₂=0; Row 2: b+2α₁=1; Row 3: −b+5α₂=1.)
+      <b>(3)</b> Row 1 ⟹ α₁=α₂; then b=1−2α₁ and −(1−2α₁)+5α₁=1 ⟹ 7α₁=2:
+      <div class="formula fctr"><b>α₁ = α₂ = 2/7,　b = 3/7</b>　(check: −3/7+10/7=1 ✓)</div>
+      <b>(4)</b> g(x) = (2/7)(0·x+1)² − (2/7)(x+1)² + 3/7 = <b>(3−4x−2x²)/7</b>, ŷ = sign g(x). Verification: g(0)=3/7&gt;0→+1 ✓; g(1)=−3/7&lt;0→−1 ✓.
+      <b>(5)</b> g(x)=0 ⟹ 2x²+4x−3=0 ⟹ x=(−2±√10)/2. <b>Positive root x\*=(√10−2)/2 ≈ 0.581</b> — between the two training points 0 and 1; the negative root ≈ −2.581 lies outside the data range.
+      <b>Remarks</b>: both αᵢ≠0 — no sparsity (every sample is an SV), because the equality constraints force αᵢ=γeᵢ≠0 (cf. Q1(d)); the linear system replaces the QP — the source of LS-SVM's speed; the boundary is quadratic, the x² term coming from the degree-2 polynomial kernel, φ(x)=[1, x², √2x]ᵀ for 1-D inputs (1-D analogue of slide 171).
+    </div>
+    <div class="box-zh"><span class="lang zh">中文</span>
+      <b>(1)</b> K₁₁=1，K₂₂=4，K₁₂=K₂₁=1 ⟹ <b>K=[[1,1],[1,4]]</b>（对称半正定 ✓）。
+      <b>(2)</b> y=[1,−1]ᵀ ⟹ Ω=[[1,−1],[−1,4]]，γ=1 ⟹ Ω+γ⁻¹I=[[2,0],[0,5]]：
+      <div class="formula fctr">[[0, 1, −1],[1, 2, 0],[−1, 0, 5]]·[b, α₁, α₂]ᵀ = [0, 1, 1]ᵀ</div>
+      （行 1＝Σαᵢyᵢ=0 ⟹ α₁−α₂=0；行 2：b+2α₁=1；行 3：−b+5α₂=1。）
+      <b>(3)</b> 行 1 ⟹ α₁=α₂ ⟹ b=1−2α₁，−(1−2α₁)+5α₁=1 ⟹ 7α₁=2：<b>α₁=α₂=2/7，b=3/7</b>（校验 −3/7+10/7=1 ✓）。
+      <b>(4)</b> g(x)=(2/7)·1−(2/7)(x+1)²+3/7=<b>(3−4x−2x²)/7</b>，ŷ=sign g(x)。校验：g(0)=3/7&gt;0→+1 ✓；g(1)=−3/7&lt;0→−1 ✓。
+      <b>(5)</b> g(x)=0 ⟹ 2x²+4x−3=0 ⟹ x=(−2±√10)/2。<b>正根 x\*=(√10−2)/2≈0.581</b>，落在两训练点 0 与 1 之间；负根 ≈−2.581 在数据区间外。
+      <b>备注</b>：α₁、α₂ 均非零——无稀疏性（等式约束 ⇒ αᵢ=γeᵢ≠0，呼应 Q1(d)）；线性方程组取代 QP，是 LS-SVM 快的来源；边界为二次曲线，x² 项来自 2 次多项式核（一维 φ(x)=[1, x², √2x]ᵀ，s171 退化情形）。
+    </div>
+    <div class="src">出处：s182–184（LS-SVM）· s171（多项式核 φ 展开）·《期中参考资料 2 页》§6.10</div>
+  </div>
+
+  <div class="end">— End of Answers · 答案卷终 —</div>
+  <div class="src" style="text-align:center">Sources: examinee's memory + CS5486Slides（sXX＝课件 PPT 页码）+ 《期中参考资料 2 页》</div>
+</div>
+</body>
+</html>

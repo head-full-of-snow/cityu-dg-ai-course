@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS5486 期中还原卷 · 题目卷（中英双语）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f2f2f2; color: #111; font-size: 15px; line-height: 1.65; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 14px 16px 90px; }
+  .topbar { position: sticky; top: 0; z-index: 9; background: #1a3a5c; color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .topbar b { font-size: 16px; }
+  .topbar .meta { font-size: 13px; color: #cfe0f0; }
+  .topbar a { color: #ffd54a; font-size: 13.5px; font-weight: 700; }
+  h1 { font-size: 21px; margin: 14px 0 2px; }
+  .sub1 { color: #555; font-size: 14px; margin-bottom: 8px; }
+  .note { background: #fff8dc; border: 1px solid #d9c77a; padding: 8px 12px; border-radius: 4px; font-size: 13.5px; margin: 10px 0; }
+  .qhead { background: #1a3a5c; color: #fff; padding: 6px 12px; border-radius: 3px; margin: 24px 0 8px; font-size: 15.5px; font-weight: 700; }
+  .qhead .en { font-weight: 400; font-style: italic; font-size: 13.5px; color: #cfe0f0; }
+  .q { background: #fff; border: 1px solid #bbb; border-radius: 6px; padding: 12px 14px; margin: 12px 0; }
+  .q .enq { font-family: Georgia, serif; font-size: 15.5px; margin-bottom: 4px; }
+  .q .zhq { font-size: 13.5px; color: #555; }
+  .q ol { margin: 6px 0 2px 22px; }
+  .q ol li { margin: 7px 0; }
+  .q ol li .zhq { display: block; }
+  .formula { font-family: Georgia, "Times New Roman", serif; }
+  .end { text-align: center; color: #1a3a5c; font-weight: 700; margin: 26px 0 8px; font-size: 15px; letter-spacing: 1px; }
+  .memo { font-size: 12.5px; color: #777; margin: 12px 0; }
+  @media print { .topbar { position: static; box-shadow: none; } body { background: #fff; } .q { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <b>CS5486 期中还原卷 · 题目卷（回忆版）</b>
+  <span class="meta">Questions Paper · 中英双语 Bilingual · 4 Questions</span>
+  <a href="CS5486期中还原_答案卷.html">→ 答案卷 Answer Paper</a>
+</div>
+<div class="wrap">
+  <h1>CS5486 Intelligent Systems 智能系统 · Mid-term Examination 期中考试</h1>
+  <div class="sub1">Recreated Paper (from memory) · Questions 还原卷 · 题目卷</div>
+  <div class="note">
+    <b>EN</b>: This paper is recreated from the examinee's memory after the exam; wording, order and marks may differ slightly from the original. Answer ALL questions in English.｜<b>中文</b>：本卷为考后回忆还原，题面措辞、题序、分值与原卷可能有出入；考试要求英文作答。范围 Scope：开课 → ART1（不含 Hopfield 及以后）；半开卷一张 A4 双面。
+  </div>
+
+  <div class="qhead">Question 1 · 不同网络的架构与功能对比 <span class="en">Comparison of Neural Network Architectures and Functions</span></div>
+  <div class="q">
+    <div class="enq">Compare the following pairs of neural network models <b>in terms of their architecture and functionality</b>.</div>
+    <div class="zhq">就<b>结构与功能</b>比较下列各对神经网络模型。</div>
+    <ol type="a">
+      <li><div class="enq">The threshold logic network composed of McCulloch–Pitts (M-P) units and the (simple) perceptron.</div><div class="zhq">由 McCulloch–Pitts（M-P）单元构成的阈值逻辑网络与（简单）感知机。</div></li>
+      <li><div class="enq">The perceptron and ADALINE.</div><div class="zhq">感知机与 ADALINE。</div></li>
+      <li><div class="enq">The multilayer perceptron (MLP) and the RBF network.</div><div class="zhq">多层感知机（MLP）与 RBF 网络。</div></li>
+      <li><div class="enq">SVM and LS-SVM (Least Squares SVM).</div><div class="zhq">SVM 与 LS-SVM（最小二乘支持向量机）。</div></li>
+      <li><div class="enq">Feedforward and recurrent neural networks.</div><div class="zhq">前馈神经网络与循环神经网络。</div></li>
+    </ol>
+  </div>
+
+  <div class="qhead">Question 2 · 双极 Sigmoid 的最大斜率 <span class="en">Maximum Slope of the Bipolar Sigmoid</span></div>
+  <div class="q">
+    <div class="enq">Let <span class="formula">v = f(u) = (1 − e<sup>−λu</sup>) / (1 + e<sup>−λu</sup>)</span>, λ &gt; 0. <b>Prove that the derivative of v with respect to u attains its maximum when v = 0, and find this maximum value.</b></div>
+    <div class="zhq">设 v = f(u) = (1 − e<sup>−λu</sup>)/(1 + e<sup>−λu</sup>)，λ &gt; 0。<b>证明当 v = 0 时，v 对 u 的导数取得最大值，并求出该最大值。</b></div>
+  </div>
+
+  <div class="qhead">Question 3 · RBF 网络解 XOR <span class="en">RBF Network Solves XOR</span></div>
+  <div class="q">
+    <div class="enq">Consider an RBF network with two Gaussian hidden units <span class="formula">φᵢ(x) = exp(−‖x − cᵢ‖²)</span>, with centers <span class="formula">c₁ = (0,0)ᵀ</span> and <span class="formula">c₂ = (1,1)ᵀ</span>, and a linear output layer. Given the data</div>
+    <div class="formula" style="text-align:center;margin:6px 0">x₁=(0,0)ᵀ,　x₂=(1,0)ᵀ,　x₃=(1,1)ᵀ,　x₄=(0,1)ᵀ,</div>
+    <div class="enq">where x₁, x₃ belong to one class and x₂, x₄ to the other, <b>prove that this network can correctly discriminate (classify) the data</b>.</div>
+    <div class="zhq">考虑含两个高斯隐单元 φᵢ(x)=exp(−‖x−cᵢ‖²) 的 RBF 网络，中心 c₁=(0,0)ᵀ、c₂=(1,1)ᵀ，输出层为线性。给定数据 x₁=(0,0)ᵀ、x₂=(1,0)ᵀ、x₃=(1,1)ᵀ、x₄=(0,1)ᵀ，其中 x₁、x₃ 为一类，x₂、x₄ 为另一类，<b>证明该网络能正确区分（分类）这些数据</b>。</div>
+  </div>
+
+  <div class="qhead">Question 4 · LS-SVM 计算题 <span class="en">LS-SVM Computation</span></div>
+  <div class="q">
+    <div class="enq">Consider an LS-SVM classifier with two training points <span class="formula">x₁ = 0 (y₁ = +1)</span> and <span class="formula">x₂ = 1 (y₂ = −1)</span>, polynomial kernel <span class="formula">K(xᵢ, xⱼ) = (xᵢxⱼ + 1)²</span>, and regularization parameter <span class="formula">γ = 1</span>.</div>
+    <div class="zhq">考虑 LS-SVM 分类器：训练样本 x₁=0（y₁=+1）、x₂=1（y₂=−1），多项式核 K(xᵢ,xⱼ)=(xᵢxⱼ+1)²，正则参数 γ=1。</div>
+    <ol type="1">
+      <li><div class="enq">Compute the 2×2 kernel matrix.</div><div class="zhq">求 2×2 核矩阵。</div></li>
+      <li><div class="enq">Set up the 3×3 linear system for the unknowns b, α₁, α₂.</div><div class="zhq">列出关于未知量 b、α₁、α₂ 的 3×3 线性方程组。</div></li>
+      <li><div class="enq">Solve the linear system.</div><div class="zhq">解该线性方程组。</div></li>
+      <li><div class="enq">Write the LS-SVM decision function.</div><div class="zhq">写出 LS-SVM 判决函数。</div></li>
+      <li><div class="enq">Find the decision boundary g(x)=0 and give its <b>positive root</b>.</div><div class="zhq">求决策边界 g(x)=0 并给出其<b>正根</b>。</div></li>
+    </ol>
+  </div>
+
+  <div class="end">— End of Paper · 卷终 —</div>
+  <div class="memo">回忆备注：Q4 "P=2"＝2 个训练样本，"r=1"＝γ=1；标签按 y₁=+1、y₂=−1（若原卷相反，则判决函数整体变号、边界与正根不变）。｜Sources: examinee's memory + CS5486 official slides.</div>
+</div>
+</body>
+</html>

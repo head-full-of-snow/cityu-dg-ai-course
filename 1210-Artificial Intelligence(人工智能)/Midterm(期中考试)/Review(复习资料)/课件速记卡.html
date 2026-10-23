@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CS5491 课件速记卡</title>
+<style>
+  @page { size: A4; margin: 9mm 8mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 9.6px; line-height: 1.32; color: #111; margin: 0; }
+  h1 { font-size: 14px; margin: 0 0 3px; text-align: center; }
+  .sub { text-align: center; font-size: 9px; color: #555; margin-bottom: 5px; }
+  .cols { column-count: 2; column-gap: 5mm; }
+  .blk { break-inside: avoid; margin-bottom: 5px; border: 1px solid #b8c4d4; border-radius: 3px; overflow: hidden; }
+  .blk h2 { background: #1a3a5c; color: #fff; font-size: 10px; margin: 0; padding: 2px 7px; }
+  .blk h2 span { float: right; font-weight: 400; opacity: .85; font-size: 8.5px; }
+  .body { padding: 3px 7px 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 2px 0; font-size: 9.2px; }
+  th, td { border: 1px solid #9aa8ba; padding: 1px 4px; text-align: left; vertical-align: top; }
+  th { background: #e8eef5; }
+  ul { margin: 1px 0; padding-left: 14px; } li { margin: 0.5px 0; }
+  .f { font-family: "Cambria Math", Georgia, serif; }
+  .hot { background: #fff3c4; }
+  b.k { color: #1a3a5c; }
+</style>
+</head>
+<body>
+
+<h1>CS5491 课件速记卡（L01–12 全部考点 · 一张纸）</h1>
+<div class="sub">纯事实无废话版 ｜ 详细推导见参考手册 §1–9 ｜ 完整例题见解题示范集 D1–D11 ｜ 2026-10-18</div>
+
+<!-- ================= 双栏自动流式排布 ================= -->
+<div class="cols">
+
+<div class="blk"><h2>搜索问题形式化 <span>L01–02</span></h2><div class="body">
+<ul>
+<li>四要素：状态空间 S；后继 succ(s)→(action, s′, cost)；初始 s₀；目标测试 Goal(s)。解 = 动作序列</li>
+<li>理性 Agent：最大化<b class="k">期望效用</b>；反射式只看当前感知，规划式需<b class="k">转移模型 + 目标</b></li>
+<li>PEAS = Performance / Environment / Actuators / Sensors</li>
+<li>环境维度：完全/部分<b>可观测</b>、单/多 agent、<b>确定/随机</b>、<b>静态/动态</b>、离散/连续（井字棋 = 完全可观测·确定·静态）</li>
+<li>状态空间图：节点 = 状态（唯一）；搜索树：节点 = <b>路径</b>（同状态可重复出现）</li>
+</ul></div></div>
+
+<div class="blk"><h2>无信息搜索 <span>L03</span></h2><div class="body">
+<table>
+<tr><th>算法</th><th>Fringe</th><th>完备</th><th>最优</th><th>时间</th><th>空间</th></tr>
+<tr><td>DFS</td><td>栈 LIFO</td><td>m 有限且防环</td><td>✗</td><td>O(bᵐ)</td><td><b class="k">O(bm)</b></td></tr>
+<tr><td>BFS</td><td>队列 FIFO</td><td>✓</td><td>仅代价全 1</td><td>O(bˢ)</td><td>O(bˢ)</td></tr>
+<tr><td>UCS</td><td>优先队列 g</td><td>✓(ε&gt;0)</td><td>✓</td><td>O(b^(C*/ε))</td><td>同时间</td></tr>
+<tr><td>IDS</td><td>栈+限深</td><td>✓</td><td>同 BFS</td><td>O(bˢ)</td><td><b class="k">O(bs)</b></td></tr>
+</table>
+<ul>
+<li>树节点总数 O(bᵐ)；s = 最浅解深度，C* = 最优代价</li>
+<li>BFS = 边数最少 ≠ 代价最小；UCS 沿等代价等值线扩展</li>
+<li class="hot">IDS 重复代价可接受（多数节点在最后一层）；DFS 空间 O(bm) 是它的杀手锏</li>
+</ul></div></div>
+
+<div class="blk"><h2>有信息搜索 <span>L04</span></h2><div class="body">
+<ul>
+<li class="f hot">f(n) = g(n) + h(n)；Greedy 按 h，UCS 按 g，A* 按 f</li>
+<li>可采纳：0 ≤ h ≤ h*（乐观）；一致 |h(a)−h(b)| ≤ c(a,b) ⟹ 可采纳（更强）</li>
+<li class="hot"><b class="k">A* 必须 dequeue 目标才停</b>（入队时还有更便宜路径可能）</li>
+<li>最优性一行：fringe 上最优解 A 的祖先 n 满足 f(n) ≤ g(A) = f(A) &lt; f(B) ⟹ A 先出</li>
+<li>h = 0 ⟹ A* 退化 UCS；h 精确 ⟹ 只扩展最优路径</li>
+<li>构造 h：解<b>松弛问题</b>（去约束/加动作）取精确解 = 乐观估计（忽略墙→曼哈顿距离）</li>
+</ul></div></div>
+
+<div class="blk"><h2>启发函数组合 <span>L04 · Q1b</span></h2><div class="body">
+<table>
+<tr><th>组合</th><th>可采纳?</th><th>理由</th></tr>
+<tr><td>凸组合 Σwᵢhᵢ (Σwᵢ=1, wᵢ≥0)</td><td>✓</td><td>≤ Σwᵢh* = h*</td></tr>
+<tr><td>min / max(h₁..hₖ)</td><td>✓</td><td>max 恰取到某一个 ≤ h*</td></tr>
+<tr><td>和 h₁+h₂</td><td>✗</td><td>反例 h*=2, hᵢ=2：和=4</td></tr>
+<tr><td>积 h₁·h₂</td><td>✗</td><td>大于 1 的数相乘爆</td></tr>
+</table></div></div>
+
+<div class="blk"><h2>CSP <span>L05</span></h2><div class="body">
+<ul>
+<li>CSP = (X, D, C)；解 = 满足全部约束的<b>完整赋值</b>；识别问题（路径无关，与规划相对）</li>
+<li>约束：一元（直接缩域）/ 二元（约束图）/ 高阶 / 软（偏好→优化）</li>
+<li>穷举 O(dⁿ)；布尔 CSP = SAT (NP-complete)</li>
+<li>回溯 = DFS + ①每次只赋一个变量（赋值可交换）②边赋边查一致性</li>
+<li>状态抽象：N 皇后建模 Qₖ∈{1..N}（每列一皇后）优于 Xᵢⱼ∈{0,1}</li>
+</ul></div></div>
+
+<div class="blk"><h2>回溯改进 + 过滤 <span>L06 · Q1c</span></h2><div class="body">
+<table>
+<tr><th>技术</th><th>做什么</th><th>要点</th></tr>
+<tr><td>MRV（选变量）</td><td>剩余合法值最少</td><td>fail-fast / 最受约束变量</td></tr>
+<tr><td>LCV（选值）</td><td>删邻居选项最少</td><td>留余地（与 MRV 方向相反）</td></tr>
+<tr><td>FC 前向检查</td><td>赋值后删<b>未赋值邻居</b>域</td><td>域空→立即回溯；非邻居/已赋值不动</td></tr>
+<tr><td>AC-3 弧一致</td><td>弧 X→Y：每个 x 有支持 y，否则<b>删尾 X</b></td><td>X 丢值→(Z→X) 重入队；O(n²d³)→可优化 O(n²d²)</td></tr>
+</table>
+<ul>
+<li class="hot">FC 只传播"已赋值→未赋值"；AC-3 还能传播域-域冲突（NT、SA 都剩 blue，FC 察觉不到）</li>
+<li>弧一致后可能：1 个解 / 多个解 / <b>0 个解而不知</b>（弧一致 ≠ 有解，仍需回溯框架）</li>
+</ul></div></div>
+
+<div class="blk"><h2>CSP 结构 <span>L06</span></h2><div class="body">
+<table>
+<tr><th>结构</th><th>条件</th><th>复杂度</th></tr>
+<tr><td>独立子问题</td><td>约束图连通分量（塔斯马尼亚）</td><td>O((n/c)·dᶜ)</td></tr>
+<tr><td>树形 CSP</td><td>约束图无环</td><td><b class="k">O(nd²)</b>：选根排序→反向删不一致→正向赋值</td></tr>
+<tr><td>割集条件</td><td>实例化 c 个变量使剩余成树</td><td>O(dᶜ(n−c)d²)</td></tr>
+</table></div></div>
+
+<div class="blk"><h2>对抗搜索 <span>L07</span></h2><div class="body">
+<ul>
+<li>形式化 (S, s₀, Player, A, succ, terminal, utility)；解 = <b>策略</b> S→A（非路径）</li>
+<li class="f">V(s) = max / min / 已知（终态）；零和：一方效用 = 另一方负值</li>
+<li>Minimax：时间 O(bᵐ)，空间 O(bm)；对完美对手最优</li>
+</ul></div></div>
+
+<div class="blk"><h2>α-β 剪枝 <span>L07 · Q3</span></h2><div class="body">
+<ul>
+<li>α = MAX 已保证的最好值（下界）；β = MIN 已保证（上界）；根起 (−∞,+∞)</li>
+<li class="f hot">MIN 节点 v ≤ α ⟹ 剪；MAX 节点 v ≥ β ⟹ 剪（先测试后更新窗口）</li>
+<li>根值不变；<b>中间节点值可能错</b>（含根的孩子）→ 不能直接做动作选择</li>
+<li>剪枝依赖顺序：MAX 先看大、MIN 先看小；完美排序 O(b^(m/2)) = 深度翻倍</li>
+<li>深度受限：eval 替代终局效用；失去最优保证（horizon effect）；迭代加深 = anytime</li>
+</ul></div></div>
+
+<div class="blk"><h2>Expectimax <span>L08</span></h2><div class="body">
+<ul>
+<li class="f">机会节点 v = Σ pᵢvᵢ；MAX 层照旧；Expectiminimax = max/min/chance 交替（双陆棋）</li>
+<li class="hot">机会节点<b>不能剪枝</b>（未见孩子可任意大/小）；效用有界 [lo,hi] 才可估上界剪</li>
+<li>minimax 只需效用<b>序</b>（单调变换不敏感）；expectimax 需要<b>数值大小</b>（平方可翻转决策）</li>
+<li>MEU 最大期望效用原理；vNM 定理：理性偏好 ⟺ 存在效用函数</li>
+<li>把对抗当随机 = 危险乐观；把随机当最坏 = 危险悲观（对随机鬼 expectimax&gt;minimax，对对抗鬼反之）</li>
+</ul></div></div>
+
+<div class="blk"><h2>线性规划 <span>L09 · Q5</span></h2><div class="body">
+<ul>
+<li class="f">min cᵀx s.t. Ax ≤ b（不等式形）；Ax = b, x ≥ 0（标准式，加松弛变量）</li>
+<li>LP = 线性目标 + 线性约束 + 连续变量；可行域 = 凸多面体</li>
+<li class="hot"><b class="k">顶点定理</b>：有界可行域必有顶点最优；顶点 = n 条独立约束取等联立 → 解方程组 → <b>代回全部约束验证</b></li>
+<li>等值线 cᵀx = k 一族平行线，c ⊥ 等值线指向代价增大 → 沿 −c 平移找最小</li>
+<li>三结局：有限最优 / 不可行 / 无界；<b>可行域无界 ≠ 目标无界</b></li>
+<li>算法概念：单纯形（顶点间移动）、内点法；考试用图解 + 顶点枚举</li>
+</ul></div></div>
+
+<div class="blk"><h2>整数规划 <span>L10 · 新增</span></h2><div class="body">
+<table>
+<tr><th>模型</th><th>变量域</th></tr>
+<tr><td>LP / ILP / Binary / MILP</td><td>R / 全整数 Z / {0,1} / 部分整数</td></tr>
+</table>
+<ul>
+<li class="f hot">松弛：P_IP ⊆ P_LP ⟹ z*_LP ≤ z*_IP（min 时 LP 是<b>下界</b>）</li>
+<li>LP 最优点恰为整数坐标 ⟹ 即 IP 最优（可行且达下界）</li>
+<li>rounding 可失败：LP (3.8,3) 舍入 (4,3) 不可行；可行舍入 (4,2)=−4 也非最优（真最优 (2,2)=−6）</li>
+<li>类比 A*：节点 LP 界 ≈ 乐观估计，用于排除分支</li>
+</ul></div></div>
+
+<div class="blk"><h2>分支定界 B&amp;B <span>L10 · Q 大题</span></h2><div class="body">
+<ul>
+<li>L = 节点 LP 松弛值（下界）；U = incumbent（迄今最优整数解）目标值，初始 +∞</li>
+<li class="f">分支：分数变量 xᵢ* → xᵢ ≤ ⌊xᵢ*⌋ 或 xᵢ ≥ ⌈xᵢ*⌉（3.8 → ≤3 / ≥4）；孩子继承全部祖先约束</li>
+<li class="hot"><b class="k">三种关闭</b>：① LP 不可行 ② LP 解整数（更好则更新 U）③ L ≥ U 剪枝</li>
+<li>不能停在第一个整数解（−4 后来改进到 −6）</li>
+<li>终止证书：每叶子 = 不可行 / 整数 / 界剪 ⟹ incumbent 最优</li>
+</ul></div></div>
+
+<div class="blk"><h2>优化建模 <span>L11</span></h2><div class="body">
+<ul>
+<li class="f">min_{x∈F} f(x)：决策变量（选什么）vs 数据（给定）；argmin = 解集，f* = 最优值</li>
+<li>三结局：取得 / 无界 / 不可行；argmin f = argmax(−f)，g* = −f*</li>
+<li>TSP：x = 排列，f = Σd(xₖ,xₖ₊₁) + d(xₙ,x₁)（闭合边别漏）</li>
+<li>8 皇后 = 可行性问题：xᵢ≠xⱼ 且 |xᵢ−xⱼ|≠|i−j|，f ≡ 0</li>
+<li>拟合：L₁ = Σ|yᵢ−axᵢ|（最优可为区间）vs L₂ = Σ(yᵢ−axᵢ)²（唯一）；a* = Σxᵢyᵢ/Σxᵢ²</li>
+<li>先定单位再建模（8oz 一份 → amount = 8n）</li>
+</ul></div></div>
+
+<div class="blk"><h2>凸性 <span>L12 · 新增</span></h2><div class="body">
+<ul>
+<li>凸集：任两点线段不出集；凸函数：f(θx+(1−θ)y) ≤ θf(x)+(1−θ)f(y)（图在弦下方）</li>
+<li class="f">判定：f″ ≥ 0（1D）；H ⪰ 0 即特征值全 ≥ 0（nD）；非负加权和、仿射复合保凸；f 凹 ⟺ −f 凸</li>
+</ul>
+<table>
+<tr><th>对象</th><th>凸?</th><th>对象</th><th>凸?</th></tr>
+<tr><td>Rⁿ / 单点 / ∅</td><td>✓</td><td>Zⁿ</td><td class="hot">✗ 中点非整数</td></tr>
+<tr><td>交集</td><td>✓</td><td>并集</td><td>✗ {0}∪{2} 缺 1</td></tr>
+<tr><td>e^{at}</td><td>✓</td><td>log t / t³</td><td>凹 / ✗(变号)</td></tr>
+<tr><td>‖x‖₂</td><td>✓(0 处不可微)</td><td>仿射 ax+b</td><td>✓ 且凹</td></tr>
+</table>
+<ul>
+<li class="hot"><b class="k">局部最优 = 全局最优</b>（凸问题的意义所在）；严格凸 ⟹ 至多一个最小点；凸不保证存在/唯一（eᵗ 无取得点；线段上无穷多 argmin）</li>
+<li>凸优化 = f 凸 <b>且</b> F 凸（整数约束 → 非凸！）；max 凹 = min 其负</li>
+</ul></div></div>
+
+<div class="blk"><h2>梯度下降 <span>L12 · 新增</span></h2><div class="body">
+<ul>
+<li class="f hot">xₖ₊₁ = xₖ − αₖ∇f(xₖ)；∇f = 最速上升方向 → 负梯度 = 下降方向</li>
+<li>二次目标 (t−a)²：误差每步 ×(1−2α)；|1−2α| &lt; 1 ⟺ 0 &lt; α &lt; 1 收敛；= 1 振荡；&gt; 1 发散</li>
+<li>课件例：q=(t−2)²+1, t₀=0, α=¼：q′=2(t−2)，t₁=1, t₂=3/2 → t*=2, q*=1</li>
+<li class="hot">无约束可微凸：∇f = 0 = <b>全局最小证书</b>；停机：梯度范数 / 目标变化 / 迭代上限</li>
+<li>更新量小 ≠ 收敛（可能步长小）；投影梯度下降<b>不考</b></li>
+</ul></div></div>
+
+<div class="blk"><h2>考试约定（模拟卷原话，答题必须遵守）</h2><div class="body">
+<ul>
+<li class="hot">树搜索：同状态不同路径分开保留；再 visit 就再写；visit = 出队/出栈那一刻做目标测试（生成时不做）</li>
+<li class="hot">平局：先按端点字母序，同字母按先入队</li>
+<li>IDS：限深从 0 起；cutoff 节点 visit 计数；孩子按字母序</li>
+<li class="hot">"Path length" = 总边代价（非边数）｜ Expand = 生成后继（visit at limit ≠ expand）</li>
+<li class="hot">FC 只改新赋值变量的<b>未赋值邻居</b>域</li>
+<li>α-β：左到右探索，α ≥ β 即剪（含等号）；剪后返回的是界不必真值</li>
+<li>区间 [start, end)：back-to-back 不算重叠</li>
+<li>LP：含 x,y ≥ 0，变量视作连续；超出绘图窗口的可行域用箭头标出</li>
+<li>猜错倒扣（正式考试）；歧义题自行补假设并<b>明确写出</b>；冗长扣分——先想后写</li>
+</ul></div></div>
+
+</div>
+
+</body>
+</html>
